@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boršovík</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>">
+  <meta name="theme-color" content="#1a3a1f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink:      #1a2018;
+      --ink-soft: #4a5a45;
+      --ink-mute: #8a9a82;
+      --parchment: #f7f3ec;
+      --parchment2: #efe9de;
+      --parchment3: #e5ddd0;
+      --moss:     #2d5a27;
+      --moss-mid: #3d7a35;
+      --moss-pale:#e6ede4;
+      --gold:     #b8972a;
+      --gold-pale:#f5edd6;
+      --stone:    #c8c0b4;
+      --surface:  rgba(255,255,255,0.72);
+      --radius:   18px;
+      --shadow:   0 4px 24px rgba(26,42,24,0.10);
+      --shadow-lg:0 12px 48px rgba(26,42,24,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--parchment);
+      color: var(--ink);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ─── TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── BOTANICAL DECORATION ─── */
+    .botanical {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.06;
+      font-size: 180px;
+      line-height: 1;
+      user-select: none;
+    }
+    .botanical-tl { top: -20px; left: -20px; transform: rotate(-20deg); }
+    .botanical-br { bottom: -20px; right: -20px; transform: rotate(160deg); }
+
+    /* ─── SCREENS ─── */
+    .screen {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      animation: revealUp 0.35s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .screen.active { display: flex; }
+
+    @keyframes revealUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── BRAND HEADER ─── */
+    .brand-header {
+      width: 100%;
+      background: var(--ink);
+      color: var(--parchment);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 60%, rgba(184,151,42,0.12));
+      pointer-events: none;
+    }
+    .brand-logo {
+      width: 38px; height: 38px;
+      border: 1.5px solid var(--gold);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .brand-tagline {
+      font-size: 0.65rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-top: 1px;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(200,192,180,0.5);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--moss);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    .card-sub {
+      font-size: 0.8rem;
+      color: var(--ink-mute);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    /* ─── HOME ─── */
+    .home-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 32px;
+      gap: 0;
+    }
+    .home-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    .users-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      max-width: 460px;
+      width: 100%;
+      margin-bottom: 28px;
+    }
+
+    .user-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 22px 18px 18px;
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(200,192,180,0.5);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16,1,0.3,1),
+                  box-shadow 0.2s ease,
+                  border-color 0.2s ease;
+      min-width: 100px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .user-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--user-color, var(--moss));
+      opacity: 0.85;
+    }
+    .user-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(200,192,180,0.9);
+    }
+    .user-card .uc-emoji {
+      font-size: 2.6rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+    .user-card .uc-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--ink);
+    }
+    .user-card .uc-admin {
+      font-size: 0.58rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      border: 1px solid var(--gold);
+      padding: 1px 7px;
+      border-radius: 20px;
+    }
+
+    .add-user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      background: transparent;
+      border: 1.5px dashed var(--stone);
+      border-radius: 40px;
+      color: var(--ink-mute);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .add-user-btn:hover {
+      border-color: var(--moss);
+      color: var(--moss);
+      background: var(--moss-pale);
+    }
+
+    /* ─── FORM ─── */
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--parchment3);
+      border-radius: 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--ink);
+      background: var(--parchment);
+      transition: border-color 0.15s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--moss); background: white; }
+
+    /* ─── EMOJI PICKER ─── */
+    .emoji-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 10px;
+      background: var(--parchment);
+      border-radius: 10px;
+      border: 1.5px solid var(--parchment3);
+      max-height: 148px;
+      overflow-y: auto;
+    }
+    .emoji-opt {
+      font-size: 1.45rem;
+      padding: 4px 5px;
+      border-radius: 7px;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all 0.12s;
+      line-height: 1;
+    }
+    .emoji-opt:hover { background: var(--parchment2); }
+    .emoji-opt.sel {
+      background: var(--moss-pale);
+      border-color: var(--moss);
+      transform: scale(1.1);
+    }
+    .emoji-preview {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--ink-mute);
+      font-weight: 500;
+    }
+
+    /* ─── COLOR PICKER ─── */
+    .color-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .color-swatch {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2.5px solid transparent;
+      outline: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .color-swatch:hover { transform: scale(1.2); }
+    .color-swatch.sel {
+      outline-color: var(--ink);
+      outline-offset: 2px;
+      transform: scale(1.2);
+    }
+
+    /* ─── PIN PAD ─── */
+    .pin-dots {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+    .pin-dot {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      border: 1.5px solid var(--stone);
+      background: transparent;
+      transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .pin-dot.on {
+      background: var(--moss);
+      border-color: var(--moss);
+      transform: scale(1.2);
+    }
+
+    .pin-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+    .pin-key {
+      aspect-ratio: 1;
+      background: var(--parchment);
+      border: 1.5px solid var(--parchment3);
+      border-radius: 12px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.13s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pin-key:hover {
+      background: var(--moss-pale);
+      border-color: var(--moss);
+      color: var(--moss);
+    }
+    .pin-key:active { transform: scale(0.91); }
+    .pin-key.del { font-family: 'Jost', sans-serif; font-size: 1rem; color: var(--ink-mute); }
+    .pin-key.gap { border: none; background: transparent; pointer-events: none; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 14px 24px;
+      border: none; border-radius: 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; transition: all 0.18s;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--parchment);
+    }
+    .btn-primary:hover { background: var(--moss); }
+    .btn-primary:disabled {
+      background: var(--parchment3);
+      color: var(--stone);
+      cursor: not-allowed;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-mute);
+      border: 1.5px solid var(--parchment3);
+    }
+    .btn-ghost:hover { border-color: var(--moss); color: var(--moss); }
+
+    /* ─── BACK LINK ─── */
+    .back-btn {
+      background: none; border: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--ink-mute);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 24px;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .back-btn:hover { color: var(--moss); }
+
+    /* ─── MESSAGES ─── */
+    .msg {
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      text-align: center;
+    }
+    .msg-err { background: #faeaea; color: #c0392b; }
+    .msg-ok  { background: var(--moss-pale); color: var(--moss); }
+
+    /* ─── SHAKE ─── */
+    @keyframes shake {
+      0%,100%{transform:translateX(0)} 20%{transform:translateX(-7px)}
+      40%{transform:translateX(7px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
+    }
+    .shake { animation: shake 0.38s ease; }
+
+    /* ─── LOADING ─── */
+    .loading-veil {
+      position: fixed; inset: 0;
+      background: rgba(247,243,236,0.88);
+      backdrop-filter: blur(6px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 16px;
+      z-index: 9999;
+    }
+    .loader-ring {
+      width: 44px; height: 44px;
+      border: 3px solid var(--parchment3);
+      border-top-color: var(--moss);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    .loader-text {
+      font-size: 0.7rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 500;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── LOGIN AVATAR ─── */
+    .login-avatar-row {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 26px;
+    }
+    .login-avatar {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: var(--parchment2);
+      border: 2px solid var(--user-color, var(--moss));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+    }
+    .login-user-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--moss);
+    }
+    .login-user-hint {
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 500;
+    }
+
+    /* ─── APP SHELL ─── */
+    .app-shell { display: none; flex-direction: column; flex: 1; }
+    .app-shell.active { display: flex; }
+
+    .top-bar {
+      background: var(--ink);
+      color: var(--parchment);
+      padding: 13px 22px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; overflow: hidden; flex-shrink: 0;
+    }
+    .top-bar::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 55%, rgba(184,151,42,0.1));
+      pointer-events: none;
+    }
+    .top-bar-brand {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .top-bar-logo {
+      width: 30px; height: 30px;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .top-bar-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .user-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+      letter-spacing: 0.3px;
+    }
+    .user-pill:hover { background: rgba(255,255,255,0.18); }
+    .user-pill .arrow { opacity: 0.6; font-size: 0.7rem; }
+
+    .tab-content { flex: 1; overflow-y: auto; }
+    .tab-pane { display: none; padding: 28px 20px; }
+    .tab-pane.active { display: block; animation: revealUp 0.22s ease both; }
+
+    /* ─── TAB BAR ─── */
+    .tab-bar {
+      display: flex;
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 3px;
+      padding: 10px 4px 12px;
+      background: none; border: none;
+      color: rgba(247,243,236,0.4);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.15s;
+      position: relative;
+    }
+    .tab-btn .ticon { font-size: 1.15rem; transition: transform 0.2s; }
+    .tab-btn.active { color: var(--parchment); }
+    .tab-btn.active .ticon { transform: scale(1.12); }
+    .tab-btn.active::before {
+      content: '';
+      position: absolute; top: 0; left: 20%; right: 20%;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 0 0 2px 2px;
+    }
+
+    /* ─── PLACEHOLDER ─── */
+    .ph {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .ph-icon { font-size: 2.8rem; opacity: 0.5; }
+    .ph-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+    .ph-sub {
+      font-size: 0.75rem;
+      color: var(--ink-mute);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ─── SETTINGS ─── */
+    .settings-section-title {
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 600;
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    .settings-section-title:first-child { margin-top: 0; }
+
+    .settings-card {
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(200,192,180,0.5);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 10px;
+    }
+    .sc-avatar { font-size: 1.8rem; flex-shrink: 0; }
+    .sc-info { flex: 1; }
+    .sc-name { font-weight: 600; font-size: 0.95rem; }
+    .sc-role {
+      font-size: 0.72rem;
+      color: var(--ink-mute);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .sc-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 480px) {
+      .card { padding: 44px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Botanical deco -->
+<span class="botanical botanical-tl">🌿</span>
+<span class="botanical botanical-br">🌿</span>
+
+<!-- Loading -->
+<div class="loading-veil" id="loadingVeil">
+  <div class="loader-ring"></div>
+  <div class="loader-text">Načítám</div>
+</div>
+
+<!-- ════════════ HOME ════════════ -->
+<div class="screen active" id="sHome">
+  <div class="brand-header">
+    <div class="brand-logo">🏡</div>
+    <div>
+      <div class="brand-name">Boršovík</div>
+      <div class="brand-tagline">Rodinná chata</div>
+    </div>
+  </div>
+  <div class="home-wrap">
+    <div class="home-eyebrow">Kdo jsi dnes?</div>
+    <div class="users-grid" id="usersGrid"></div>
+    <button class="add-user-btn" onclick="goTo('sRegister')">＋ &nbsp;Přidat uživatele</button>
+  </div>
+</div>
+
+<!-- ════════════ REGISTRACE ════════════ -->
+<div class="screen" id="sRegister">
+  <div class="brand-header">
+    <div class="brand-logo">🏡</div>
+    <div>
+      <div class="brand-name">Boršovík</div>
+      <div class="brand-tagline">Nový uživatel</div>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:28px 16px;">
+    <div class="card">
+      <button class="back-btn" onclick="goTo('sHome')">← Zpět</button>
+      <div class="card-title" id="regTitle">Vytvoř si profil</div>
+      <div class="card-sub" id="regSub">Boršovík · Nový člen</div>
+
+      <div class="form-group">
+        <label class="form-label">Tvoje jméno</label>
+        <input class="form-input" id="regName" type="text" placeholder="Jak ti říkají?" maxlength="20" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Emoji avatar</label>
+        <div class="emoji-grid" id="emojiGrid"></div>
+        <div class="emoji-preview">Vybráno: <span id="emojiPreview">—</span></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Tvoje barva</label>
+        <div class="color-strip" id="colorStrip"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Zvol PIN (4 číslice)</label>
+        <div class="pin-dots" id="pd1"></div>
+        <div class="pin-grid" id="pp1"></div>
+      </div>
+
+      <div class="form-group" id="pin2wrap" style="display:none;">
+        <label class="form-label">Potvrď PIN</label>
+        <div class="pin-dots" id="pd2"></div>
+        <div class="pin-grid" id="pp2"></div>
+      </div>
+
+      <div id="regMsg"></div>
+      <button class="btn btn-primary" id="regBtn" onclick="submitReg()" disabled style="margin-top:8px;">
+        Vytvořit profil
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ LOGIN ════════════ -->
+<div class="screen" id="sLogin">
+  <div class="brand-header">
+    <div class="brand-logo">🏡</div>
+    <div>
+      <div class="brand-name">Boršovík</div>
+      <div class="brand-tagline">Přihlášení</div>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:28px 16px;">
+    <div class="card">
+      <button class="back-btn" onclick="goTo('sHome')">← Zpět</button>
+      <div class="login-avatar-row">
+        <div class="login-avatar" id="loginAv"></div>
+        <div>
+          <div class="login-user-name" id="loginName"></div>
+          <div class="login-user-hint">Zadej svůj PIN</div>
+        </div>
+      </div>
+      <div class="pin-dots" id="loginDots"></div>
+      <div class="pin-grid" id="loginPad"></div>
+      <div id="loginMsg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ APP SHELL ════════════ -->
+<div class="app-shell" id="appShell">
+  <div class="top-bar">
+    <div class="top-bar-brand">
+      <div class="top-bar-logo">🏡</div>
+      <div class="top-bar-name">Boršovík</div>
+    </div>
+    <div class="user-pill" id="userPill" onclick="logout()">
+      <span id="pillEmoji"></span>
+      <span id="pillName"></span>
+      <span class="arrow">↩</span>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="pane-cal">
+      <div class="ph">
+        <div class="ph-icon">📅</div>
+        <div class="ph-title">Kalendář</div>
+        <div class="ph-sub">Připravujeme</div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pane-ev">
+      <div class="ph">
+        <div class="ph-icon">🎉</div>
+        <div class="ph-title">Události</div>
+        <div class="ph-sub">Připravujeme</div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pane-tasks">
+      <div class="ph">
+        <div class="ph-icon">✅</div>
+        <div class="ph-title">Úkoly</div>
+        <div class="ph-sub">Připravujeme</div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pane-guides">
+      <div class="ph">
+        <div class="ph-icon">📖</div>
+        <div class="ph-title">Návody</div>
+        <div class="ph-sub">Připravujeme</div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pane-settings">
+      <div id="settingsInner"></div>
+    </div>
+  </div>
+
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('cal',this)">
+      <span class="ticon">📅</span>Kalendář
+    </button>
+    <button class="tab-btn" onclick="switchTab('ev',this)">
+      <span class="ticon">🎉</span>Události
+    </button>
+    <button class="tab-btn" onclick="switchTab('tasks',this)">
+      <span class="ticon">✅</span>Úkoly
+    </button>
+    <button class="tab-btn" onclick="switchTab('guides',this)">
+      <span class="ticon">📖</span>Návody
+    </button>
+    <button class="tab-btn" onclick="switchTab('settings',this)">
+      <span class="ticon">⚙️</span>Nastavení
+    </button>
+  </nav>
+</div>
+
+<!-- ════════════ FIREBASE + LOGIC ════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, collection, getDocs, addDoc,
+  query, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ── CONFIG ──
+const firebaseConfig = {
+  apiKey: "AIzaSyA6dUhVOqwjTkjc0jD7bVGdSuzmevpFIK4",
+  authDomain: "borsovik-a6116.firebaseapp.com",
+  projectId: "borsovik-a6116",
+  storageBucket: "borsovik-a6116.firebasestorage.app",
+  messagingSenderId: "1056113485657",
+  appId: "1:1056113485657:web:e3336a8bfd865baecece48",
+  measurementId: "G-YZ544121RQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── DATA ──
+const EMOJIS = [
+  '😀','😄','😎','🤩','🥳','😇','🤗','😋','🧐','🤓',
+  '👩','👨','👴','👵','🧑','👱','🧔','👸','🤴','🧒',
+  '🦊','🐻','🐼','🐨','🐯','🦁','🐸','🐙','🦄','🐲',
+  '🌟','🌈','🌺','🌻','🍀','🍁','🌙','⭐','🔥','💎',
+  '🏡','⛺','🌲','🏔️','🚂','⚽','🎸','🎨','📚','🍕'
+];
+const COLORS = [
+  '#c0392b','#e67e22','#d4ac0d','#27ae60','#16a085',
+  '#2980b9','#8e44ad','#e91e63','#00838f','#558b2f',
+  '#ff5722','#546e7a','#6d4c41','#2d5a27','#1565c0'
+];
+
+// ── STATE ──
+let _users = [], _currentUser = null;
+let _loginTarget = null, _loginPin = '';
+let _regPin1 = '', _regPin2 = '', _pin1Done = false;
+let _selEmoji = EMOJIS[0], _selColor = COLORS[0];
+
+// ── UTILS ──
+async function sha256(s) {
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+function veil(on) {
+  document.getElementById('loadingVeil').style.display = on ? 'flex' : 'none';
+}
+function msg(id, text, type='err') {
+  document.getElementById(id).innerHTML =
+    `<div class="msg msg-${type}">${text}</div>`;
+}
+
+// ── SCREENS ──
+window.goTo = function(id) {
+  if (id === 'sRegister') initReg();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('appShell').classList.remove('active');
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+};
+
+function showApp() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('appShell').classList.add('active');
+  renderSettings();
+}
+
+window.switchTab = function(tab, el) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pane-' + tab).classList.add('active');
+  el.classList.add('active');
+};
+
+// ── LOAD USERS ──
+async function loadUsers() {
+  veil(true);
+  try {
+    const snap = await getDocs(query(collection(db,'users'), orderBy('createdAt')));
+    _users = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderHomeGrid();
+  } catch(e) {
+    console.error('Firebase error:', e);
+  }
+  veil(false);
+}
+
+function renderHomeGrid() {
+  const g = document.getElementById('usersGrid');
+  g.innerHTML = '';
+  _users.forEach(u => {
+    const btn = document.createElement('button');
+    btn.className = 'user-card';
+    btn.style.setProperty('--user-color', u.color);
+    btn.innerHTML = `
+      <span class="uc-emoji">${u.emoji}</span>
+      <span class="uc-name">${u.name}</span>
+      ${u.isAdmin ? '<span class="uc-admin">Admin</span>' : ''}
+    `;
+    btn.onclick = () => openLogin(u);
+    g.appendChild(btn);
+  });
+}
+
+// ── LOGIN ──
+window.openLogin = function(u) {
+  _loginTarget = u; _loginPin = '';
+  const av = document.getElementById('loginAv');
+  av.textContent = u.emoji;
+  av.style.setProperty('--user-color', u.color);
+  document.getElementById('loginName').textContent = u.name;
+  document.getElementById('loginMsg').innerHTML = '';
+  dots('loginDots', _loginPin);
+  pad('loginPad', loginKey, loginDel);
+  goTo('sLogin');
+};
+
+async function loginKey(d) {
+  if (_loginPin.length >= 4) return;
+  _loginPin += d;
+  dots('loginDots', _loginPin);
+  if (_loginPin.length === 4) {
+    veil(true);
+    const h = await sha256(_loginPin);
+    veil(false);
+    if (h === _loginTarget.pinHash) {
+      _currentUser = _loginTarget;
+      sessionStorage.setItem('bUser', JSON.stringify(_currentUser));
+      enterApp();
+    } else {
+      document.getElementById('loginDots').classList.add('shake');
+      setTimeout(() => document.getElementById('loginDots').classList.remove('shake'), 400);
+      msg('loginMsg', 'Špatný PIN — zkus to znovu');
+      _loginPin = '';
+      dots('loginDots', _loginPin);
+    }
+  }
+}
+function loginDel() {
+  _loginPin = _loginPin.slice(0,-1);
+  dots('loginDots', _loginPin);
+  document.getElementById('loginMsg').innerHTML = '';
+}
+
+function enterApp() {
+  const u = _currentUser;
+  document.getElementById('pillEmoji').textContent = u.emoji;
+  document.getElementById('pillName').textContent = u.name;
+  showApp();
+}
+
+window.logout = function() {
+  sessionStorage.removeItem('bUser');
+  _currentUser = null;
+  goTo('sHome');
+};
+
+// ── REGISTER ──
+function initReg() {
+  _regPin1 = ''; _regPin2 = ''; _pin1Done = false;
+  _selEmoji = EMOJIS[0]; _selColor = COLORS[0];
+  document.getElementById('regName').value = '';
+  document.getElementById('regMsg').innerHTML = '';
+  document.getElementById('pin2wrap').style.display = 'none';
+  document.getElementById('regBtn').disabled = true;
+  document.getElementById('regSub').textContent =
+    _users.length === 0 ? 'První uživatel · Budeš admin 👑' : 'Boršovík · Nový člen';
+
+  // Emoji
+  const eg = document.getElementById('emojiGrid');
+  eg.innerHTML = '';
+  EMOJIS.forEach((em,i) => {
+    const s = document.createElement('span');
+    s.className = 'emoji-opt' + (i===0?' sel':'');
+    s.textContent = em;
+    s.onclick = () => {
+      eg.querySelectorAll('.emoji-opt').forEach(x=>x.classList.remove('sel'));
+      s.classList.add('sel');
+      _selEmoji = em;
+      document.getElementById('emojiPreview').textContent = em;
+    };
+    eg.appendChild(s);
+  });
+  document.getElementById('emojiPreview').textContent = EMOJIS[0];
+
+  // Colors
+  const cs = document.getElementById('colorStrip');
+  cs.innerHTML = '';
+  COLORS.forEach((c,i) => {
+    const d = document.createElement('div');
+    d.className = 'color-swatch' + (i===0?' sel':'');
+    d.style.background = c;
+    d.onclick = () => {
+      cs.querySelectorAll('.color-swatch').forEach(x=>x.classList.remove('sel'));
+      d.classList.add('sel');
+      _selColor = c;
+    };
+    cs.appendChild(d);
+  });
+
+  // PINs
+  dots('pd1', _regPin1); pad('pp1', rp1key, rp1del);
+  dots('pd2', _regPin2); pad('pp2', rp2key, rp2del);
+}
+
+function rp1key(d) {
+  if (_regPin1.length>=4 || _pin1Done) return;
+  _regPin1 += d; dots('pd1',_regPin1);
+  if (_regPin1.length===4) {
+    _pin1Done = true;
+    document.getElementById('pin2wrap').style.display = 'block';
+    msg('regMsg','Skvělé! Zadej PIN ještě jednou pro potvrzení','ok');
+  }
+}
+function rp1del() {
+  if (_pin1Done) return;
+  _regPin1 = _regPin1.slice(0,-1); dots('pd1',_regPin1);
+}
+function rp2key(d) {
+  if (_regPin2.length>=4) return;
+  _regPin2 += d; dots('pd2',_regPin2);
+  if (_regPin2.length===4) {
+    if (_regPin1 !== _regPin2) {
+      document.getElementById('pd2').classList.add('shake');
+      setTimeout(()=>document.getElementById('pd2').classList.remove('shake'),400);
+      msg('regMsg','PINy se neshodují — zkus znovu');
+      _regPin2 = ''; dots('pd2',_regPin2);
+    } else {
+      msg('regMsg','PIN potvrzen ✓','ok');
+      document.getElementById('regBtn').disabled = false;
+    }
+  }
+}
+function rp2del() {
+  _regPin2 = _regPin2.slice(0,-1); dots('pd2',_regPin2);
+  document.getElementById('regBtn').disabled = true;
+}
+
+window.submitReg = async function() {
+  const name = document.getElementById('regName').value.trim();
+  if (!name) { msg('regMsg','Zadej prosím jméno'); return; }
+  if (_regPin1.length!==4 || _regPin1!==_regPin2) { msg('regMsg','Zkontroluj PIN'); return; }
+  if (_users.some(u=>u.name.toLowerCase()===name.toLowerCase())) {
+    msg('regMsg','Uživatel s tímto jménem již existuje'); return;
+  }
+  veil(true);
+  try {
+    const pinHash = await sha256(_regPin1);
+    await addDoc(collection(db,'users'), {
+      name, emoji: _selEmoji, color: _selColor,
+      pinHash, isAdmin: _users.length===0,
+      createdAt: serverTimestamp()
+    });
+    await loadUsers();
+    goTo('sHome');
+  } catch(e) { msg('regMsg','Chyba: '+e.message); }
+  veil(false);
+};
+
+// ── SETTINGS ──
+function renderSettings() {
+  const u = _currentUser;
+  let h = `
+    <div class="settings-section-title">Přihlášen jako</div>
+    <div class="settings-card">
+      <div class="sc-avatar">${u.emoji}</div>
+      <div class="sc-info">
+        <div class="sc-name">${u.name} ${u.isAdmin?'👑':''}</div>
+        <div class="sc-role">${u.isAdmin?'Administrátor':'Uživatel'}</div>
+      </div>
+      <div class="sc-dot" style="background:${u.color}"></div>
+    </div>
+  `;
+  if (u.isAdmin) {
+    h += `<div class="settings-section-title">Všichni uživatelé</div>`;
+    _users.forEach(usr => {
+      h += `
+        <div class="settings-card">
+          <div class="sc-avatar">${usr.emoji}</div>
+          <div class="sc-info">
+            <div class="sc-name">${usr.name} ${usr.isAdmin?'👑':''}</div>
+            <div class="sc-role">${usr.isAdmin?'Admin':'Uživatel'}</div>
+          </div>
+          <div class="sc-dot" style="background:${usr.color}"></div>
+        </div>`;
+    });
+  }
+  h += `
+    <div style="margin-top:28px;">
+      <button class="btn btn-ghost" onclick="logout()">↩ &nbsp;Odhlásit se</button>
+    </div>
+    <p style="margin-top:20px;text-align:center;font-size:0.72rem;color:var(--ink-mute);letter-spacing:1px;">
+      Editace profilu · Brzy k dispozici
+    </p>
+  `;
+  document.getElementById('settingsInner').innerHTML = h;
+}
+
+// ── PIN UI ──
+function dots(id, pin) {
+  const el = document.getElementById(id); el.innerHTML = '';
+  for (let i=0;i<4;i++) {
+    const d = document.createElement('div');
+    d.className = 'pin-dot' + (i<pin.length?' on':'');
+    el.appendChild(d);
+  }
+}
+function pad(id, onKey, onDel) {
+  const el = document.getElementById(id); el.innerHTML = '';
+  ['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k => {
+    const b = document.createElement('button');
+    if (!k) { b.className='pin-key gap'; }
+    else if (k==='⌫') { b.className='pin-key del'; b.textContent=k; b.onclick=onDel; }
+    else { b.className='pin-key'; b.textContent=k; b.onclick=()=>onKey(k); }
+    el.appendChild(b);
+  });
+}
+
+// ── INIT ──
+async function init() {
+  veil(true);
+  await loadUsers();
+  const stored = sessionStorage.getItem('bUser');
+  if (stored) {
+    try {
+      const u = JSON.parse(stored);
+      const found = _users.find(x=>x.id===u.id);
+      if (found) { _currentUser = found; enterApp(); return; }
+    } catch(e) {}
+  }
+  goTo('sHome');
+}
+
+init();
+</script>
+</body>
+</html>
