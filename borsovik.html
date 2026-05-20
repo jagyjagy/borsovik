@@ -152,7 +152,7 @@
     .cal-grid-wrap{flex:0 0 auto;overflow:visible;position:relative;}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);overflow:visible;position:relative;}
     /* Buňka – overflow hidden zachovává pevnou výšku */
-    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 20px;min-height:62px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:visible;position:relative;box-sizing:border-box;}
+    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 20px;min-height:62px;height:62px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;position:relative;box-sizing:border-box;}
     .cal-cell:nth-child(7n){border-right:none;}
     .cal-cell:hover{background:transparent;}
     .cal-cell.sel{background:transparent;}
@@ -173,7 +173,7 @@
     /* číslo dne */
     .cal-dn{font-size:.88rem;font-weight:600;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;}
     /* svátek pod číslem – ellipsis */
-    .cal-hol{font-size:.6rem;color:#a07000;font-weight:600;line-height:1.2;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;display:block;max-width:100%;box-sizing:border-box;}
+    .cal-hol{font-size:.58rem;color:#a07000;font-weight:600;line-height:1.2;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;display:block;width:100%;box-sizing:border-box;}
     /* Proužky – absolutně na spodku buňky */
     .cal-strips{position:absolute;bottom:3px;left:0;right:0;display:flex;flex-direction:column;gap:2px;overflow:visible;}
     /* Wrapper proužku – překrývá border buňky */
@@ -185,7 +185,7 @@
     .strip.end{border-radius:0 4px 4px 0;left:-1px;right:2px;}
     .strip.cont{left:-1px;right:-1px;}
     /* Text proužku – přesahuje přes sousední buňky */
-    .strip-text{position:absolute;left:6px;top:0;height:18px;line-height:18px;white-space:nowrap;font-size:.76rem;font-weight:600;color:#fff;z-index:50;pointer-events:none;overflow:visible;}
+    .strip-text{display:none;}
     .strip-more{font-size:.66rem;color:var(--tx3);padding:2px 4px;line-height:1;}
 
     /* Buněčné pozadí přes pseudo-element, samotná buňka má overflow:visible pro proužky */
@@ -1046,6 +1046,33 @@ async function renderCal(){
     cell.addEventListener('click',()=>{_selDate=ds;grid.querySelectorAll('.cal-cell').forEach(c=>c.classList.remove('sel'));cell.classList.add('sel');renderDayPanel(ds);});
     grid.appendChild(cell);
   }
+
+  // Overlay pro texty proužků – přesahují přes buňky
+  const oldOv=document.getElementById('calLabelOverlay');
+  if(oldOv)oldOv.remove();
+  const ov=document.createElement('div');
+  ov.id='calLabelOverlay';
+  ov.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:50;overflow:visible;';
+  const gridWrap=document.querySelector('.cal-grid-wrap');
+  const gwRect=gridWrap.getBoundingClientRect();
+  // Musíme počkat na layout
+  requestAnimationFrame(()=>{
+    grid.querySelectorAll('.strip-wrap').forEach(wrap=>{
+      const lbl=wrap.querySelector('.strip-text');
+      if(!lbl||!lbl.textContent.trim())return;
+      const wr=wrap.getBoundingClientRect();
+      const left=wr.left-gwRect.left+6;
+      const top=wr.top-gwRect.top;
+      const sp=document.createElement('span');
+      sp.className='cal-label-overlay';
+      sp.textContent=lbl.textContent;
+      sp.style.left=left+'px';
+      sp.style.top=top+'px';
+      ov.appendChild(sp);
+    });
+    gridWrap.appendChild(ov);
+  });
+
   renderDayPanel(_selDate);
 }
 
