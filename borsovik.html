@@ -1024,9 +1024,7 @@ async function renderCal(){
       const owner=_u.find(u=>u.id===ev.userId);
       const color=owner?owner.color:'#888';
       const recurSym=ev.recur?'🔁':'';
-      const isRowStart=(i%7===0);
-      const isMonthStart=ds.endsWith('-01');
-      const showLabel=isStart||isRowStart||isMonthStart;
+      const showLabel=isStart;
       const em=owner?owner.emoji:'';
       const nm=owner?owner.name:'';
       const ti=ev.title?(' · '+ev.title):'';
