@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boršovík</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f0ece4'/%3E%3Cpolygon points='12,30 32,12 52,30' fill='%23b5623a'/%3E%3Crect x='18' y='30' width='28' height='22' fill='%23e8e0d0'/%3E%3Crect x='23' y='35' width='7' height='7' fill='%23a07050'/%3E%3Crect x='34' y='35' width='7' height='7' fill='%23a07050'/%3E%3Crect x='28' y='42' width='8' height='10' fill='%23a07050'/%3E%3Crect x='28' y='16' width='8' height='6' rx='1' fill='%23d4c8b8'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f0ece4'/%3E%3Cpolygon points='12,30 32,12 52,30' fill='%23b5623a'/%3E%3Crect x='18' y='30' width='28' height='22' fill='%23e8e0d0'/%3E%3Crect x='23' y='35' width='7' height='7' fill='%23a07050'/%3E%3Crect x='34' y='35' width='7' height='7' fill='%23a07050'/%3E%3Crect x='28' y='42' width='8' height='10' fill='%23a07050'/%3E%3Crect x='28' y='16' width='8' height='6' rx='1' fill='%23d4c8b8'/%3E%3C/svg%3E">
   <meta name="theme-color" content="#f7f4ef">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Boršovík">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -14,24 +19,20 @@
       --sf:#ffffff;--tx:#1c1917;--tx2:#6b6560;--tx3:#a09890;
       --ac:#b5623a;--ac2:#c97a52;--acbg:#f5ede8;
       --bd:#ddd9d2;--bd2:#ccc7be;
+      --we-bg:#fff4f0;--hol-bg:#fff8f0;
       --r:14px;--rs:8px;--tab-h:58px;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{-webkit-tap-highlight-color:transparent;}
     body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);height:100svh;display:flex;flex-direction:column;font-size:15px;overflow:hidden;}
-
     .screen{display:none;flex:1;flex-direction:column;min-height:0;animation:up .28s cubic-bezier(.16,1,.3,1);}
     .screen.active{display:flex;}
     .screen-scroll{overflow-y:auto;}
     @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-    /* HEADER */
     .hdr{width:100%;background:var(--sf);border-bottom:1px solid var(--bd);padding:0 20px;height:52px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
     .hdr-logo{width:28px;height:28px;flex-shrink:0;}
     .hdr-title{font-size:1rem;font-weight:600;letter-spacing:-.2px;}
     .hdr-sub{font-size:.72rem;color:var(--tx3);margin-left:auto;}
-
-    /* HOME */
     .home-body{flex:1;width:100%;max-width:500px;padding:32px 20px 24px;display:flex;flex-direction:column;align-items:center;margin:0 auto;}
     .home-label{font-size:.7rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--tx3);margin-bottom:22px;}
     .users-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%;margin-bottom:22px;}
@@ -43,8 +44,6 @@
     .uc-admin{font-size:.58rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ac);}
     .add-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;border:1.5px dashed var(--bd2);border-radius:40px;background:transparent;color:var(--tx3);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:border-color .15s,color .15s;}
     .add-btn:hover{border-color:var(--ac);color:var(--ac);}
-
-    /* CARD/FORM */
     .wrap{flex:1;width:100%;max-width:440px;padding:20px 16px;display:flex;flex-direction:column;align-items:center;margin:0 auto;}
     .card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:24px 22px;width:100%;}
     .card-ttl{font-size:1.1rem;font-weight:600;letter-spacing:-.2px;margin-bottom:2px;}
@@ -55,11 +54,10 @@
     .fg label{display:block;font-size:.68rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:6px;}
     .fg input[type=text],.fg input[type=date],.fg input[type=time],.fg textarea,.fg select{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--tx);background:var(--bg);outline:none;transition:border-color .13s;}
     .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--ac2);background:#fff;}
-    .fg textarea{resize:vertical;min-height:72px;line-height:1.5;}
+    .fg textarea{resize:vertical;min-height:68px;line-height:1.5;}
     .fg select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a09890' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
     .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-
-    /* Emoji / colors */
+    .fg-hint{font-size:.68rem;color:var(--tx3);margin-top:5px;}
     .ebox{display:flex;flex-wrap:wrap;gap:2px;padding:8px;background:var(--bg);border:1px solid var(--bd);border-radius:var(--rs);max-height:148px;overflow-y:auto;}
     .ebox::-webkit-scrollbar{width:4px;}
     .ebox::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:4px;}
@@ -71,8 +69,6 @@
     .csw{width:25px;height:25px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;outline:2px solid transparent;outline-offset:2px;transition:all .13s;}
     .csw:hover{transform:scale(1.18);}
     .csw.sel{outline-color:var(--tx);transform:scale(1.18);}
-
-    /* PIN */
     .pdots{display:flex;gap:12px;justify-content:center;margin-bottom:18px;}
     .pd{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--bd2);background:transparent;transition:all .18s cubic-bezier(.34,1.56,.64,1);}
     .pd.on{background:var(--ac);border-color:var(--ac);transform:scale(1.15);}
@@ -82,55 +78,37 @@
     .pk:active{transform:scale(.92);}
     .pk.gap{border:none;background:transparent;pointer-events:none;}
     .pk.del{font-size:.85rem;color:var(--tx3);}
-
-    /* Guest chips */
-    .guest-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
-    .chip{display:flex;align-items:center;gap:5px;padding:4px 10px;background:var(--bg2);border:1px solid var(--bd);border-radius:20px;font-size:.75rem;font-weight:500;}
-    .chip-remove{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:.9rem;line-height:1;padding:0;margin-left:2px;}
-    .chip-remove:hover{color:var(--ac);}
-
-    /* BUTTONS */
     .btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:12px 20px;border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .15s;}
     .btn-p{background:var(--tx);color:#fff;}
     .btn-p:hover{background:#2d2926;}
     .btn-p:disabled{background:var(--bg3);color:var(--tx3);cursor:not-allowed;}
     .btn-g{background:transparent;color:var(--tx2);border:1px solid var(--bd);}
     .btn-g:hover{border-color:var(--bd2);color:var(--tx);}
-    .btn-sm{padding:8px 16px;font-size:.78rem;width:auto;}
-
-    /* MSG */
     .msg{margin-top:11px;padding:8px 12px;border-radius:var(--rs);font-size:.77rem;text-align:center;}
     .me{background:#fdf0ed;color:#b5623a;}
     .mo{background:#f0f5eb;color:#4a7c2f;}
     @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
     .shake{animation:shake .35s ease;}
-
-    /* LOGIN */
     .lrow{display:flex;align-items:center;gap:13px;margin-bottom:22px;}
     .lav{width:48px;height:48px;border-radius:12px;background:var(--bg2);border:2px solid var(--uc,var(--ac));display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0;}
     .lname{font-size:1.05rem;font-weight:600;}
     .lhint{font-size:.7rem;color:var(--tx3);}
-
-    /* LOADING */
     .veil{position:fixed;inset:0;background:rgba(247,244,239,.9);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:9999;}
     .ring{width:34px;height:34px;border:2.5px solid var(--bg3);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;}
     .rlabel{font-size:.68rem;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);}
     @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* MODAL */
     .modal-backdrop{position:fixed;inset:0;background:rgba(28,25,23,.45);backdrop-filter:blur(3px);z-index:200;display:none;align-items:flex-end;justify-content:center;}
     .modal-backdrop.open{display:flex;animation:fadein .2s ease;}
     @keyframes fadein{from{opacity:0}to{opacity:1}}
-    .modal{background:var(--sf);border-radius:var(--r) var(--r) 0 0;width:100%;max-width:520px;max-height:92svh;display:flex;flex-direction:column;animation:slideup .28s cubic-bezier(.16,1,.3,1);}
+    .modal{background:var(--sf);border-radius:20px 20px 0 0;width:100%;max-width:520px;max-height:92svh;display:flex;flex-direction:column;animation:slideup .28s cubic-bezier(.16,1,.3,1);}
     @keyframes slideup{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
-    .modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid var(--bd);flex-shrink:0;}
+    .modal-handle{width:36px;height:4px;background:var(--bd2);border-radius:2px;margin:10px auto 0;}
+    .modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--bd);flex-shrink:0;}
     .modal-title{font-size:1rem;font-weight:600;}
-    .modal-close{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:1.2rem;line-height:1;padding:4px;}
-    .modal-close:hover{color:var(--tx);}
-    .modal-body{overflow-y:auto;padding:18px 20px;flex:1;}
-    .modal-footer{padding:12px 20px 20px;border-top:1px solid var(--bd);flex-shrink:0;}
-
-    /* APP SHELL */
+    .modal-close{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:1.1rem;padding:6px;border-radius:50%;transition:background .13s;}
+    .modal-close:hover{background:var(--bg2);}
+    .modal-body{overflow-y:auto;padding:16px 20px;flex:1;}
+    .modal-footer{padding:12px 20px 20px;border-top:1px solid var(--bd);flex-shrink:0;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));}
     .app-shell{display:none;flex-direction:column;height:100svh;}
     .app-shell.active{display:flex;}
     .top-bar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
@@ -143,9 +121,7 @@
     .tab-pane{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;}
     .tab-pane.active{display:flex;}
     .pane-scroll{overflow-y:auto;flex:1;padding:20px;}
-
-    /* TAB BAR */
-    .tab-bar{display:flex;background:var(--sf);border-top:1px solid var(--bd);flex-shrink:0;height:var(--tab-h);padding-bottom:env(safe-area-inset-bottom,0);}
+    .tab-bar{display:flex;background:var(--sf);border-top:1px solid var(--bd);flex-shrink:0;height:var(--tab-h);padding-bottom:env(safe-area-inset-bottom,0);border-radius:16px 16px 0 0;box-shadow:0 -2px 16px rgba(0,0,0,.06);}
     .tbb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;color:var(--tx3);font-family:'DM Sans',sans-serif;font-size:.56rem;font-weight:500;letter-spacing:.7px;text-transform:uppercase;cursor:pointer;transition:color .13s;position:relative;padding:0;}
     .tbb svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s cubic-bezier(.16,1,.3,1);}
     .tbb.active{color:var(--ac);}
@@ -159,50 +135,151 @@
     .cnav-btn{background:none;border:1px solid var(--bd);border-radius:var(--rs);width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);transition:all .13s;flex-shrink:0;}
     .cnav-btn:hover{border-color:var(--bd2);color:var(--tx);}
     .cnav-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-    .cal-title{font-size:.9rem;font-weight:600;letter-spacing:-.1px;white-space:nowrap;flex:1;text-align:center;}
+    .cal-title{font-size:.9rem;font-weight:600;white-space:nowrap;flex:1;text-align:center;}
     .cal-today-btn{background:none;border:1px solid var(--bd);border-radius:var(--rs);padding:4px 10px;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:500;color:var(--tx2);cursor:pointer;transition:all .13s;white-space:nowrap;flex-shrink:0;}
     .cal-today-btn:hover{border-color:var(--ac);color:var(--ac);}
     .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
     .cal-dow-cell{text-align:center;padding:5px 0;font-size:.6rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--tx3);}
-    .cal-dow-cell.we{color:var(--ac2);}
+    .cal-dow-cell.we{color:var(--ac);font-weight:700;}
     .cal-grid-wrap{flex:0 0 auto;}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
-    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:3px 2px 2px;min-height:58px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;position:relative;}
+    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:3px 2px 2px;min-height:58px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;}
     .cal-cell:nth-child(7n){border-right:none;}
     .cal-cell:hover{background:var(--bg2);}
     .cal-cell.sel{background:var(--acbg);}
-    .cal-cell.other-month .cal-dn{opacity:.3;}
+    .cal-cell.other-month .cal-dn{opacity:.28;}
     .cal-cell.today .cal-dn{background:var(--ac);color:#fff;border-radius:50%;}
-    .cal-cell.we-cell .cal-dn{color:var(--ac2);}
+    .cal-cell.we-cell{background:var(--we-bg);}
+    .cal-cell.we-cell:hover{background:#ffe8e0;}
+    .cal-cell.we-cell.sel{background:#fde0d0;}
+    .cal-cell.we-cell .cal-dn{color:var(--ac);font-weight:700;}
     .cal-cell.today.we-cell .cal-dn{color:#fff;}
+    .cal-cell.hol-cell{background:var(--hol-bg);}
     .cal-dn{font-size:.72rem;font-weight:500;width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:1px;}
-    .cal-hol{font-size:.55rem;color:var(--ac);font-weight:500;line-height:1.2;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 1px;}
+    .cal-hol{font-size:.54rem;color:var(--ac);font-weight:600;line-height:1.2;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 1px;}
     .cal-strips{display:flex;flex-direction:column;gap:1px;overflow:hidden;flex:1;}
     .strip{height:11px;border-radius:2px;font-size:.58rem;font-weight:500;color:#fff;line-height:11px;padding:0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     .strip.cl{border-radius:0 2px 2px 0;padding-left:1px;}
     .strip.cr{border-radius:2px 0 0 2px;padding-right:0;}
     .strip.cb{border-radius:0;padding:0 1px;}
     .strip-more{font-size:.55rem;color:var(--tx3);padding:0 2px;line-height:12px;}
-
-    /* DENNÍ PANEL */
     .day-panel{flex:1;min-height:0;overflow-y:auto;border-top:2px solid var(--bd);background:var(--sf);}
-    .day-panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px;border-bottom:1px solid var(--bd);flex-shrink:0;position:sticky;top:0;background:var(--sf);z-index:1;}
+    .day-panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--sf);z-index:1;}
     .day-panel-date{font-size:.82rem;font-weight:600;}
-    .day-panel-hol{font-size:.7rem;color:var(--ac);font-weight:500;}
-    .day-panel-empty{padding:24px;text-align:center;font-size:.8rem;color:var(--tx3);}
-    .day-evt-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s;}
+    .day-panel-hol{font-size:.7rem;color:var(--ac);font-weight:600;}
+    .day-panel-empty{padding:22px;text-align:center;font-size:.78rem;color:var(--tx3);}
+    .day-evt-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bd);transition:background .12s;}
     .day-evt-item:hover{background:var(--bg);}
     .day-evt-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
     .day-evt-body{flex:1;min-width:0;}
     .day-evt-title{font-size:.85rem;font-weight:500;}
     .day-evt-meta{font-size:.72rem;color:var(--tx3);margin-top:1px;}
+    .day-evt-del{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;color:#c0392b;cursor:pointer;padding:0;opacity:.7;transition:opacity .13s;margin-top:5px;display:block;}
+    .day-evt-del:hover{opacity:1;}
     .day-hol-item{padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;}
-    .day-hol-name{font-size:.82rem;color:var(--ac);font-weight:500;}
-
-    /* FAB */
-    .fab{position:absolute;bottom:14px;right:14px;width:44px;height:44px;border-radius:50%;background:var(--ac);border:none;color:#fff;cursor:pointer;box-shadow:0 3px 14px rgba(181,98,58,.35);display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;z-index:5;}
+    .day-hol-name{font-size:.82rem;color:var(--ac);font-weight:600;}
+    .fab{position:absolute;bottom:14px;right:14px;width:44px;height:44px;border-radius:50%;background:var(--ac);border:none;color:#fff;cursor:pointer;box-shadow:0 3px 14px rgba(181,98,58,.35);display:flex;align-items:center;justify-content:center;transition:transform .15s;z-index:5;}
     .fab:hover{transform:scale(1.07);}
     .fab svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
+
+    /* UDÁLOSTI */
+    .ev-filter{display:flex;gap:6px;padding:12px 16px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;overflow-x:auto;}
+    .ev-filter::-webkit-scrollbar{display:none;}
+    .ev-ftag{padding:5px 12px;border:1px solid var(--bd);border-radius:20px;font-size:.72rem;font-weight:500;cursor:pointer;background:transparent;color:var(--tx2);font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .13s;}
+    .ev-ftag.active{background:var(--tx);color:#fff;border-color:var(--tx);}
+    .ev-list{flex:1;overflow-y:auto;}
+    .ev-month-label{padding:10px 16px 4px;font-size:.65rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);background:var(--bg);border-bottom:1px solid var(--bd);}
+    .ev-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--sf);transition:background .12s;}
+    .ev-item:hover{background:var(--bg);}
+    .ev-item.past{opacity:.55;}
+    .ev-color-bar{width:3px;border-radius:2px;align-self:stretch;flex-shrink:0;}
+    .ev-date-col{display:flex;flex-direction:column;align-items:center;min-width:36px;flex-shrink:0;}
+    .ev-day{font-size:1.2rem;font-weight:700;line-height:1;color:var(--tx);}
+    .ev-mon{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);}
+    .ev-body{flex:1;min-width:0;}
+    .ev-title{font-size:.88rem;font-weight:600;}
+    .ev-meta{font-size:.72rem;color:var(--tx3);margin-top:2px;}
+    .ev-owner{display:inline-flex;align-items:center;gap:4px;margin-top:4px;background:var(--bg2);border-radius:10px;padding:2px 7px;font-size:.7rem;font-weight:500;}
+    .ev-empty{padding:48px 20px;text-align:center;font-size:.82rem;color:var(--tx3);}
+    .day-evt-del{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;color:#c0392b;cursor:pointer;padding:0;opacity:.7;transition:opacity .13s;margin-top:5px;display:block;}
+
+    /* ÚKOLY */
+    .task-add-bar{display:flex;gap:8px;padding:12px 16px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
+    .task-input{flex:1;padding:9px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--tx);background:var(--bg);outline:none;transition:border-color .13s;}
+    .task-input:focus{border-color:var(--ac2);background:#fff;}
+    .task-add-btn{background:var(--ac);border:none;border-radius:var(--rs);width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .13s;}
+    .task-add-btn:hover{background:var(--ac2);}
+    .task-add-btn svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
+    .task-assign-row{display:flex;gap:6px;padding:6px 16px 10px;background:var(--sf);border-bottom:1px solid var(--bd);align-items:center;flex-shrink:0;}
+    .task-assign-label{font-size:.68rem;color:var(--tx3);font-weight:500;white-space:nowrap;}
+    .task-assign-sel{flex:1;padding:5px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:.8rem;color:var(--tx);background:var(--bg);outline:none;appearance:none;}
+    .task-list{flex:1;overflow-y:auto;}
+    .task-section{padding:10px 16px 4px;font-size:.65rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);background:var(--bg);border-bottom:1px solid var(--bd);}
+    .task-item{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--bd);background:var(--sf);transition:background .12s;}
+    .task-item:hover{background:var(--bg);}
+    .task-item.done .task-text{text-decoration:line-through;color:var(--tx3);}
+    .task-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s;background:transparent;}
+    .task-check:hover{border-color:var(--ac);}
+    .task-item.done .task-check{background:var(--ac);border-color:var(--ac);}
+    .task-check svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:0;}
+    .task-item.done .task-check svg{opacity:1;}
+    .task-body{flex:1;min-width:0;}
+    .task-text{font-size:.88rem;font-weight:500;}
+    .task-assignee{font-size:.7rem;color:var(--tx3);margin-top:1px;}
+    .task-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:.85rem;padding:4px;opacity:.5;transition:opacity .13s;}
+    .task-del:hover{opacity:1;color:#c0392b;}
+    .task-empty{padding:48px 20px;text-align:center;font-size:.82rem;color:var(--tx3);}
+
+    /* ═══ NÁVODY ═══ */
+    .guide-list{flex:1;overflow-y:auto;padding:16px;}
+    .guide-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:box-shadow .15s,border-color .15s;}
+    .guide-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.07);border-color:var(--bd2);}
+    .guide-icon{font-size:1.5rem;flex-shrink:0;width:40px;height:40px;background:var(--bg2);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+    .guide-info{flex:1;min-width:0;}
+    .guide-name{font-size:.9rem;font-weight:600;}
+    .guide-meta{font-size:.7rem;color:var(--tx3);margin-top:2px;}
+    .guide-arrow{color:var(--tx3);font-size:.9rem;}
+    .guide-empty{padding:48px 20px;text-align:center;font-size:.82rem;color:var(--tx3);}
+    .guide-add-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:var(--sf);border:1.5px dashed var(--bd2);border-radius:var(--r);cursor:pointer;color:var(--tx3);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;margin-bottom:10px;transition:all .15s;width:100%;}
+    .guide-add-btn:hover{border-color:var(--ac);color:var(--ac);}
+
+    /* EDITOR NÁVODU */
+    .guide-editor{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:10;animation:up .25s ease;}
+    .guide-editor.open{display:flex;}
+    .guide-editor-bar{display:flex;align-items:center;gap:8px;padding:0 12px;height:52px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
+    .ge-back{background:none;border:none;cursor:pointer;color:var(--tx2);font-size:.82rem;font-weight:500;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;padding:0;transition:color .13s;}
+    .ge-back:hover{color:var(--ac);}
+    .ge-title{flex:1;font-size:.95rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .ge-save{background:var(--ac);color:#fff;border:none;border-radius:var(--rs);padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;cursor:pointer;transition:background .13s;white-space:nowrap;}
+    .ge-save:hover{background:var(--ac2);}
+    .ge-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:.85rem;padding:6px;border-radius:6px;transition:all .13s;}
+    .ge-del:hover{color:#c0392b;background:var(--bg2);}
+
+    /* Toolbar formátování */
+    .ge-toolbar{display:flex;gap:4px;padding:8px 12px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;flex-wrap:wrap;}
+    .ge-tool{background:none;border:1px solid var(--bd);border-radius:6px;padding:5px 9px;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;color:var(--tx2);transition:all .13s;line-height:1;}
+    .ge-tool:hover{border-color:var(--ac);color:var(--ac);background:var(--acbg);}
+    .ge-tool.active{background:var(--tx);color:#fff;border-color:var(--tx);}
+    .ge-tool-sep{width:1px;background:var(--bd);margin:0 2px;align-self:stretch;}
+
+    /* Název návodu (editovatelný) */
+    .ge-name-input{width:100%;padding:12px 16px;border:none;border-bottom:1px solid var(--bd);font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;color:var(--tx);background:var(--sf);outline:none;}
+    .ge-name-input::placeholder{color:var(--tx3);}
+
+    /* Obrázky toolbar */
+    .ge-img-btn{display:flex;align-items:center;gap:5px;}
+    .ge-img-input{display:none;}
+
+    /* Conteneditable oblast */
+    .ge-content{flex:1;overflow-y:auto;padding:16px;}
+    .ge-editor{min-height:200px;outline:none;font-size:.92rem;line-height:1.7;color:var(--tx);}
+    .ge-editor:empty::before{content:attr(data-placeholder);color:var(--tx3);pointer-events:none;}
+    .ge-editor h2{font-size:1.1rem;font-weight:700;margin:12px 0 4px;}
+    .ge-editor ul{padding-left:20px;margin:4px 0;}
+    .ge-editor ol{padding-left:20px;margin:4px 0;}
+    .ge-editor img{max-width:100%;border-radius:8px;margin:8px 0;display:block;}
+    .ge-editor a{color:var(--ac);}
+    .ge-uploading{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:.75rem;color:var(--tx3);background:var(--bg2);border-radius:6px;margin:4px 0;}
 
     /* SETTINGS */
     .s-sec{font-size:.65rem;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px;margin-top:20px;}
@@ -212,14 +289,9 @@
     .s-name{font-weight:500;font-size:.88rem;}
     .s-role{font-size:.68rem;color:var(--tx3);}
     .s-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-    .ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:60px 20px;text-align:center;}
-    .ph svg{width:32px;height:32px;stroke:var(--tx3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.45;}
-    .ph-t{font-size:.95rem;font-weight:500;color:var(--tx2);}
-    .ph-s{font-size:.7rem;color:var(--tx3);}
   </style>
 </head>
 <body>
-
 <svg style="display:none">
   <symbol id="ic" viewBox="0 0 40 40">
     <polygon points="4,22 20,6 36,22" fill="#b5623a"/>
@@ -233,58 +305,31 @@
 
 <div class="veil" id="veil"><div class="ring"></div><div class="rlabel">Načítám</div></div>
 
-<!-- MODAL – PŘIDAT UDÁLOST -->
+<!-- MODAL UDÁLOST -->
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
   <div class="modal">
-    <div class="modal-hdr">
-      <span class="modal-title">Nová událost</span>
-      <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    </div>
+    <div class="modal-handle"></div>
+    <div class="modal-hdr"><span class="modal-title">Nová událost</span><button class="modal-close" onclick="closeModalDirect()">✕</button></div>
     <div class="modal-body">
-      <!-- Za koho -->
-      <div class="fg">
-        <label>Za koho</label>
-        <select id="evUser"></select>
-      </div>
-      <!-- Název -->
-      <div class="fg">
-        <label>Název události</label>
-        <input type="text" id="evTitle" placeholder="např. Oslava narozenin" maxlength="60">
-      </div>
-      <!-- Datum od/do -->
-      <div class="fg">
-        <label>Datum</label>
+      <div class="fg"><label>Za koho</label><select id="evUser"></select></div>
+      <div class="fg"><label>Název události</label><input type="text" id="evTitle" placeholder="např. Oslava narozenin" maxlength="60"></div>
+      <div class="fg"><label>Datum</label>
         <div class="fg-row">
-          <div><label style="font-size:.62rem">Od</label><input type="date" id="evDateStart"></div>
-          <div><label style="font-size:.62rem">Do</label><input type="date" id="evDateEnd"></div>
+          <div><label style="font-size:.62rem;margin-bottom:4px;display:block">Od</label><input type="date" id="evDateStart"></div>
+          <div><label style="font-size:.62rem;margin-bottom:4px;display:block">Do</label><input type="date" id="evDateEnd"></div>
         </div>
       </div>
-      <!-- Čas příjezdu / odjezdu -->
-      <div class="fg">
-        <label>Čas příjezdu / odjezdu</label>
+      <div class="fg"><label>Čas příjezdu / odjezdu</label>
         <div class="fg-row">
-          <div><label style="font-size:.62rem">Příjezd</label><input type="time" id="evArrival"></div>
-          <div><label style="font-size:.62rem">Odjezd</label><input type="time" id="evDepart"></div>
+          <div><label style="font-size:.62rem;margin-bottom:4px;display:block">Příjezd</label><input type="time" id="evArrival"></div>
+          <div><label style="font-size:.62rem;margin-bottom:4px;display:block">Odjezd</label><input type="time" id="evDepart"></div>
         </div>
       </div>
-      <!-- Hosté -->
-      <div class="fg">
-        <label>Hosté</label>
-        <select id="evGuestSelect" onchange="addGuest()">
-          <option value="">— přidat hosta —</option>
-        </select>
-        <div class="guest-chips" id="guestChips"></div>
-      </div>
-      <!-- Popis -->
-      <div class="fg">
-        <label>Popis</label>
-        <textarea id="evDesc" placeholder="Volitelný popis…"></textarea>
-      </div>
+      <div class="fg"><label>Hosté <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.72rem">(nepovinné)</span></label><input type="text" id="evGuests" placeholder="např. Karel, Petra, děti…"></div>
+      <div class="fg"><label>Popis <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.72rem">(nepovinné)</span></label><textarea id="evDesc" placeholder="Volitelný popis…"></textarea></div>
       <div id="evMsg"></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-p" onclick="submitEvent()">Uložit událost</button>
-    </div>
+    <div class="modal-footer"><button class="btn btn-p" onclick="submitEvent()">Uložit událost</button></div>
   </div>
 </div>
 
@@ -294,10 +339,7 @@
   <div class="home-body">
     <div class="home-label">Kdo jsi?</div>
     <div class="users-grid" id="usersGrid"></div>
-    <button class="add-btn" onclick="goTo('sRegister')">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="0" x2="6" y2="12"/><line x1="0" y1="6" x2="12" y2="6"/></svg>
-      Přidat uživatele
-    </button>
+    <button class="add-btn" onclick="goTo('sRegister')"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="0" x2="6" y2="12"/><line x1="0" y1="6" x2="12" y2="6"/></svg>Přidat uživatele</button>
   </div>
 </div>
 
@@ -306,8 +348,7 @@
   <div class="hdr"><svg class="hdr-logo" viewBox="0 0 40 40"><use href="#ic"/></svg><span class="hdr-title">Boršovík</span><span class="hdr-sub">Nový uživatel</span></div>
   <div class="wrap"><div class="card">
     <button class="back" onclick="goTo('sHome')">← Zpět</button>
-    <div class="card-ttl">Vytvoř si profil</div>
-    <div class="card-sub" id="regSub">Boršovík · nový člen</div>
+    <div class="card-ttl">Vytvoř si profil</div><div class="card-sub" id="regSub">Boršovík · nový člen</div>
     <div class="fg"><label>Jméno</label><input type="text" id="regName" placeholder="Jak ti říkají?" maxlength="20" autocomplete="off"></div>
     <div class="fg"><label>Avatar</label><div class="ebox" id="ebox"></div><div class="ehint">Vybráno: <span id="eprev">—</span></div></div>
     <div class="fg"><label>Barva</label><div class="crow" id="crow"></div></div>
@@ -324,8 +365,7 @@
   <div class="wrap"><div class="card">
     <button class="back" onclick="goTo('sHome')">← Zpět</button>
     <div class="lrow"><div class="lav" id="lav"></div><div><div class="lname" id="lname"></div><div class="lhint">Zadej PIN</div></div></div>
-    <div class="pdots" id="ldots"></div>
-    <div class="ppad" id="lpad"></div>
+    <div class="pdots" id="ldots"></div><div class="ppad" id="lpad"></div>
     <div id="loginMsg"></div>
   </div></div>
 </div>
@@ -334,12 +374,12 @@
 <div class="app-shell" id="appShell">
   <div class="top-bar">
     <div class="tb-brand"><svg class="tb-logo" viewBox="0 0 40 40"><use href="#ic"/></svg><span class="tb-name">Boršovík</span></div>
-    <div class="upill" id="upill" onclick="logout()">
-      <span id="pem"></span><span id="pnm"></span>
+    <div class="upill" id="upill" onclick="logout()"><span id="pem"></span><span id="pnm"></span>
       <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6H2M5 9l-3-3 3-3"/></svg>
     </div>
   </div>
   <div class="tab-content">
+
     <!-- KALENDÁŘ -->
     <div class="tab-pane active" id="pane-cal">
       <div class="cal-outer">
@@ -358,9 +398,62 @@
       <button class="fab" onclick="openModal()"><svg viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/></svg></button>
     </div>
 
-    <div class="tab-pane" id="pane-ev"><div class="pane-scroll"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><div class="ph-t">Události</div><div class="ph-s">Připravujeme</div></div></div></div>
-    <div class="tab-pane" id="pane-tasks"><div class="pane-scroll"><div class="ph"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div class="ph-t">Úkoly</div><div class="ph-s">Připravujeme</div></div></div></div>
-    <div class="tab-pane" id="pane-guides"><div class="pane-scroll"><div class="ph"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><div class="ph-t">Návody</div><div class="ph-s">Připravujeme</div></div></div></div>
+    <!-- UDÁLOSTI -->
+    <div class="tab-pane" id="pane-ev">
+      <div class="ev-filter" id="evFilter">
+        <button class="ev-ftag active" onclick="setEvFilter('all',this)">Vše</button>
+        <button class="ev-ftag" onclick="setEvFilter('upcoming',this)">Nadcházející</button>
+        <button class="ev-ftag" onclick="setEvFilter('past',this)">Minulé</button>
+      </div>
+      <div class="ev-list" id="evList"></div>
+      <button class="fab" onclick="openModal()"><svg viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/></svg></button>
+    </div>
+
+    <!-- ÚKOLY -->
+    <div class="tab-pane" id="pane-tasks">
+      <div class="task-add-bar">
+        <input class="task-input" id="taskInput" type="text" placeholder="Nový úkol…" maxlength="120" onkeydown="if(event.key==='Enter')addTask()">
+        <button class="task-add-btn" onclick="addTask()"><svg viewBox="0 0 18 18"><line x1="9" y1="1" x2="9" y2="17"/><line x1="1" y1="9" x2="17" y2="9"/></svg></button>
+      </div>
+      <div class="task-assign-row">
+        <span class="task-assign-label">Přiřadit:</span>
+        <select class="task-assign-sel" id="taskAssign"></select>
+      </div>
+      <div class="task-list" id="taskList"></div>
+    </div>
+
+    <!-- NÁVODY -->
+    <div class="tab-pane" id="pane-guides">
+      <div class="guide-list" id="guideList"></div>
+      <!-- EDITOR (overlay uvnitř pane) -->
+      <div class="guide-editor" id="guideEditor">
+        <div class="guide-editor-bar">
+          <button class="ge-back" onclick="closeEditor()">← Zpět</button>
+          <div class="ge-title" id="geTitle">Návod</div>
+          <button class="ge-del" id="geDelBtn" onclick="deleteGuide()" title="Smazat návod">🗑</button>
+          <button class="ge-save" onclick="saveGuide()">Uložit</button>
+        </div>
+        <input class="ge-name-input" id="geName" placeholder="Název návodu…" maxlength="60">
+        <div class="ge-toolbar">
+          <button class="ge-tool" onclick="fmt('bold')" title="Tučné"><b>B</b></button>
+          <button class="ge-tool" onclick="fmt('italic')" title="Kurzíva"><i>I</i></button>
+          <button class="ge-tool" onclick="fmt('underline')" title="Podtržení"><u>U</u></button>
+          <div class="ge-tool-sep"></div>
+          <button class="ge-tool" onclick="fmtBlock('h2')" title="Nadpis">H</button>
+          <button class="ge-tool" onclick="fmt('insertUnorderedList')" title="Seznam">•</button>
+          <button class="ge-tool" onclick="fmt('insertOrderedList')" title="Číslovaný">1.</button>
+          <div class="ge-tool-sep"></div>
+          <button class="ge-tool ge-img-btn" onclick="document.getElementById('geImgInput').click()">
+            📷 Foto
+          </button>
+          <input type="file" id="geImgInput" class="ge-img-input" accept="image/*" onchange="uploadImage(event)">
+        </div>
+        <div class="ge-content">
+          <div class="ge-editor" id="geEditor" contenteditable="true" data-placeholder="Napiš návod… Použij toolbar pro formátování nebo přidej fotku."></div>
+        </div>
+      </div>
+    </div>
+
     <div class="tab-pane" id="pane-settings"><div class="pane-scroll" id="si"></div></div>
   </div>
   <nav class="tab-bar">
@@ -374,21 +467,25 @@
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import{getFirestore,collection,getDocs,addDoc,query,orderBy,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{getFirestore,collection,getDocs,addDoc,deleteDoc,updateDoc,doc,query,orderBy,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{getStorage,ref,uploadBytes,getDownloadURL,deleteObject}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const fb={apiKey:"AIzaSyA6dUhVOqwjTkjc0jD7bVGdSuzmevpFIK4",authDomain:"borsovik-a6116.firebaseapp.com",projectId:"borsovik-a6116",storageBucket:"borsovik-a6116.firebasestorage.app",messagingSenderId:"1056113485657",appId:"1:1056113485657:web:e3336a8bfd865baecece48"};
-const db=getFirestore(initializeApp(fb));
+const app=initializeApp(fb);
+const db=getFirestore(app);
+const storage=getStorage(app);
 
 const EM=['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😗','😚','😙','🥲','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','🤐','🤨','😐','😑','😶','😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤧','🥵','🥶','🥴','😵','🤯','🤠','🥳','🥸','😎','🤓','🧐','😕','😟','🙁','☹️','😮','😯','😲','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀','💩','🤡','👹','👺','👻','👽','👾','🤖','😺','😸','😹','😻','😼','😽','🙀','😿','😾','🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐻‍❄️','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🙈','🙉','🙊','🐔','🐧','🐦','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷','🦂','🐢','🐍','🦎','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🦭','🐊','🦓','🦍','🦧','🦣','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦬','🐄','🐎','🐖','🐏','🐑','🦙','🐐','🦌','🐕','🐩','🦮','🐈','🐈‍⬛','🐓','🦃','🦤','🦚','🦜','🦢','🦩','🕊','🐇','🦝','🦨','🦡','🦫','🦦','🦥','🐁','🐀','🐿','🦔','🌵','🎄','🌲','🌳','🌴','🌱','🌿','☘️','🍀','🍃','🍂','🍁','🍄','🌾','💐','🌷','🌹','🥀','🌺','🌸','🌼','🌻','🌞','🌝','🌛','🌜','🌚','🌕','🌙','🌟','💫','⭐','🌠','☀️','⛅','🌦','🌧','⛈','🌩','🌨','❄️','☃️','⛄','💨','💧','💦','🌊','🔥','🌈','⚡','🍎','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶','🧄','🧅','🥔','🍠','🥐','🍞','🥖','🧀','🥚','🍳','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥙','🌮','🌯','🥗','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍘','🍥','🧁','🍰','🎂','🍭','🍬','🍫','🍿','🍩','🍪','☕','🍵','🫖','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🍾','🏠','🏡','🏢','🏥','🏦','🏨','🏪','🏫','🏬','🏭','🏯','🏰','🗼','🗽','⛪','🌃','🌄','🌅','🌆','🌇','🌉','🚂','🚌','🚑','🚒','🚓','🚕','🚗','🚙','🛻','🚚','🚛','🚜','🏎','🏍','🛵','🚲','🛴','🛹','⛵','🚤','🛥','🚢','✈️','🚁','🚀','🛸','🎆','🎇','🎃','🎄','🎀','🎁','🏆','🥇','🥈','🥉','🏅','🎭','🎨','🎬','🎤','🎧','🎵','🎶','🎹','🥁','🎷','🎺','🎸','🎻','🎲','♟','🎯','🎳','🎮','🧩','⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🎱','🏓','🏸','🏒','🏑','⛳','🎣','🥊','🥋'];
 const CO=['#c0392b','#e67e22','#d4ac0d','#27ae60','#16a085','#2980b9','#8e44ad','#e91e63','#00838f','#558b2f','#ff5722','#546e7a','#6d4c41','#2d5a27','#1565c0'];
 const MCS=['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+const MCS_SHORT=['Led','Úno','Bře','Dub','Kvě','Čer','Črc','Srp','Zář','Říj','Lis','Pro'];
 const DCS=['neděle','pondělí','úterý','středa','čtvrtek','pátek','sobota'];
+const GUIDE_ICONS=['📋','🔔','🌡️','💧','🌐','🔑','⚡','🔧','🏠','📖','🍳','🚗','🛠️','📱','🔒'];
 
 let _u=[],_cur=null,_lt=null,_lp='',_rp1='',_rp2='',_p1d=false,_se=EM[0],_sc=CO[0];
-let _calDate=new Date(),_holidays={},_events=[],_selDate=null;
-let _guestIds=[];
+let _calDate=new Date(),_holidays={},_events=[],_tasks=[],_guides=[],_selDate=null,_evFilter='all';
+let _editingGuideId=null;
 
-// UTILS
 async function h256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
 const V=v=>document.getElementById('veil').style.display=v?'flex':'none';
 const M=(id,t,c='e')=>document.getElementById(id).innerHTML=`<div class="msg m${c}">${t}</div>`;
@@ -396,7 +493,6 @@ function ymd(d){return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
 function fmtDate(ds){const d=new Date(ds+'T12:00:00');return`${d.getDate()}. ${d.getMonth()+1}. ${d.getFullYear()}, ${DCS[d.getDay()]}`;}
 
-// NAV
 window.goTo=function(id){
   if(id==='sRegister')initR();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -406,7 +502,7 @@ window.goTo=function(id){
 function showApp(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('appShell').classList.add('active');
-  renderS();renderCal();
+  renderS();renderCal();renderEvList();renderTaskList();renderGuideList();
 }
 window.switchTab=function(t,el){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
@@ -415,7 +511,6 @@ window.switchTab=function(t,el){
   el.classList.add('active');
 };
 
-// USERS
 async function loadU(){
   V(true);
   try{const s=await getDocs(query(collection(db,'users'),orderBy('createdAt')));_u=s.docs.map(d=>({id:d.id,...d.data()}));renderG();}catch(e){console.error(e);}
@@ -430,7 +525,6 @@ function renderG(){
   });
 }
 
-// LOGIN
 window.openL=function(u){
   _lt=u;_lp='';
   const a=document.getElementById('lav');a.textContent=u.emoji;a.style.setProperty('--uc',u.color);
@@ -442,21 +536,18 @@ async function lK(d){
   if(_lp.length>=4)return;_lp+=d;D('ldots',_lp);
   if(_lp.length===4){
     V(true);const h=await h256(_lp);V(false);
-    if(h===_lt.pinHash){_cur=_lt;sessionStorage.setItem('bU',JSON.stringify(_cur));eApp();}
+    if(h===_lt.pinHash){_cur=_lt;localStorage.setItem('borsovikUser',JSON.stringify({id:_cur.id}));eApp();}
     else{document.getElementById('ldots').classList.add('shake');setTimeout(()=>document.getElementById('ldots').classList.remove('shake'),380);M('loginMsg','Špatný PIN');_lp='';D('ldots',_lp);}
   }
 }
 function lD(){_lp=_lp.slice(0,-1);D('ldots',_lp);document.getElementById('loginMsg').innerHTML='';}
 function eApp(){document.getElementById('pem').textContent=_cur.emoji;document.getElementById('pnm').textContent=_cur.name;showApp();}
-window.logout=function(){sessionStorage.removeItem('bU');_cur=null;goTo('sHome');};
+window.logout=function(){localStorage.removeItem('borsovikUser');_cur=null;goTo('sHome');};
 
-// REGISTER
 function initR(){
   _rp1='';_rp2='';_p1d=false;_se=EM[0];_sc=CO[0];
-  document.getElementById('regName').value='';
-  document.getElementById('regMsg').innerHTML='';
-  document.getElementById('pin2w').style.display='none';
-  document.getElementById('regBtn').disabled=true;
+  document.getElementById('regName').value='';document.getElementById('regMsg').innerHTML='';
+  document.getElementById('pin2w').style.display='none';document.getElementById('regBtn').disabled=true;
   document.getElementById('regSub').textContent=_u.length===0?'První uživatel · budeš admin 👑':'Boršovík · nový člen';
   const eb=document.getElementById('ebox');eb.innerHTML='';
   EM.forEach((em,i)=>{const s=document.createElement('span');s.className='eo'+(i===0?' sel':'');s.textContent=em;s.onclick=()=>{eb.querySelectorAll('.eo').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');_se=em;document.getElementById('eprev').textContent=em;};eb.appendChild(s);});
@@ -467,13 +558,7 @@ function initR(){
 }
 function r1k(d){if(_rp1.length>=4||_p1d)return;_rp1+=d;D('pd1',_rp1);if(_rp1.length===4){_p1d=true;document.getElementById('pin2w').style.display='block';M('regMsg','Zadej PIN ještě jednou','o');}}
 function r1d(){if(_p1d)return;_rp1=_rp1.slice(0,-1);D('pd1',_rp1);}
-function r2k(d){
-  if(_rp2.length>=4)return;_rp2+=d;D('pd2',_rp2);
-  if(_rp2.length===4){
-    if(_rp1!==_rp2){document.getElementById('pd2').classList.add('shake');setTimeout(()=>document.getElementById('pd2').classList.remove('shake'),380);M('regMsg','PINy se neshodují');_rp2='';D('pd2',_rp2);}
-    else{M('regMsg','PIN potvrzen ✓','o');document.getElementById('regBtn').disabled=false;}
-  }
-}
+function r2k(d){if(_rp2.length>=4)return;_rp2+=d;D('pd2',_rp2);if(_rp2.length===4){if(_rp1!==_rp2){document.getElementById('pd2').classList.add('shake');setTimeout(()=>document.getElementById('pd2').classList.remove('shake'),380);M('regMsg','PINy se neshodují');_rp2='';D('pd2',_rp2);}else{M('regMsg','PIN potvrzen ✓','o');document.getElementById('regBtn').disabled=false;}}}
 function r2d(){_rp2=_rp2.slice(0,-1);D('pd2',_rp2);document.getElementById('regBtn').disabled=true;}
 window.submitReg=async function(){
   const n=document.getElementById('regName').value.trim();
@@ -482,78 +567,43 @@ window.submitReg=async function(){
   if(_u.some(u=>u.name.toLowerCase()===n.toLowerCase())){M('regMsg','Jméno je již obsazené');return;}
   V(true);
   try{const ph=await h256(_rp1);await addDoc(collection(db,'users'),{name:n,emoji:_se,color:_sc,pinHash:ph,isAdmin:_u.length===0,createdAt:serverTimestamp()});await loadU();goTo('sHome');}
-  catch(e){M('regMsg','Chyba: '+e.message);}
-  V(false);
+  catch(e){M('regMsg','Chyba: '+e.message);}V(false);
 };
 
-// HOLIDAYS
 async function loadHolidays(year){
   if(_holidays[year])return;
-  try{const r=await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/CZ`);const data=await r.json();_holidays[year]={};data.forEach(h=>{_holidays[year][h.date]=h.localName;});}
-  catch(e){_holidays[year]={};}
+  try{const r=await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/CZ`);const data=await r.json();_holidays[year]={};data.forEach(h=>{_holidays[year][h.date]=h.localName;});}catch(e){_holidays[year]={};}
+}
+async function loadEvents(){
+  try{const snap=await getDocs(query(collection(db,'events'),orderBy('dateStart')));_events=snap.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);}
+}
+async function loadTasks(){
+  try{const snap=await getDocs(query(collection(db,'tasks'),orderBy('createdAt')));_tasks=snap.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);}
+}
+async function loadGuides(){
+  try{const snap=await getDocs(query(collection(db,'guides'),orderBy('updatedAt','desc')));_guides=snap.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);}
 }
 
-// EVENTS
-async function loadEvents(){
-  try{const snap=await getDocs(query(collection(db,'events'),orderBy('dateStart')));_events=snap.docs.map(d=>({id:d.id,...d.data()}));}
-  catch(e){console.error(e);}
-}
 function eventsForDate(ds){return _events.filter(e=>e.dateStart<=ds&&e.dateEnd>=ds);}
 
-// MODAL
+// MODAL UDÁLOST
 window.openModal=function(){
-  const today=ymd(new Date());
-  const preDate=_selDate||today;
-  // Naplnit select uživatelů
+  const preDate=_selDate||ymd(new Date());
   const sel=document.getElementById('evUser');
   sel.innerHTML=_u.map(u=>`<option value="${u.id}">${u.emoji} ${u.name}</option>`).join('');
   if(_cur)sel.value=_cur.id;
-  // Hosté select (bez aktuálně vybraného usera)
-  refreshGuestSelect();
-  // Datum
   document.getElementById('evDateStart').value=preDate;
   document.getElementById('evDateEnd').value=preDate;
   document.getElementById('evArrival').value='';
   document.getElementById('evDepart').value='';
   document.getElementById('evTitle').value='';
+  document.getElementById('evGuests').value='';
   document.getElementById('evDesc').value='';
   document.getElementById('evMsg').innerHTML='';
-  _guestIds=[];
-  renderChips();
   document.getElementById('modalBackdrop').classList.add('open');
 };
-
-function refreshGuestSelect(){
-  const userId=document.getElementById('evUser').value;
-  const gs=document.getElementById('evGuestSelect');
-  gs.innerHTML='<option value="">— přidat hosta —</option>';
-  _u.filter(u=>u.id!==userId&&!_guestIds.includes(u.id))
-    .forEach(u=>{gs.innerHTML+=`<option value="${u.id}">${u.emoji} ${u.name}</option>`;});
-}
-
-window.addGuest=function(){
-  const gs=document.getElementById('evGuestSelect');
-  const id=gs.value;
-  if(!id)return;
-  if(!_guestIds.includes(id))_guestIds.push(id);
-  gs.value='';
-  refreshGuestSelect();
-  renderChips();
-};
-
-function renderChips(){
-  const el=document.getElementById('guestChips');
-  el.innerHTML=_guestIds.map(id=>{
-    const u=_u.find(x=>x.id===id);
-    if(!u)return'';
-    return`<div class="chip"><span>${u.emoji} ${u.name}</span><button class="chip-remove" onclick="removeGuest('${id}')">✕</button></div>`;
-  }).join('');
-}
-window.removeGuest=function(id){_guestIds=_guestIds.filter(x=>x!==id);refreshGuestSelect();renderChips();};
-
 window.closeModal=function(e){if(e.target===document.getElementById('modalBackdrop'))closeModalDirect();};
 window.closeModalDirect=function(){document.getElementById('modalBackdrop').classList.remove('open');};
-
 window.submitEvent=async function(){
   const userId=document.getElementById('evUser').value;
   const title=document.getElementById('evTitle').value.trim();
@@ -561,161 +611,301 @@ window.submitEvent=async function(){
   const dateEnd=document.getElementById('evDateEnd').value;
   const arrival=document.getElementById('evArrival').value;
   const depart=document.getElementById('evDepart').value;
+  const guests=document.getElementById('evGuests').value.trim();
   const desc=document.getElementById('evDesc').value.trim();
-
   if(!title){M('evMsg','Zadej název události');return;}
-  if(!dateStart){M('evMsg','Zadej datum od');return;}
-  if(!dateEnd){M('evMsg','Zadej datum do');return;}
+  if(!dateStart||!dateEnd){M('evMsg','Zadej datum');return;}
   if(dateEnd<dateStart){M('evMsg','Datum „do" nesmí být před „od"');return;}
-
   V(true);
-  try{
-    await addDoc(collection(db,'events'),{
-      userId, title, dateStart, dateEnd,
-      arrivalTime:arrival||null, departTime:depart||null,
-      guests:_guestIds, desc:desc||null,
-      createdAt:serverTimestamp()
-    });
-    await loadEvents();
-    closeModalDirect();
-    renderCal();
-  }catch(e){M('evMsg','Chyba: '+e.message);}
-  V(false);
+  try{await addDoc(collection(db,'events'),{userId,title,dateStart,dateEnd,arrivalTime:arrival||null,departTime:depart||null,guests:guests||null,desc:desc||null,createdAt:serverTimestamp()});await loadEvents();closeModalDirect();renderCal();renderEvList();}
+  catch(e){M('evMsg','Chyba: '+e.message);}V(false);
+};
+window.deleteEvent=async function(id,ownerId){
+  if(!(_cur&&(_cur.isAdmin||_cur.id===ownerId))){alert('Nemůžeš mazat cizí události.');return;}
+  if(!confirm('Smazat tuto událost?'))return;
+  V(true);
+  try{await deleteDoc(doc(db,'events',id));await loadEvents();renderCal();renderEvList();}catch(e){alert('Chyba: '+e.message);}V(false);
 };
 
-// Sync guest select when user changes
-document.getElementById('evUser').addEventListener('change',refreshGuestSelect);
+// UDÁLOSTI SEZNAM
+window.setEvFilter=function(f,el){
+  _evFilter=f;
+  document.querySelectorAll('.ev-ftag').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');renderEvList();
+};
+function renderEvList(){
+  const el=document.getElementById('evList');
+  const today=ymd(new Date());
+  let list=[..._events].sort((a,b)=>a.dateStart.localeCompare(b.dateStart));
+  if(_evFilter==='upcoming')list=list.filter(e=>e.dateEnd>=today);
+  if(_evFilter==='past')list=list.filter(e=>e.dateEnd<today);
+  if(!list.length){el.innerHTML=`<div class="ev-empty">Žádné události</div>`;return;}
+  let html='';let lastMonth='';
+  list.forEach(ev=>{
+    const d=new Date(ev.dateStart+'T12:00:00');
+    const monthKey=`${d.getFullYear()}-${d.getMonth()}`;
+    if(monthKey!==lastMonth){lastMonth=monthKey;html+=`<div class="ev-month-label">${MCS[d.getMonth()]} ${d.getFullYear()}</div>`;}
+    const owner=_u.find(u=>u.id===ev.userId);
+    const color=owner?owner.color:'#888';
+    const isPast=ev.dateEnd<today;
+    const canDel=_cur&&(_cur.isAdmin||_cur.id===ev.userId);
+    let meta='';
+    if(ev.arrivalTime)meta+=`příjezd ${ev.arrivalTime}`;
+    if(ev.departTime)meta+=(meta?' · ':'')+`odjezd ${ev.departTime}`;
+    if(ev.guests)meta+=(meta?' · ':'')+ev.guests;
+    html+=`<div class="ev-item${isPast?' past':''}">
+      <div class="ev-color-bar" style="background:${color}"></div>
+      <div class="ev-date-col"><div class="ev-day">${d.getDate()}</div><div class="ev-mon">${MCS_SHORT[d.getMonth()]}</div></div>
+      <div class="ev-body">
+        <div class="ev-title">${ev.title}</div>
+        ${meta?`<div class="ev-meta">${meta}</div>`:''}
+        ${ev.desc?`<div class="ev-meta" style="font-style:italic;margin-top:2px">${ev.desc}</div>`:''}
+        <div class="ev-owner"><span>${owner?owner.emoji:''}</span><span>${owner?owner.name:''}</span></div>
+        ${canDel?`<button class="day-evt-del" onclick="deleteEvent('${ev.id}','${ev.userId}')">🗑 Smazat</button>`:''}
+      </div>
+    </div>`;
+  });
+  el.innerHTML=html;
+}
 
-// CALENDAR
+// ÚKOLY
+function refreshTaskAssign(){
+  const sel=document.getElementById('taskAssign');
+  sel.innerHTML=`<option value="">— nikomu —</option>`+_u.map(u=>`<option value="${u.id}">${u.emoji} ${u.name}</option>`).join('');
+  if(_cur)sel.value=_cur.id;
+}
+window.addTask=async function(){
+  const text=document.getElementById('taskInput').value.trim();
+  if(!text)return;
+  const assignedTo=document.getElementById('taskAssign').value||null;
+  const createdBy=_cur?_cur.id:null;
+  V(true);
+  try{await addDoc(collection(db,'tasks'),{text,assignedTo,createdBy,done:false,createdAt:serverTimestamp()});document.getElementById('taskInput').value='';await loadTasks();renderTaskList();}
+  catch(e){alert('Chyba: '+e.message);}V(false);
+};
+window.toggleTask=async function(id,done){
+  try{await updateDoc(doc(db,'tasks',id),{done:!done});await loadTasks();renderTaskList();}catch(e){alert('Chyba: '+e.message);}
+};
+window.deleteTask=async function(id,createdBy){
+  if(!(_cur&&(_cur.isAdmin||_cur.id===createdBy))){alert('Nemůžeš mazat cizí úkoly.');return;}
+  if(!confirm('Smazat úkol?'))return;
+  V(true);
+  try{await deleteDoc(doc(db,'tasks',id));await loadTasks();renderTaskList();}catch(e){alert('Chyba: '+e.message);}V(false);
+};
+function renderTaskList(){
+  refreshTaskAssign();
+  const el=document.getElementById('taskList');
+  const open=_tasks.filter(t=>!t.done);
+  const done=_tasks.filter(t=>t.done);
+  if(!_tasks.length){el.innerHTML=`<div class="task-empty">Žádné úkoly · přidej první!</div>`;return;}
+  let html='';
+  if(open.length){html+=`<div class="task-section">K dokončení (${open.length})</div>`;open.forEach(t=>html+=taskHTML(t));}
+  if(done.length){html+=`<div class="task-section">Hotovo (${done.length})</div>`;done.forEach(t=>html+=taskHTML(t));}
+  el.innerHTML=html;
+}
+function taskHTML(t){
+  const assignee=t.assignedTo?_u.find(u=>u.id===t.assignedTo):null;
+  const creator=t.createdBy?_u.find(u=>u.id===t.createdBy):null;
+  const canDel=_cur&&(_cur.isAdmin||_cur.id===t.createdBy);
+  const color=assignee?assignee.color:'var(--bd2)';
+  return`<div class="task-item${t.done?' done':''}">
+    <div class="task-check" onclick="toggleTask('${t.id}',${t.done})" style="border-color:${color}">
+      <svg viewBox="0 0 11 9"><polyline points="1,4.5 4,7.5 10,1"/></svg>
+    </div>
+    <div class="task-body">
+      <div class="task-text">${t.text}</div>
+      <div class="task-assignee">${assignee?`${assignee.emoji} ${assignee.name}`:'Nikdo'}${creator&&creator.id!==assignee?.id?` · přidal ${creator.emoji} ${creator.name}`:''}</div>
+    </div>
+    ${canDel?`<button class="task-del" onclick="deleteTask('${t.id}','${t.createdBy}')">✕</button>`:''}
+  </div>`;
+}
+
+// ═══ NÁVODY ═══
+function renderGuideList(){
+  const el=document.getElementById('guideList');
+  let html=`<button class="guide-add-btn" onclick="openEditor(null)">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="7" y1="0" x2="7" y2="14"/><line x1="0" y1="7" x2="14" y2="7"/></svg>
+    Přidat návod
+  </button>`;
+  if(!_guides.length){
+    html+=`<div class="guide-empty">Žádné návody · přidej první kliknutím výše</div>`;
+  }else{
+    _guides.forEach(g=>{
+      const icon=g.icon||'📋';
+      const updated=g.updatedAt?.toDate?g.updatedAt.toDate():null;
+      const meta=updated?`Upraveno ${updated.getDate()}. ${updated.getMonth()+1}. ${updated.getFullYear()}`:'';
+      html+=`<div class="guide-card" onclick="openEditor('${g.id}')">
+        <div class="guide-icon">${icon}</div>
+        <div class="guide-info">
+          <div class="guide-name">${g.name||'Bez názvu'}</div>
+          ${meta?`<div class="guide-meta">${meta}</div>`:''}
+        </div>
+        <div class="guide-arrow">›</div>
+      </div>`;
+    });
+  }
+  el.innerHTML=html;
+}
+
+window.openEditor=function(id){
+  _editingGuideId=id;
+  const editor=document.getElementById('guideEditor');
+  const guide=id?_guides.find(g=>g.id===id):null;
+  document.getElementById('geName').value=guide?guide.name||'':'';
+  document.getElementById('geTitle').textContent=guide?guide.name||'Návod':'Nový návod';
+  document.getElementById('geEditor').innerHTML=guide?guide.content||'':'';
+  document.getElementById('geDelBtn').style.display=id?'block':'none';
+  editor.classList.add('open');
+};
+window.closeEditor=function(){
+  document.getElementById('guideEditor').classList.remove('open');
+};
+
+// Formátování
+window.fmt=function(cmd){document.getElementById('geEditor').focus();document.execCommand(cmd,false,null);};
+window.fmtBlock=function(tag){document.getElementById('geEditor').focus();document.execCommand('formatBlock',false,tag);};
+
+// Nahrávání obrázku
+window.uploadImage=async function(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  // Max 5MB
+  if(file.size>5*1024*1024){alert('Obrázek je příliš velký (max 5 MB).');return;}
+  const editor=document.getElementById('geEditor');
+  editor.focus();
+  // Placeholder
+  const placeholder=document.createElement('div');
+  placeholder.className='ge-uploading';
+  placeholder.textContent='⏳ Nahrávám obrázek…';
+  const sel=window.getSelection();
+  if(sel&&sel.rangeCount){sel.getRangeAt(0).insertNode(placeholder);}
+  else{editor.appendChild(placeholder);}
+  try{
+    const path=`guides/${Date.now()}_${file.name.replace(/[^a-z0-9.]/gi,'_')}`;
+    const storageRef=ref(storage,path);
+    await uploadBytes(storageRef,file);
+    const url=await getDownloadURL(storageRef);
+    placeholder.remove();
+    document.execCommand('insertHTML',false,`<img src="${url}" alt="foto">`);
+  }catch(err){
+    placeholder.remove();
+    alert('Chyba nahrávání: '+err.message);
+  }
+  e.target.value='';
+};
+
+window.saveGuide=async function(){
+  const name=document.getElementById('geName').value.trim()||'Bez názvu';
+  const content=document.getElementById('geEditor').innerHTML;
+  // Vyber ikonu podle názvu
+  const iconMap={alarm:'🔔',topení:'🌡️',topen:'🌡️',voda:'💧',internet:'🌐',klíč:'🔑',klic:'🔑',elektrik:'⚡',oprav:'🔧',bezpečnost:'🔒'};
+  let icon='📋';
+  const nameLow=name.toLowerCase();
+  for(const[k,v]of Object.entries(iconMap)){if(nameLow.includes(k)){icon=v;break;}}
+  V(true);
+  try{
+    if(_editingGuideId){
+      await updateDoc(doc(db,'guides',_editingGuideId),{name,content,icon,updatedAt:serverTimestamp()});
+    }else{
+      await addDoc(collection(db,'guides'),{name,content,icon,createdBy:_cur?_cur.id:null,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+    }
+    await loadGuides();renderGuideList();
+    document.getElementById('geTitle').textContent=name;
+    closeEditor();
+  }catch(e){alert('Chyba: '+e.message);}V(false);
+};
+
+window.deleteGuide=async function(){
+  if(!_editingGuideId)return;
+  if(!confirm('Smazat tento návod?'))return;
+  V(true);
+  try{await deleteDoc(doc(db,'guides',_editingGuideId));await loadGuides();renderGuideList();closeEditor();}
+  catch(e){alert('Chyba: '+e.message);}V(false);
+};
+
+// KALENDÁŘ
 window.calNav=function(dir){_calDate.setMonth(_calDate.getMonth()+dir);_calDate=new Date(_calDate);renderCal();};
 window.calGoToday=function(){_calDate=new Date();_selDate=ymd(new Date());renderCal();};
-
 async function renderCal(){
   const y=_calDate.getFullYear(),m=_calDate.getMonth();
   await loadHolidays(y);if(m===11)await loadHolidays(y+1);
   document.getElementById('calTitle').textContent=`${MCS[m]} ${y}`;
-  const dowEl=document.getElementById('calDow');
-  dowEl.innerHTML=['Po','Út','St','Čt','Pá','So','Ne'].map((d,i)=>`<div class="cal-dow-cell${i>=5?' we':''}">${d}</div>`).join('');
-
+  document.getElementById('calDow').innerHTML=['Po','Út','St','Čt','Pá','So','Ne'].map((d,i)=>`<div class="cal-dow-cell${i>=5?' we':''}">${d}</div>`).join('');
   const firstDay=new Date(y,m,1);
   const startOffset=(firstDay.getDay()+6)%7;
   const gridStart=addDays(firstDay,-startOffset);
   const today=ymd(new Date());
   if(!_selDate)_selDate=today;
-
-  const grid=document.getElementById('calGrid');
-  grid.innerHTML='';
-
+  const grid=document.getElementById('calGrid');grid.innerHTML='';
   for(let i=0;i<42;i++){
     const cell=document.createElement('div');
-    const cd=addDays(gridStart,i);
-    const ds=ymd(cd);
-    const inMonth=cd.getMonth()===m;
-    const isToday=ds===today;
-    const isWE=cd.getDay()===0||cd.getDay()===6;
-    const isSel=ds===_selDate;
+    const cd=addDays(gridStart,i);const ds=ymd(cd);
+    const inMonth=cd.getMonth()===m;const isToday=ds===today;
+    const dow=cd.getDay();const isWE=dow===0||dow===6;
     const hol=(_holidays[cd.getFullYear()]||{})[ds];
-    const evts=eventsForDate(ds);
-
+    const isSel=ds===_selDate;const evts=eventsForDate(ds);
     let cls='cal-cell';
-    if(!inMonth)cls+=' other-month';
-    if(isToday)cls+=' today';
-    if(isWE)cls+=' we-cell';
-    if(isSel)cls+=' sel';
+    if(!inMonth)cls+=' other-month';if(isToday)cls+=' today';
+    if(isWE)cls+=' we-cell';if(hol&&!isWE)cls+=' hol-cell';if(isSel)cls+=' sel';
     cell.className=cls;
-
     let html=`<div class="cal-dn">${cd.getDate()}</div>`;
     if(hol)html+=`<div class="cal-hol">${hol}</div>`;
     html+=`<div class="cal-strips">`;
     evts.slice(0,2).forEach(ev=>{
       const isStart=ev.dateStart===ds,isEnd=ev.dateEnd===ds;
       let sc='strip';
-      if(!isStart&&!isEnd)sc+=' cb';
-      else if(!isEnd)sc+=' cr';
-      else if(!isStart)sc+=' cl';
+      if(!isStart&&!isEnd)sc+=' cb';else if(!isEnd)sc+=' cr';else if(!isStart)sc+=' cl';
       const owner=_u.find(u=>u.id===ev.userId);
       const color=owner?owner.color:'#888';
       const label=isStart?`${owner?owner.emoji:''}${owner?owner.name:''}${ev.title?' · '+ev.title:''}`:' ';
       html+=`<div class="${sc}" style="background:${color}">${label}</div>`;
     });
     if(evts.length>2)html+=`<div class="strip-more">+${evts.length-2}</div>`;
-    html+=`</div>`;
-    cell.innerHTML=html;
-
-    cell.addEventListener('click',()=>{
-      _selDate=ds;
-      grid.querySelectorAll('.cal-cell').forEach(c=>c.classList.remove('sel'));
-      cell.classList.add('sel');
-      renderDayPanel(ds);
-    });
+    html+=`</div>`;cell.innerHTML=html;
+    cell.addEventListener('click',()=>{_selDate=ds;grid.querySelectorAll('.cal-cell').forEach(c=>c.classList.remove('sel'));cell.classList.add('sel');renderDayPanel(ds);});
     grid.appendChild(cell);
   }
   renderDayPanel(_selDate);
 }
-
 function renderDayPanel(ds){
   const panel=document.getElementById('dayPanel');
   const evts=eventsForDate(ds);
   const d=new Date(ds+'T12:00:00');
   const hol=(_holidays[d.getFullYear()]||{})[ds];
   const isToday=ds===ymd(new Date());
-
-  let html=`<div class="day-panel-hdr">
-    <span class="day-panel-date">${fmtDate(ds)}${isToday?' · Dnes':''}</span>
-    ${hol?`<span class="day-panel-hol">🎉 ${hol}</span>`:''}
-  </div>`;
-
-  if(hol&&evts.length===0){
-    html+=`<div class="day-hol-item"><span style="font-size:.9rem">🎉</span><span class="day-hol-name">${hol}</span></div>`;
-  }
-  if(!hol&&evts.length===0){
-    html+=`<div class="day-panel-empty">Žádné události · klikni + pro přidání</div>`;
-  }
-
+  let html=`<div class="day-panel-hdr"><span class="day-panel-date">${fmtDate(ds)}${isToday?' · Dnes':''}</span>${hol?`<span class="day-panel-hol">🎉 ${hol}</span>`:''}</div>`;
+  if(hol&&evts.length===0)html+=`<div class="day-hol-item"><span style="font-size:.9rem">🎉</span><span class="day-hol-name">${hol}</span></div>`;
+  if(!hol&&evts.length===0)html+=`<div class="day-panel-empty">Žádné události · klikni + pro přidání</div>`;
   evts.forEach(ev=>{
     const owner=_u.find(u=>u.id===ev.userId);
     const color=owner?owner.color:'#888';
     let meta=owner?`${owner.emoji} ${owner.name}`:'';
     if(ev.arrivalTime)meta+=` · příjezd ${ev.arrivalTime}`;
     if(ev.departTime)meta+=` · odjezd ${ev.departTime}`;
-    if(ev.guests&&ev.guests.length>0){
-      const gnames=ev.guests.map(gid=>{const gu=_u.find(x=>x.id===gid);return gu?gu.name:'';}).filter(Boolean).join(', ');
-      if(gnames)meta+=` · hosté: ${gnames}`;
-    }
-    if(ev.dateStart!==ev.dateEnd)meta+=` · ${ev.dateStart}–${ev.dateEnd}`;
-    html+=`<div class="day-evt-item">
-      <div class="day-evt-dot" style="background:${color}"></div>
-      <div class="day-evt-body">
-        <div class="day-evt-title">${ev.title}</div>
-        <div class="day-evt-meta">${meta}</div>
-        ${ev.desc?`<div class="day-evt-meta" style="margin-top:3px;font-style:italic">${ev.desc}</div>`:''}
-      </div>
-    </div>`;
+    if(ev.guests)meta+=` · ${ev.guests}`;
+    if(ev.dateStart!==ev.dateEnd)meta+=` · ${ev.dateStart} – ${ev.dateEnd}`;
+    const canDel=_cur&&(_cur.isAdmin||_cur.id===ev.userId);
+    html+=`<div class="day-evt-item"><div class="day-evt-dot" style="background:${color}"></div><div class="day-evt-body"><div class="day-evt-title">${ev.title}</div><div class="day-evt-meta">${meta}</div>${ev.desc?`<div class="day-evt-meta" style="margin-top:3px;font-style:italic">${ev.desc}</div>`:''}${canDel?`<button class="day-evt-del" onclick="deleteEvent('${ev.id}','${ev.userId}')">🗑 Smazat</button>`:''}</div></div>`;
   });
   panel.innerHTML=html;
 }
 
-// SETTINGS
 function renderS(){
   const u=_cur;
   let h=`<div class="s-sec">Přihlášen jako</div><div class="s-card"><div class="s-av">${u.emoji}</div><div style="flex:1"><div class="s-name">${u.name}${u.isAdmin?' 👑':''}</div><div class="s-role">${u.isAdmin?'Administrátor':'Uživatel'}</div></div><div class="s-dot" style="background:${u.color}"></div></div>`;
   if(u.isAdmin){h+=`<div class="s-sec">Všichni uživatelé</div>`;_u.forEach(x=>{h+=`<div class="s-card"><div class="s-av">${x.emoji}</div><div style="flex:1"><div class="s-name">${x.name}${x.isAdmin?' 👑':''}</div><div class="s-role">${x.isAdmin?'Admin':'Uživatel'}</div></div><div class="s-dot" style="background:${x.color}"></div></div>`;});}
-  h+=`<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div>
-      <p style="margin-top:14px;text-align:center;font-size:.7rem;color:var(--tx3)">Editace profilu · brzy</p>
-      <p style="margin-top:5px;text-align:center;font-size:.66rem;color:var(--tx3);letter-spacing:1px">v 1.03</p>`;
+  h+=`<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.7rem;color:var(--tx3)">Editace profilu · brzy</p><p style="margin-top:5px;text-align:center;font-size:.66rem;color:var(--tx3);letter-spacing:1px">v 1.06</p>`;
   document.getElementById('si').innerHTML=h;
 }
 
-// PIN UI
 function D(id,pin){const el=document.getElementById(id);el.innerHTML='';for(let i=0;i<4;i++){const d=document.createElement('div');d.className='pd'+(i<pin.length?' on':'');el.appendChild(d);}}
 function P(id,oK,oD){const el=document.getElementById(id);el.innerHTML='';['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{const b=document.createElement('button');if(!k){b.className='pk gap';}else if(k==='⌫'){b.className='pk del';b.textContent=k;b.onclick=oD;}else{b.className='pk';b.textContent=k;b.onclick=()=>oK(k);}el.appendChild(b);});}
 
-// INIT
 async function init(){
-  V(true);await loadU();await loadEvents();
+  V(true);await loadU();await loadEvents();await loadTasks();await loadGuides();
   _selDate=ymd(new Date());
-  const s=sessionStorage.getItem('bU');
-  if(s){try{const u=JSON.parse(s);const f=_u.find(x=>x.id===u.id);if(f){_cur=f;eApp();return;}}catch(e){}}
+  const stored=localStorage.getItem('borsovikUser');
+  if(stored){try{const{id}=JSON.parse(stored);const f=_u.find(x=>x.id===id);if(f){_cur=f;eApp();return;}}catch(e){}}
   goTo('sHome');
 }
 init();
