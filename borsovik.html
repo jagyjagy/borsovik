@@ -157,43 +157,41 @@
     .cal-dow-cell.we{color:var(--ac);font-weight:700;}
     .cal-grid-wrap{flex:0 0 auto;}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
-    /* Buňka: pevná výška, overflow hidden pro obsah ale ne pro proužky */
-    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 4px 0;min-height:76px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;position:relative;box-sizing:border-box;}
+    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:5px 4px 4px;min-height:80px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;position:relative;box-sizing:border-box;}
     .cal-cell:nth-child(7n){border-right:none;}
     .cal-cell:hover{background:var(--bg2);}
     .cal-cell.sel{background:var(--acbg);}
-    .cal-cell.other-month .cal-dn{opacity:.28;}
-    .cal-cell.other-month .cal-hol{opacity:.5;}
+    .cal-cell.other-month .cal-dn{opacity:.25;}
+    .cal-cell.other-month .cal-hol{opacity:.4;}
+    .cal-cell.other-month .strip-wrap{opacity:.4;}
     .cal-cell.today .cal-dn{background:var(--ac);color:#fff;border-radius:50%;}
-    .cal-cell.we-cell{background:var(--we-bg);}
-    .cal-cell.we-cell:hover{background:#ffe8e0;}
-    .cal-cell.we-cell.sel{background:#fde0d0;}
-    .cal-cell.we-cell .cal-dn{color:var(--ac);font-weight:700;}
+    /* víkendy – výraznější */
+    .cal-cell.we-cell{background:#ffeee8;}
+    .cal-cell.we-cell:hover{background:#ffddd0;}
+    .cal-cell.we-cell.sel{background:#fdd0c0;}
+    .cal-cell.we-cell .cal-dn{color:#b5623a;font-weight:700;}
     .cal-cell.today.we-cell .cal-dn{color:#fff;}
-    .cal-cell.hol-cell{background:var(--hol-bg);}
-    /* Číslo dne */
-    .cal-dn{font-size:.85rem;font-weight:500;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;}
-    /* Svátek – zalamuje se, začíná vedle čísla */
-    .cal-hol{font-size:.6rem;color:var(--ac);font-weight:600;line-height:1.25;margin-bottom:3px;padding:0 2px;word-break:break-word;white-space:normal;}
-    /* Proužky – absolutně přes spodek buňky, z-index nad gridem */
-    .cal-strips{position:absolute;bottom:4px;left:0;right:0;display:flex;flex-direction:column;gap:2px;pointer-events:none;}
-    /* Každý proužek přesahuje přes border buňky o 1px na každé straně */
-    .strip{height:16px;font-size:.74rem;font-weight:600;color:#fff;line-height:16px;padding:0 6px;white-space:nowrap;overflow:visible;position:relative;z-index:10;border-radius:0;}
-    /* Začátek události */
-    .strip.start{border-radius:4px 0 0 4px;margin-left:2px;}
-    /* Konec události */
-    .strip.end{border-radius:0 4px 4px 0;margin-right:2px;}
-    /* Začátek i konec (jednodenní) */
-    .strip.solo{border-radius:4px;margin-left:2px;margin-right:2px;}
-    /* Pokračuje oběma směry */
-    .strip.cont{border-radius:0;margin:0 -1px;}
-    /* Levý kraj (začíná vlevo, pokračuje) */
-    .strip.cont-l{border-radius:4px 0 0 4px;margin-left:2px;margin-right:-1px;}
-    /* Pravý kraj */
-    .strip.cont-r{border-radius:0 4px 4px 0;margin-left:-1px;margin-right:2px;}
-    /* Text proužku – přesahuje z buňky ven */
-    .strip-text{position:absolute;left:6px;top:0;height:16px;line-height:16px;white-space:nowrap;font-size:.74rem;font-weight:600;color:#fff;z-index:20;pointer-events:none;}
-    .strip-more{font-size:.64rem;color:var(--tx3);padding:0 4px;line-height:16px;position:relative;z-index:10;}
+    /* svátky – výrazně jiné pozadí */
+    .cal-cell.hol-cell{background:#fff0d8;}
+    .cal-cell.hol-cell .cal-dn{color:#c07000;}
+    .cal-cell.we-cell.hol-cell{background:#ffe4c0;}
+    /* číslo dne */
+    .cal-dn{font-size:.88rem;font-weight:600;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;}
+    /* svátek pod číslem – ellipsis */
+    .cal-hol{font-size:.6rem;color:#b07000;font-weight:600;line-height:1.2;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+    /* Proužky – relative flow, spodek buňky */
+    .cal-strips{margin-top:auto;display:flex;flex-direction:column;gap:2px;padding-bottom:3px;}
+    /* strip-wrap – přesahuje přes border */
+    .strip-wrap{height:18px;position:relative;width:calc(100% + 2px);margin-left:-1px;overflow:visible;}
+    /* samotný proužek */
+    .strip{height:18px;font-size:.76rem;font-weight:600;color:#fff;line-height:18px;white-space:nowrap;overflow:visible;position:absolute;left:0;right:0;top:0;}
+    .strip.solo{border-radius:5px;left:3px;right:3px;}
+    .strip.start{border-radius:5px 0 0 5px;left:3px;right:-1px;}
+    .strip.end{border-radius:0 5px 5px 0;left:-1px;right:3px;}
+    .strip.cont{border-radius:0;left:-1px;right:-1px;}
+    /* text proužku – přesahuje přes sousední buňky */
+    .strip-text{position:absolute;left:7px;top:0;height:18px;line-height:18px;white-space:nowrap;font-size:.76rem;font-weight:600;color:#fff;z-index:20;pointer-events:none;}
+    .strip-more{font-size:.66rem;color:var(--tx3);padding:0 4px;line-height:18px;}
 
     /* DENNÍ PANEL */
     .day-panel{flex:1;min-height:0;overflow-y:auto;border-top:2px solid var(--bd);background:var(--sf);}
@@ -1213,11 +1211,8 @@ async function renderCal(){
     if(!inMonth)cls+=' other-month';if(isToday)cls+=' today';
     if(isWE)cls+=' we-cell';if(hol&&!isWE)cls+=' hol-cell';if(isSel)cls+=' sel';
     cell.className=cls;
-    // Horní část: číslo + svátek vedle sebe
-    let html=`<div style="display:flex;align-items:flex-start;gap:3px;flex:1;min-height:0;">
-      <div class="cal-dn">${cd.getDate()}</div>
-      ${hol?`<div class="cal-hol" style="padding-top:3px;">${hol}</div>`:''}
-    </div>`;
+    let html=`<div class="cal-dn">${cd.getDate()}</div>`;
+    if(hol)html+=`<div class="cal-hol">${hol}</div>`;
     html+=`<div class="cal-strips">`;
     evts.slice(0,2).forEach((ev,evIdx)=>{
       const isStart=ev.dateStart===ds, isEnd=ev.dateEnd===ds;
@@ -1229,12 +1224,11 @@ async function renderCal(){
       const owner=_u.find(u=>u.id===ev.userId);
       const color=owner?owner.color:'#888';
       const recurSym=ev.recur?'🔁':'';
-      // Zobraz text na začátku nebo na začátku každého řádku
       const isRowStart=(i%7===0);
       const isMonthStart=ds.endsWith('-01');
       const showLabel=isStart||isRowStart||isMonthStart;
-      const labelText=showLabel?`${owner?owner.emoji:''} ${owner?owner.name:''}${ev.title?' · '+ev.title:''}${recurSym}`:'';
-      html+=`<div class="${sc}" style="background:${color}"><span class="strip-text">${labelText}</span></div>`;
+      const labelText=showLabel?`${owner?owner.emoji||''} ${owner?owner.name:''}${ev.title?' · '+ev.title:''}${recurSym}`:'';
+      html+=`<div class="strip-wrap"><div class="${sc}" style="background:${color}"></div><span class="strip-text">${labelText}</span></div>`;
     });
     if(evts.length>2)html+=`<div class="strip-more">+${evts.length-2}</div>`;
     html+=`</div>`;cell.innerHTML=html;
