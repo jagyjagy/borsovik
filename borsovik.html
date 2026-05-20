@@ -40,7 +40,7 @@
     .user-card::after{content:'';position:absolute;top:0;left:14px;right:14px;height:2px;background:var(--uc,var(--ac));border-radius:0 0 2px 2px;opacity:.8;}
     .user-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.08);border-color:var(--bd2);transform:translateY(-2px);}
     .uc-em{font-size:2rem;line-height:1;}
-    .uc-name{font-size:.78rem;font-weight:500;}
+    .uc-name{font-size:.84rem;font-weight:500;}
     .uc-admin{font-size:.58rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ac);}
     .add-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;border:1.5px dashed var(--bd2);border-radius:40px;background:transparent;color:var(--tx3);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:border-color .15s,color .15s;}
     .add-btn:hover{border-color:var(--ac);color:var(--ac);}
@@ -174,7 +174,7 @@
     .cal-dn{font-size:.72rem;font-weight:500;width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:1px;}
     .cal-hol{font-size:.54rem;color:var(--ac);font-weight:600;line-height:1.2;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 1px;}
     .cal-strips{display:flex;flex-direction:column;gap:1px;overflow:hidden;flex:1;}
-    .strip{height:11px;border-radius:2px;font-size:.58rem;font-weight:500;color:#fff;line-height:11px;padding:0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .strip{height:13px;border-radius:2px;font-size:.64rem;font-weight:500;color:#fff;line-height:11px;padding:0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     .strip.cl{border-radius:0 2px 2px 0;padding-left:1px;}
     .strip.cr{border-radius:2px 0 0 2px;padding-right:0;}
     .strip.cb{border-radius:0;padding:0 1px;}
@@ -183,15 +183,15 @@
     /* DENNÍ PANEL */
     .day-panel{flex:1;min-height:0;overflow-y:auto;border-top:2px solid var(--bd);background:var(--sf);}
     .day-panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--sf);z-index:1;}
-    .day-panel-date{font-size:.82rem;font-weight:600;}
+    .day-panel-date{font-size:.88rem;font-weight:600;}
     .day-panel-hol{font-size:.7rem;color:var(--ac);font-weight:600;}
-    .day-panel-empty{padding:22px;text-align:center;font-size:.78rem;color:var(--tx3);}
+    .day-panel-empty{padding:22px;text-align:center;font-size:.84rem;color:var(--tx3);}
     .day-evt-block{border-bottom:1px solid var(--bd);}
     .day-evt-main{display:flex;align-items:flex-start;gap:10px;padding:10px 14px 4px;}
     .day-evt-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px;}
     .day-evt-body{flex:1;min-width:0;}
-    .day-evt-title{font-size:.85rem;font-weight:500;}
-    .day-evt-meta{font-size:.72rem;color:var(--tx3);margin-top:1px;}
+    .day-evt-title{font-size:.9rem;font-weight:500;}
+    .day-evt-meta{font-size:.78rem;color:var(--tx3);margin-top:2px;}
     .day-evt-actions{display:flex;gap:8px;padding:2px 14px 8px 34px;}
     .dea-btn{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;cursor:pointer;padding:0;}
     .dea-btn.edit{color:var(--ac);}
@@ -206,12 +206,12 @@
     .comment-av{font-size:.95rem;width:24px;height:24px;background:var(--bg2);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
     .comment-right{flex:1;min-width:0;}
     .comment-header{display:flex;align-items:center;gap:6px;}
-    .comment-author{font-size:.7rem;font-weight:600;color:var(--tx2);}
+    .comment-author{font-size:.76rem;font-weight:600;color:var(--tx2);}
     .comment-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:.65rem;padding:0;opacity:.6;margin-left:auto;}
     .comment-del:hover{opacity:1;color:#c0392b;}
-    .comment-text{font-size:.78rem;color:var(--tx);margin-top:2px;line-height:1.4;}
+    .comment-text{font-size:.82rem;color:var(--tx);margin-top:2px;line-height:1.4;}
     .comment-form{display:flex;gap:6px;margin-top:8px;}
-    .comment-input{flex:1;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--tx);background:var(--bg);outline:none;transition:border-color .13s;}
+    .comment-input{flex:1;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--tx);background:var(--bg);outline:none;transition:border-color .13s;}
     .comment-input:focus{border-color:var(--ac2);background:#fff;}
     .comment-send{background:var(--ac);color:#fff;border:none;border-radius:var(--rs);padding:8px 13px;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .13s;flex-shrink:0;}
     .comment-send:hover{background:var(--ac2);}
@@ -233,11 +233,11 @@
     .ev-main{display:flex;align-items:flex-start;gap:12px;padding:12px 16px 6px;}
     .ev-color-bar{width:3px;border-radius:2px;align-self:stretch;flex-shrink:0;}
     .ev-date-col{display:flex;flex-direction:column;align-items:center;min-width:36px;flex-shrink:0;}
-    .ev-day{font-size:1.2rem;font-weight:700;line-height:1;color:var(--tx);}
-    .ev-mon{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);}
+    .ev-day{font-size:1.4rem;font-weight:700;line-height:1;color:var(--tx);}
+    .ev-mon{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);}
     .ev-body{flex:1;min-width:0;}
-    .ev-title{font-size:.88rem;font-weight:600;}
-    .ev-meta{font-size:.72rem;color:var(--tx3);margin-top:2px;}
+    .ev-title{font-size:.92rem;font-weight:600;}
+    .ev-meta{font-size:.78rem;color:var(--tx3);margin-top:3px;}
     .ev-owner{display:inline-flex;align-items:center;gap:4px;margin-top:4px;background:var(--bg2);border-radius:10px;padding:2px 7px;font-size:.7rem;font-weight:500;}
     .ev-actions{display:flex;gap:10px;padding:2px 16px 8px 67px;}
     .ev-act{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;cursor:pointer;padding:0;}
@@ -269,8 +269,8 @@
     .task-check svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:0;}
     .task-block.done .task-check svg{opacity:1;}
     .task-body{flex:1;min-width:0;}
-    .task-text{font-size:.88rem;font-weight:500;}
-    .task-assignee{font-size:.7rem;color:var(--tx3);margin-top:1px;}
+    .task-text{font-size:.92rem;font-weight:500;}
+    .task-assignee{font-size:.76rem;color:var(--tx3);margin-top:2px;}
     /* edit inline */
     .task-edit-input{width:100%;padding:6px 8px;border:1px solid var(--ac2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--tx);background:#fff;outline:none;margin-bottom:4px;}
     .task-edit-row{display:flex;gap:6px;align-items:center;}
@@ -344,8 +344,8 @@
     .guide-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.07);border-color:var(--bd2);}
     .guide-icon{font-size:1.5rem;flex-shrink:0;width:40px;height:40px;background:var(--bg2);border-radius:10px;display:flex;align-items:center;justify-content:center;}
     .guide-info{flex:1;min-width:0;}
-    .guide-name{font-size:.9rem;font-weight:600;}
-    .guide-meta{font-size:.7rem;color:var(--tx3);margin-top:2px;}
+    .guide-name{font-size:.95rem;font-weight:600;}
+    .guide-meta{font-size:.76rem;color:var(--tx3);margin-top:2px;}
     .guide-arrow{color:var(--tx3);font-size:.9rem;}
     .guide-empty{padding:48px 20px;text-align:center;font-size:.82rem;color:var(--tx3);}
     .guide-add-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:var(--sf);border:1.5px dashed var(--bd2);border-radius:var(--r);cursor:pointer;color:var(--tx3);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;margin-bottom:10px;transition:all .15s;width:100%;}
@@ -487,7 +487,7 @@
         <div class="cal-grid-wrap"><div class="cal-grid" id="calGrid"></div></div>
         <div class="day-panel" id="dayPanel"></div>
       </div>
-      <button class="fab" onclick="openModal(null)"><svg viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/></svg></button>
+      <button class="fab" id="fabCal" onclick="openModal(null)" style="width:auto;border-radius:24px;padding:0 18px 0 14px;gap:7px;"><svg viewBox="0 0 20 20" style="width:18px;height:18px;flex-shrink:0"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/></svg><span style="font-size:.82rem;font-weight:600;white-space:nowrap">Přidat pobyt</span></button>
     </div>
     <!-- UDÁLOSTI -->
     <div class="tab-pane" id="pane-ev">
