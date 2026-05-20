@@ -155,14 +155,14 @@
     .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
     .cal-dow-cell{text-align:center;padding:7px 0;font-size:.72rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);}
     .cal-dow-cell.we{color:var(--ac);font-weight:700;}
-    .cal-grid-wrap{flex:0 0 auto;overflow:visible;}
-    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);overflow:visible;}
-    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 3px;min-height:72px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:visible;position:relative;isolation:isolate;}
+    .cal-grid-wrap{flex:0 0 auto;}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+    /* Buňka: pevná výška, overflow hidden pro obsah ale ne pro proužky */
+    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 4px 0;min-height:76px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;position:relative;box-sizing:border-box;}
     .cal-cell:nth-child(7n){border-right:none;}
     .cal-cell:hover{background:var(--bg2);}
     .cal-cell.sel{background:var(--acbg);}
     .cal-cell.other-month .cal-dn{opacity:.28;}
-    .cal-cell.other-month .strip{opacity:.45;}
     .cal-cell.other-month .cal-hol{opacity:.5;}
     .cal-cell.today .cal-dn{background:var(--ac);color:#fff;border-radius:50%;}
     .cal-cell.we-cell{background:var(--we-bg);}
@@ -171,16 +171,29 @@
     .cal-cell.we-cell .cal-dn{color:var(--ac);font-weight:700;}
     .cal-cell.today.we-cell .cal-dn{color:#fff;}
     .cal-cell.hol-cell{background:var(--hol-bg);}
-    .cal-dn{font-size:.85rem;font-weight:500;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:1px;}
-    .cal-hol{font-size:.62rem;color:var(--ac);font-weight:600;line-height:1.2;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px;}
-    .cal-strips{display:flex;flex-direction:column;gap:2px;overflow:visible;flex:1;}
-    .strip{height:16px;border-radius:3px;font-size:.74rem;font-weight:500;color:#fff;line-height:16px;padding:0 5px;white-space:nowrap;overflow:visible;position:relative;z-index:2;flex-shrink:0;}
-    .strip.cl{border-radius:0 3px 3px 0;margin-left:-2px;padding-left:6px;}
-    .strip.cr{border-radius:3px 0 0 3px;margin-right:-2px;padding-right:4px;}
-    .strip.cb{border-radius:0;margin-left:-2px;margin-right:-2px;padding:0 4px;}
-    .strip.cr,.strip.cb{width:calc(100% + 2px);}
-    .strip.cl{width:calc(100% + 2px);}
-    .strip-more{font-size:.64rem;color:var(--tx3);padding:0 3px;line-height:16px;}
+    /* Číslo dne */
+    .cal-dn{font-size:.85rem;font-weight:500;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;}
+    /* Svátek – zalamuje se, začíná vedle čísla */
+    .cal-hol{font-size:.6rem;color:var(--ac);font-weight:600;line-height:1.25;margin-bottom:3px;padding:0 2px;word-break:break-word;white-space:normal;}
+    /* Proužky – absolutně přes spodek buňky, z-index nad gridem */
+    .cal-strips{position:absolute;bottom:4px;left:0;right:0;display:flex;flex-direction:column;gap:2px;pointer-events:none;}
+    /* Každý proužek přesahuje přes border buňky o 1px na každé straně */
+    .strip{height:16px;font-size:.74rem;font-weight:600;color:#fff;line-height:16px;padding:0 6px;white-space:nowrap;overflow:visible;position:relative;z-index:10;border-radius:0;}
+    /* Začátek události */
+    .strip.start{border-radius:4px 0 0 4px;margin-left:2px;}
+    /* Konec události */
+    .strip.end{border-radius:0 4px 4px 0;margin-right:2px;}
+    /* Začátek i konec (jednodenní) */
+    .strip.solo{border-radius:4px;margin-left:2px;margin-right:2px;}
+    /* Pokračuje oběma směry */
+    .strip.cont{border-radius:0;margin:0 -1px;}
+    /* Levý kraj (začíná vlevo, pokračuje) */
+    .strip.cont-l{border-radius:4px 0 0 4px;margin-left:2px;margin-right:-1px;}
+    /* Pravý kraj */
+    .strip.cont-r{border-radius:0 4px 4px 0;margin-left:-1px;margin-right:2px;}
+    /* Text proužku – přesahuje z buňky ven */
+    .strip-text{position:absolute;left:6px;top:0;height:16px;line-height:16px;white-space:nowrap;font-size:.74rem;font-weight:600;color:#fff;z-index:20;pointer-events:none;}
+    .strip-more{font-size:.64rem;color:var(--tx3);padding:0 4px;line-height:16px;position:relative;z-index:10;}
 
     /* DENNÍ PANEL */
     .day-panel{flex:1;min-height:0;overflow-y:auto;border-top:2px solid var(--bd);background:var(--sf);}
@@ -1200,22 +1213,28 @@ async function renderCal(){
     if(!inMonth)cls+=' other-month';if(isToday)cls+=' today';
     if(isWE)cls+=' we-cell';if(hol&&!isWE)cls+=' hol-cell';if(isSel)cls+=' sel';
     cell.className=cls;
-    let html=`<div class="cal-dn">${cd.getDate()}</div>`;
-    if(hol)html+=`<div class="cal-hol">${hol}</div>`;
+    // Horní část: číslo + svátek vedle sebe
+    let html=`<div style="display:flex;align-items:flex-start;gap:3px;flex:1;min-height:0;">
+      <div class="cal-dn">${cd.getDate()}</div>
+      ${hol?`<div class="cal-hol" style="padding-top:3px;">${hol}</div>`:''}
+    </div>`;
     html+=`<div class="cal-strips">`;
-    evts.slice(0,2).forEach(ev=>{
-      const isStart=ev.dateStart===ds,isEnd=ev.dateEnd===ds;
+    evts.slice(0,2).forEach((ev,evIdx)=>{
+      const isStart=ev.dateStart===ds, isEnd=ev.dateEnd===ds;
       let sc='strip';
-      if(!isStart&&!isEnd)sc+=' cb';else if(!isEnd)sc+=' cr';else if(!isStart)sc+=' cl';
+      if(isStart&&isEnd) sc+=' solo';
+      else if(isStart) sc+=' start';
+      else if(isEnd) sc+=' end';
+      else sc+=' cont';
       const owner=_u.find(u=>u.id===ev.userId);
       const color=owner?owner.color:'#888';
       const recurSym=ev.recur?'🔁':'';
-      // Label: na začátku události, začátku každého řádku gridu (i%7===0), nebo 1. dne v měsíci
+      // Zobraz text na začátku nebo na začátku každého řádku
       const isRowStart=(i%7===0);
       const isMonthStart=ds.endsWith('-01');
       const showLabel=isStart||isRowStart||isMonthStart;
-      const label=showLabel?`${owner?owner.emoji:''}${owner?owner.name:''}${ev.title?' · '+ev.title:''}${recurSym}`:' ';
-      html+=`<div class="${sc}" style="background:${color}">${label}</div>`;
+      const labelText=showLabel?`${owner?owner.emoji:''} ${owner?owner.name:''}${ev.title?' · '+ev.title:''}${recurSym}`:'';
+      html+=`<div class="${sc}" style="background:${color}"><span class="strip-text">${labelText}</span></div>`;
     });
     if(evts.length>2)html+=`<div class="strip-more">+${evts.length-2}</div>`;
     html+=`</div>`;cell.innerHTML=html;
