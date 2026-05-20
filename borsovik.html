@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boršovík</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f0ece4'/%3E%3Cpolygon points='12,30 32,12 52,30' fill='%23b5623a'/%3E%3Crect x='18' y='30' width='28' height='22' fill='%23e8e0d0'/%3E%3Crect x='23' y='35' width='7' height='7' fill='%23a07050'/%3E%3Crect x='34' y='35' width='7' height='7' fill='%23a07050'/%3E%3Crect x='28' y='42' width='8' height='10' fill='%23a07050'/%3E%3Crect x='28' y='16' width='8' height='6' rx='1' fill='%23d4c8b8'/%3E%3C/svg%3E">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f0ece4'/%3E%3Cpolygon points='12,30 32,12 52,30' fill='%23b5623a'/%3E%3Crect x='18' y='30' width='28' height='22' fill='%23e8e0d0'/%3E%3Crect x='23' y='35' width='7' height='7' fill='%23a07050'/%3E%3Crect x='34' y='35' width='7' height='7' fill='%23a07050'/%3E%3Crect x='28' y='42' width='8' height='10' fill='%23a07050'/%3E%3Crect x='28' y='16' width='8' height='6' rx='1' fill='%23d4c8b8'/%3E%3C/svg%3E">
+  <link rel="icon" href="icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon.png">
   <meta name="theme-color" content="#f7f4ef">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -30,7 +30,7 @@
     .screen-scroll{overflow-y:auto;}
     @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
     .hdr{width:100%;background:var(--sf);border-bottom:1px solid var(--bd);padding:0 20px;height:52px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
-    .hdr-logo{width:28px;height:28px;flex-shrink:0;}
+    .hdr-logo{width:28px;height:28px;border-radius:7px;object-fit:cover;}
     .hdr-title{font-size:1rem;font-weight:600;letter-spacing:-.2px;}
     .hdr-sub{font-size:.72rem;color:var(--tx3);margin-left:auto;}
     .home-body{flex:1;width:100%;max-width:500px;padding:32px 20px 24px;display:flex;flex-direction:column;align-items:center;margin:0 auto;}
@@ -57,7 +57,6 @@
     .fg textarea{resize:vertical;min-height:68px;line-height:1.5;}
     .fg select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a09890' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
     .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-    .fg-hint{font-size:.68rem;color:var(--tx3);margin-top:5px;}
     .ebox{display:flex;flex-wrap:wrap;gap:2px;padding:8px;background:var(--bg);border:1px solid var(--bd);border-radius:var(--rs);max-height:148px;overflow-y:auto;}
     .ebox::-webkit-scrollbar{width:4px;}
     .ebox::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:4px;}
@@ -84,6 +83,8 @@
     .btn-p:disabled{background:var(--bg3);color:var(--tx3);cursor:not-allowed;}
     .btn-g{background:transparent;color:var(--tx2);border:1px solid var(--bd);}
     .btn-g:hover{border-color:var(--bd2);color:var(--tx);}
+    .btn-danger{background:transparent;color:#c0392b;border:1px solid #f0c0b8;margin-top:8px;}
+    .btn-danger:hover{background:#fdf0ed;}
     .msg{margin-top:11px;padding:8px 12px;border-radius:var(--rs);font-size:.77rem;text-align:center;}
     .me{background:#fdf0ed;color:#b5623a;}
     .mo{background:#f0f5eb;color:#4a7c2f;}
@@ -97,6 +98,8 @@
     .ring{width:34px;height:34px;border:2.5px solid var(--bg3);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;}
     .rlabel{font-size:.68rem;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);}
     @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* MODAL */
     .modal-backdrop{position:fixed;inset:0;background:rgba(28,25,23,.45);backdrop-filter:blur(3px);z-index:200;display:none;align-items:flex-end;justify-content:center;}
     .modal-backdrop.open{display:flex;animation:fadein .2s ease;}
     @keyframes fadein{from{opacity:0}to{opacity:1}}
@@ -108,12 +111,14 @@
     .modal-close{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:1.1rem;padding:6px;border-radius:50%;transition:background .13s;}
     .modal-close:hover{background:var(--bg2);}
     .modal-body{overflow-y:auto;padding:16px 20px;flex:1;}
-    .modal-footer{padding:12px 20px 20px;border-top:1px solid var(--bd);flex-shrink:0;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));}
+    .modal-footer{padding:12px 20px;border-top:1px solid var(--bd);flex-shrink:0;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;}
+
+    /* APP SHELL */
     .app-shell{display:none;flex-direction:column;height:100svh;}
     .app-shell.active{display:flex;}
     .top-bar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
     .tb-brand{display:flex;align-items:center;gap:10px;}
-    .tb-logo{width:26px;height:26px;}
+    .tb-logo{width:26px;height:26px;border-radius:6px;object-fit:cover;}
     .tb-name{font-size:.95rem;font-weight:600;letter-spacing:-.2px;}
     .upill{display:flex;align-items:center;gap:6px;padding:5px 11px;background:var(--bg);border:1px solid var(--bd);border-radius:40px;font-size:.76rem;font-weight:500;color:var(--tx2);cursor:pointer;transition:border-color .13s;}
     .upill:hover{border-color:var(--bd2);color:var(--tx);}
@@ -168,16 +173,37 @@
     .day-panel-date{font-size:.82rem;font-weight:600;}
     .day-panel-hol{font-size:.7rem;color:var(--ac);font-weight:600;}
     .day-panel-empty{padding:22px;text-align:center;font-size:.78rem;color:var(--tx3);}
-    .day-evt-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bd);transition:background .12s;}
-    .day-evt-item:hover{background:var(--bg);}
+    .day-evt-item{border-bottom:1px solid var(--bd);background:var(--sf);}
+    .day-evt-main{display:flex;align-items:flex-start;gap:10px;padding:10px 14px 6px;}
     .day-evt-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
     .day-evt-body{flex:1;min-width:0;}
     .day-evt-title{font-size:.85rem;font-weight:500;}
     .day-evt-meta{font-size:.72rem;color:var(--tx3);margin-top:1px;}
-    .day-evt-del{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;color:#c0392b;cursor:pointer;padding:0;opacity:.7;transition:opacity .13s;margin-top:5px;display:block;}
-    .day-evt-del:hover{opacity:1;}
+    .day-evt-actions{display:flex;gap:8px;padding:0 14px 8px 34px;}
+    .day-evt-action-btn{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;cursor:pointer;padding:0;transition:opacity .13s;}
+    .day-evt-action-btn.edit{color:var(--ac);}
+    .day-evt-action-btn.del{color:#c0392b;opacity:.7;}
+    .day-evt-action-btn.del:hover{opacity:1;}
     .day-hol-item{padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;}
     .day-hol-name{font-size:.82rem;color:var(--ac);font-weight:600;}
+
+    /* KOMENTÁŘE */
+    .comments-wrap{padding:0 14px 10px 34px;}
+    .comment-item{display:flex;gap:8px;margin-bottom:8px;}
+    .comment-avatar{font-size:1rem;flex-shrink:0;width:24px;height:24px;background:var(--bg2);border-radius:6px;display:flex;align-items:center;justify-content:center;}
+    .comment-body{flex:1;min-width:0;}
+    .comment-author{font-size:.68rem;font-weight:600;color:var(--tx2);}
+    .comment-text{font-size:.78rem;color:var(--tx);margin-top:1px;line-height:1.4;}
+    .comment-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:.65rem;padding:0 0 0 6px;opacity:.6;transition:opacity .13s;}
+    .comment-del:hover{opacity:1;color:#c0392b;}
+    .comment-form{display:flex;gap:6px;margin-top:6px;}
+    .comment-input{flex:1;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--tx);background:var(--bg);outline:none;transition:border-color .13s;}
+    .comment-input:focus{border-color:var(--ac2);background:#fff;}
+    .comment-submit{background:var(--ac);color:#fff;border:none;border-radius:var(--rs);padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .13s;}
+    .comment-submit:hover{background:var(--ac2);}
+    .comments-toggle{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--tx3);cursor:pointer;padding:0 14px 8px 34px;display:block;transition:color .13s;}
+    .comments-toggle:hover{color:var(--ac);}
+
     .fab{position:absolute;bottom:14px;right:14px;width:44px;height:44px;border-radius:50%;background:var(--ac);border:none;color:#fff;cursor:pointer;box-shadow:0 3px 14px rgba(181,98,58,.35);display:flex;align-items:center;justify-content:center;transition:transform .15s;z-index:5;}
     .fab:hover{transform:scale(1.07);}
     .fab svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
@@ -189,9 +215,9 @@
     .ev-ftag.active{background:var(--tx);color:#fff;border-color:var(--tx);}
     .ev-list{flex:1;overflow-y:auto;}
     .ev-month-label{padding:10px 16px 4px;font-size:.65rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);background:var(--bg);border-bottom:1px solid var(--bd);}
-    .ev-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--sf);transition:background .12s;}
-    .ev-item:hover{background:var(--bg);}
-    .ev-item.past{opacity:.55;}
+    .ev-item{border-bottom:1px solid var(--bd);background:var(--sf);}
+    .ev-item-main{display:flex;align-items:flex-start;gap:12px;padding:12px 16px 8px;}
+    .ev-item.past .ev-item-main{opacity:.55;}
     .ev-color-bar{width:3px;border-radius:2px;align-self:stretch;flex-shrink:0;}
     .ev-date-col{display:flex;flex-direction:column;align-items:center;min-width:36px;flex-shrink:0;}
     .ev-day{font-size:1.2rem;font-weight:700;line-height:1;color:var(--tx);}
@@ -200,8 +226,15 @@
     .ev-title{font-size:.88rem;font-weight:600;}
     .ev-meta{font-size:.72rem;color:var(--tx3);margin-top:2px;}
     .ev-owner{display:inline-flex;align-items:center;gap:4px;margin-top:4px;background:var(--bg2);border-radius:10px;padding:2px 7px;font-size:.7rem;font-weight:500;}
+    .ev-actions{display:flex;gap:10px;padding:0 16px 8px 67px;}
+    .ev-act-btn{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;cursor:pointer;padding:0;}
+    .ev-act-btn.edit{color:var(--ac);}
+    .ev-act-btn.del{color:#c0392b;opacity:.7;}
+    .ev-act-btn.del:hover{opacity:1;}
     .ev-empty{padding:48px 20px;text-align:center;font-size:.82rem;color:var(--tx3);}
-    .day-evt-del{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:.7rem;color:#c0392b;cursor:pointer;padding:0;opacity:.7;transition:opacity .13s;margin-top:5px;display:block;}
+
+    /* komentáře v ev-list */
+    .ev-comments{padding:0 16px 10px 67px;}
 
     /* ÚKOLY */
     .task-add-bar{display:flex;gap:8px;padding:12px 16px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
@@ -230,7 +263,7 @@
     .task-del:hover{opacity:1;color:#c0392b;}
     .task-empty{padding:48px 20px;text-align:center;font-size:.82rem;color:var(--tx3);}
 
-    /* ═══ NÁVODY ═══ */
+    /* NÁVODY */
     .guide-list{flex:1;overflow-y:auto;padding:16px;}
     .guide-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:box-shadow .15s,border-color .15s;}
     .guide-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.07);border-color:var(--bd2);}
@@ -242,8 +275,6 @@
     .guide-empty{padding:48px 20px;text-align:center;font-size:.82rem;color:var(--tx3);}
     .guide-add-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:var(--sf);border:1.5px dashed var(--bd2);border-radius:var(--r);cursor:pointer;color:var(--tx3);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;margin-bottom:10px;transition:all .15s;width:100%;}
     .guide-add-btn:hover{border-color:var(--ac);color:var(--ac);}
-
-    /* EDITOR NÁVODU */
     .guide-editor{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:10;animation:up .25s ease;}
     .guide-editor.open{display:flex;}
     .guide-editor-bar{display:flex;align-items:center;gap:8px;padding:0 12px;height:52px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
@@ -254,41 +285,54 @@
     .ge-save:hover{background:var(--ac2);}
     .ge-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:.85rem;padding:6px;border-radius:6px;transition:all .13s;}
     .ge-del:hover{color:#c0392b;background:var(--bg2);}
-
-    /* Toolbar formátování */
+    .ge-icon-row{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
+    .ge-icon-preview{font-size:1.8rem;width:44px;height:44px;background:var(--bg2);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid var(--bd);transition:border-color .13s;flex-shrink:0;}
+    .ge-icon-preview:hover{border-color:var(--ac);}
+    .ge-icon-label{font-size:.72rem;color:var(--tx3);}
+    .ge-icon-picker{display:none;flex-wrap:wrap;gap:3px;padding:8px;background:var(--bg);border:1px solid var(--bd);border-radius:var(--rs);max-height:130px;overflow-y:auto;margin:0 16px 8px;}
+    .ge-icon-picker.open{display:flex;}
+    .ge-icon-opt{font-size:1.4rem;padding:4px 5px;border-radius:6px;cursor:pointer;border:1.5px solid transparent;transition:all .1s;line-height:1;}
+    .ge-icon-opt:hover{background:var(--bg2);}
+    .ge-icon-opt.sel{background:var(--acbg);border-color:var(--ac2);}
     .ge-toolbar{display:flex;gap:4px;padding:8px 12px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;flex-wrap:wrap;}
     .ge-tool{background:none;border:1px solid var(--bd);border-radius:6px;padding:5px 9px;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;color:var(--tx2);transition:all .13s;line-height:1;}
     .ge-tool:hover{border-color:var(--ac);color:var(--ac);background:var(--acbg);}
-    .ge-tool.active{background:var(--tx);color:#fff;border-color:var(--tx);}
     .ge-tool-sep{width:1px;background:var(--bd);margin:0 2px;align-self:stretch;}
-
-    /* Název návodu (editovatelný) */
     .ge-name-input{width:100%;padding:12px 16px;border:none;border-bottom:1px solid var(--bd);font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;color:var(--tx);background:var(--sf);outline:none;}
     .ge-name-input::placeholder{color:var(--tx3);}
-
-    /* Obrázky toolbar */
-    .ge-img-btn{display:flex;align-items:center;gap:5px;}
     .ge-img-input{display:none;}
-
-    /* Conteneditable oblast */
     .ge-content{flex:1;overflow-y:auto;padding:16px;}
     .ge-editor{min-height:200px;outline:none;font-size:.92rem;line-height:1.7;color:var(--tx);}
     .ge-editor:empty::before{content:attr(data-placeholder);color:var(--tx3);pointer-events:none;}
     .ge-editor h2{font-size:1.1rem;font-weight:700;margin:12px 0 4px;}
-    .ge-editor ul{padding-left:20px;margin:4px 0;}
-    .ge-editor ol{padding-left:20px;margin:4px 0;}
+    .ge-editor ul,.ge-editor ol{padding-left:20px;margin:4px 0;}
     .ge-editor img{max-width:100%;border-radius:8px;margin:8px 0;display:block;}
-    .ge-editor a{color:var(--ac);}
     .ge-uploading{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:.75rem;color:var(--tx3);background:var(--bg2);border-radius:6px;margin:4px 0;}
 
-    /* SETTINGS */
+    /* NASTAVENÍ – editace profilu */
     .s-sec{font-size:.65rem;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px;margin-top:20px;}
     .s-sec:first-child{margin-top:0;}
-    .s-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:11px 13px;display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+    .s-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:11px 13px;display:flex;align-items:center;gap:12px;margin-bottom:8px;cursor:pointer;transition:border-color .13s;}
+    .s-card:hover{border-color:var(--bd2);}
+    .s-card.no-click{cursor:default;}
+    .s-card.no-click:hover{border-color:var(--bd);}
     .s-av{font-size:1.6rem;flex-shrink:0;}
     .s-name{font-weight:500;font-size:.88rem;}
     .s-role{font-size:.68rem;color:var(--tx3);}
     .s-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+    .s-edit-arrow{color:var(--tx3);font-size:.85rem;margin-left:auto;}
+
+    /* Editace profilu – inline panel */
+    .profile-edit{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:20px;margin-top:8px;display:none;}
+    .profile-edit.open{display:block;animation:up .2s ease;}
+    .profile-edit-title{font-size:.88rem;font-weight:600;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+    .pe-close{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:1rem;padding:0;}
+
+    /* PIN change */
+    .pin-change-section{margin-top:16px;padding-top:16px;border-top:1px solid var(--bd);}
+    .pin-change-label{font-size:.68rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;display:block;}
+    .pin-step{display:none;}
+    .pin-step.active{display:block;}
   </style>
 </head>
 <body>
@@ -309,7 +353,7 @@
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-hdr"><span class="modal-title">Nová událost</span><button class="modal-close" onclick="closeModalDirect()">✕</button></div>
+    <div class="modal-hdr"><span class="modal-title" id="modalTitle">Nová událost</span><button class="modal-close" onclick="closeModalDirect()">✕</button></div>
     <div class="modal-body">
       <div class="fg"><label>Za koho</label><select id="evUser"></select></div>
       <div class="fg"><label>Název události</label><input type="text" id="evTitle" placeholder="např. Oslava narozenin" maxlength="60"></div>
@@ -329,13 +373,16 @@
       <div class="fg"><label>Popis <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.72rem">(nepovinné)</span></label><textarea id="evDesc" placeholder="Volitelný popis…"></textarea></div>
       <div id="evMsg"></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-p" onclick="submitEvent()">Uložit událost</button></div>
+    <div class="modal-footer">
+      <button class="btn btn-p" id="evSaveBtn" onclick="submitEvent()">Uložit událost</button>
+      <button class="btn btn-danger" id="evDeleteBtn" onclick="deleteEditingEvent()" style="display:none">Smazat událost</button>
+    </div>
   </div>
 </div>
 
 <!-- HOME -->
 <div class="screen screen-scroll active" id="sHome">
-  <div class="hdr"><svg class="hdr-logo" viewBox="0 0 40 40"><use href="#ic"/></svg><span class="hdr-title">Boršovík</span><span class="hdr-sub">Rodinná chata</span></div>
+  <div class="hdr"><img class="hdr-logo" src="icon.png" onerror="this.style.display='none'" alt=""><span class="hdr-title">Boršovík</span><span class="hdr-sub">Rodinná chata</span></div>
   <div class="home-body">
     <div class="home-label">Kdo jsi?</div>
     <div class="users-grid" id="usersGrid"></div>
@@ -345,7 +392,7 @@
 
 <!-- REGISTRACE -->
 <div class="screen screen-scroll" id="sRegister">
-  <div class="hdr"><svg class="hdr-logo" viewBox="0 0 40 40"><use href="#ic"/></svg><span class="hdr-title">Boršovík</span><span class="hdr-sub">Nový uživatel</span></div>
+  <div class="hdr"><img class="hdr-logo" src="icon.png" onerror="this.style.display='none'" alt=""><span class="hdr-title">Boršovík</span><span class="hdr-sub">Nový uživatel</span></div>
   <div class="wrap"><div class="card">
     <button class="back" onclick="goTo('sHome')">← Zpět</button>
     <div class="card-ttl">Vytvoř si profil</div><div class="card-sub" id="regSub">Boršovík · nový člen</div>
@@ -361,7 +408,7 @@
 
 <!-- LOGIN -->
 <div class="screen screen-scroll" id="sLogin">
-  <div class="hdr"><svg class="hdr-logo" viewBox="0 0 40 40"><use href="#ic"/></svg><span class="hdr-title">Boršovík</span><span class="hdr-sub">Přihlášení</span></div>
+  <div class="hdr"><img class="hdr-logo" src="icon.png" onerror="this.style.display='none'" alt=""><span class="hdr-title">Boršovík</span><span class="hdr-sub">Přihlášení</span></div>
   <div class="wrap"><div class="card">
     <button class="back" onclick="goTo('sHome')">← Zpět</button>
     <div class="lrow"><div class="lav" id="lav"></div><div><div class="lname" id="lname"></div><div class="lhint">Zadej PIN</div></div></div>
@@ -373,13 +420,12 @@
 <!-- APP SHELL -->
 <div class="app-shell" id="appShell">
   <div class="top-bar">
-    <div class="tb-brand"><svg class="tb-logo" viewBox="0 0 40 40"><use href="#ic"/></svg><span class="tb-name">Boršovík</span></div>
+    <div class="tb-brand"><img class="tb-logo" src="icon.png" onerror="this.style.display='none'" alt=""><span class="tb-name">Boršovík</span></div>
     <div class="upill" id="upill" onclick="logout()"><span id="pem"></span><span id="pnm"></span>
       <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6H2M5 9l-3-3 3-3"/></svg>
     </div>
   </div>
   <div class="tab-content">
-
     <!-- KALENDÁŘ -->
     <div class="tab-pane active" id="pane-cal">
       <div class="cal-outer">
@@ -395,65 +441,59 @@
         <div class="cal-grid-wrap"><div class="cal-grid" id="calGrid"></div></div>
         <div class="day-panel" id="dayPanel"></div>
       </div>
-      <button class="fab" onclick="openModal()"><svg viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/></svg></button>
+      <button class="fab" onclick="openModal(null)"><svg viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/></svg></button>
     </div>
-
     <!-- UDÁLOSTI -->
     <div class="tab-pane" id="pane-ev">
-      <div class="ev-filter" id="evFilter">
+      <div class="ev-filter">
         <button class="ev-ftag active" onclick="setEvFilter('all',this)">Vše</button>
         <button class="ev-ftag" onclick="setEvFilter('upcoming',this)">Nadcházející</button>
         <button class="ev-ftag" onclick="setEvFilter('past',this)">Minulé</button>
       </div>
       <div class="ev-list" id="evList"></div>
-      <button class="fab" onclick="openModal()"><svg viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/></svg></button>
+      <button class="fab" onclick="openModal(null)"><svg viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/></svg></button>
     </div>
-
     <!-- ÚKOLY -->
     <div class="tab-pane" id="pane-tasks">
       <div class="task-add-bar">
         <input class="task-input" id="taskInput" type="text" placeholder="Nový úkol…" maxlength="120" onkeydown="if(event.key==='Enter')addTask()">
         <button class="task-add-btn" onclick="addTask()"><svg viewBox="0 0 18 18"><line x1="9" y1="1" x2="9" y2="17"/><line x1="1" y1="9" x2="17" y2="9"/></svg></button>
       </div>
-      <div class="task-assign-row">
-        <span class="task-assign-label">Přiřadit:</span>
-        <select class="task-assign-sel" id="taskAssign"></select>
-      </div>
+      <div class="task-assign-row"><span class="task-assign-label">Přiřadit:</span><select class="task-assign-sel" id="taskAssign"></select></div>
       <div class="task-list" id="taskList"></div>
     </div>
-
     <!-- NÁVODY -->
     <div class="tab-pane" id="pane-guides">
       <div class="guide-list" id="guideList"></div>
-      <!-- EDITOR (overlay uvnitř pane) -->
       <div class="guide-editor" id="guideEditor">
         <div class="guide-editor-bar">
           <button class="ge-back" onclick="closeEditor()">← Zpět</button>
           <div class="ge-title" id="geTitle">Návod</div>
-          <button class="ge-del" id="geDelBtn" onclick="deleteGuide()" title="Smazat návod">🗑</button>
+          <button class="ge-del" id="geDelBtn" onclick="deleteGuide()" title="Smazat">🗑</button>
           <button class="ge-save" onclick="saveGuide()">Uložit</button>
         </div>
         <input class="ge-name-input" id="geName" placeholder="Název návodu…" maxlength="60">
+        <div class="ge-icon-row">
+          <div class="ge-icon-preview" id="geIconPreview" onclick="toggleIconPicker()" title="Vyber ikonu">📋</div>
+          <span class="ge-icon-label">Klikni pro výběr ikony</span>
+        </div>
+        <div class="ge-icon-picker" id="geIconPicker"></div>
         <div class="ge-toolbar">
-          <button class="ge-tool" onclick="fmt('bold')" title="Tučné"><b>B</b></button>
-          <button class="ge-tool" onclick="fmt('italic')" title="Kurzíva"><i>I</i></button>
-          <button class="ge-tool" onclick="fmt('underline')" title="Podtržení"><u>U</u></button>
+          <button class="ge-tool" onclick="fmt('bold')"><b>B</b></button>
+          <button class="ge-tool" onclick="fmt('italic')"><i>I</i></button>
+          <button class="ge-tool" onclick="fmt('underline')"><u>U</u></button>
           <div class="ge-tool-sep"></div>
-          <button class="ge-tool" onclick="fmtBlock('h2')" title="Nadpis">H</button>
-          <button class="ge-tool" onclick="fmt('insertUnorderedList')" title="Seznam">•</button>
-          <button class="ge-tool" onclick="fmt('insertOrderedList')" title="Číslovaný">1.</button>
+          <button class="ge-tool" onclick="fmtBlock('h2')">H</button>
+          <button class="ge-tool" onclick="fmt('insertUnorderedList')">•</button>
+          <button class="ge-tool" onclick="fmt('insertOrderedList')">1.</button>
           <div class="ge-tool-sep"></div>
-          <button class="ge-tool ge-img-btn" onclick="document.getElementById('geImgInput').click()">
-            📷 Foto
-          </button>
+          <button class="ge-tool" onclick="document.getElementById('geImgInput').click()">📷 Foto</button>
           <input type="file" id="geImgInput" class="ge-img-input" accept="image/*" onchange="uploadImage(event)">
         </div>
-        <div class="ge-content">
-          <div class="ge-editor" id="geEditor" contenteditable="true" data-placeholder="Napiš návod… Použij toolbar pro formátování nebo přidej fotku."></div>
-        </div>
+        <div class="ge-content"><div class="ge-editor" id="geEditor" contenteditable="true" data-placeholder="Napiš návod…"></div></div>
       </div>
     </div>
-
+    <!-- NASTAVENÍ -->
     <div class="tab-pane" id="pane-settings"><div class="pane-scroll" id="si"></div></div>
   </div>
   <nav class="tab-bar">
@@ -467,24 +507,25 @@
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import{getFirestore,collection,getDocs,addDoc,deleteDoc,updateDoc,doc,query,orderBy,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import{getStorage,ref,uploadBytes,getDownloadURL,deleteObject}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+import{getFirestore,collection,getDocs,addDoc,deleteDoc,updateDoc,doc,query,orderBy,where,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{getStorage,ref,uploadBytes,getDownloadURL}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const fb={apiKey:"AIzaSyA6dUhVOqwjTkjc0jD7bVGdSuzmevpFIK4",authDomain:"borsovik-a6116.firebaseapp.com",projectId:"borsovik-a6116",storageBucket:"borsovik-a6116.firebasestorage.app",messagingSenderId:"1056113485657",appId:"1:1056113485657:web:e3336a8bfd865baecece48"};
 const app=initializeApp(fb);
 const db=getFirestore(app);
 const storage=getStorage(app);
 
-const EM=['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😗','😚','😙','🥲','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','🤐','🤨','😐','😑','😶','😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤧','🥵','🥶','🥴','😵','🤯','🤠','🥳','🥸','😎','🤓','🧐','😕','😟','🙁','☹️','😮','😯','😲','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀','💩','🤡','👹','👺','👻','👽','👾','🤖','😺','😸','😹','😻','😼','😽','🙀','😿','😾','🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐻‍❄️','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🙈','🙉','🙊','🐔','🐧','🐦','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷','🦂','🐢','🐍','🦎','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🦭','🐊','🦓','🦍','🦧','🦣','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦬','🐄','🐎','🐖','🐏','🐑','🦙','🐐','🦌','🐕','🐩','🦮','🐈','🐈‍⬛','🐓','🦃','🦤','🦚','🦜','🦢','🦩','🕊','🐇','🦝','🦨','🦡','🦫','🦦','🦥','🐁','🐀','🐿','🦔','🌵','🎄','🌲','🌳','🌴','🌱','🌿','☘️','🍀','🍃','🍂','🍁','🍄','🌾','💐','🌷','🌹','🥀','🌺','🌸','🌼','🌻','🌞','🌝','🌛','🌜','🌚','🌕','🌙','🌟','💫','⭐','🌠','☀️','⛅','🌦','🌧','⛈','🌩','🌨','❄️','☃️','⛄','💨','💧','💦','🌊','🔥','🌈','⚡','🍎','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶','🧄','🧅','🥔','🍠','🥐','🍞','🥖','🧀','🥚','🍳','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥙','🌮','🌯','🥗','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍘','🍥','🧁','🍰','🎂','🍭','🍬','🍫','🍿','🍩','🍪','☕','🍵','🫖','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🍾','🏠','🏡','🏢','🏥','🏦','🏨','🏪','🏫','🏬','🏭','🏯','🏰','🗼','🗽','⛪','🌃','🌄','🌅','🌆','🌇','🌉','🚂','🚌','🚑','🚒','🚓','🚕','🚗','🚙','🛻','🚚','🚛','🚜','🏎','🏍','🛵','🚲','🛴','🛹','⛵','🚤','🛥','🚢','✈️','🚁','🚀','🛸','🎆','🎇','🎃','🎄','🎀','🎁','🏆','🥇','🥈','🥉','🏅','🎭','🎨','🎬','🎤','🎧','🎵','🎶','🎹','🥁','🎷','🎺','🎸','🎻','🎲','♟','🎯','🎳','🎮','🧩','⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🎱','🏓','🏸','🏒','🏑','⛳','🎣','🥊','🥋'];
+const EM=['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😗','😚','😙','🥲','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','🤐','🤨','😐','😑','😶','😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤧','🥵','🥶','🥴','😵','🤯','🤠','🥳','🥸','😎','🤓','🧐','😕','😟','🙁','☹️','😮','😯','😲','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀','💩','🤡','👹','👺','👻','👽','👾','🤖','😺','😸','😹','😻','😼','😽','🙀','😿','😾','🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🙈','🙉','🙊','🐔','🐧','🐦','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷','🦂','🐢','🐍','🦎','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🦭','🐊','🦓','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦬','🐄','🐎','🐖','🐏','🐑','🦙','🐐','🦌','🐕','🐩','🐈','🐓','🦃','🦚','🦜','🦢','🦩','🕊','🐇','🦝','🦡','🦫','🦦','🦥','🐁','🐀','🐿','🦔','🌵','🎄','🌲','🌳','🌴','🌱','🌿','☘️','🍀','🍃','🍂','🍁','🍄','🌾','💐','🌷','🌹','🥀','🌺','🌸','🌼','🌻','🌞','🌝','🌛','🌜','🌚','🌕','🌙','🌟','💫','⭐','🌠','☀️','⛅','🌦','🌧','⛈','🌩','🌨','❄️','☃️','⛄','💨','💧','💦','🌊','🔥','🌈','⚡','🍎','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶','🧄','🧅','🥔','🍠','🥐','🍞','🥖','🧀','🥚','🍳','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥙','🌮','🌯','🥗','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍘','🍥','🧁','🍰','🎂','🍭','🍬','🍫','🍿','🍩','🍪','☕','🍵','🫖','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🍾','🏠','🏡','🏢','🏥','🏦','🏨','🏪','🏫','🏬','🏭','🏯','🏰','🗼','🗽','⛪','🌃','🌄','🌅','🌆','🌇','🌉','🚂','🚌','🚑','🚒','🚓','🚕','🚗','🚙','🛻','🚚','🚛','🚜','🏎','🏍','🛵','🚲','🛴','🛹','⛵','🚤','🛥','🚢','✈️','🚁','🚀','🛸','🎆','🎇','🎃','🎄','🎀','🎁','🏆','🥇','🥈','🥉','🏅','🎭','🎨','🎬','🎤','🎧','🎵','🎶','🎹','🥁','🎷','🎺','🎸','🎻','🎲','♟','🎯','🎳','🎮','🧩','⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🎱','🏓','🏸','🏒','🏑','⛳','🎣','🥊','🥋','🔑','🔒','🔓','🔧','🔨','⚙️','🛠️','📋','📖','📱','💻','📡','🔔','🌡️','💧','🚿','🧹','🧺','🧻','🧼'];
 const CO=['#c0392b','#e67e22','#d4ac0d','#27ae60','#16a085','#2980b9','#8e44ad','#e91e63','#00838f','#558b2f','#ff5722','#546e7a','#6d4c41','#2d5a27','#1565c0'];
 const MCS=['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
 const MCS_SHORT=['Led','Úno','Bře','Dub','Kvě','Čer','Črc','Srp','Zář','Říj','Lis','Pro'];
 const DCS=['neděle','pondělí','úterý','středa','čtvrtek','pátek','sobota'];
-const GUIDE_ICONS=['📋','🔔','🌡️','💧','🌐','🔑','⚡','🔧','🏠','📖','🍳','🚗','🛠️','📱','🔒'];
 
 let _u=[],_cur=null,_lt=null,_lp='',_rp1='',_rp2='',_p1d=false,_se=EM[0],_sc=CO[0];
-let _calDate=new Date(),_holidays={},_events=[],_tasks=[],_guides=[],_selDate=null,_evFilter='all';
-let _editingGuideId=null;
+let _calDate=new Date(),_holidays={},_events=[],_tasks=[],_guides=[],_comments={},_selDate=null,_evFilter='all';
+let _editingEventId=null,_editingGuideId=null,_selectedIcon='📋';
+// Profile edit state
+let _peUserId=null,_peSe='',_peSc='',_peP1='',_peP2='',_peP1done=false,_pePinStep=0;
 
 async function h256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
 const V=v=>document.getElementById('veil').style.display=v?'flex':'none';
@@ -524,7 +565,6 @@ function renderG(){
     b.onclick=()=>openL(u);g.appendChild(b);
   });
 }
-
 window.openL=function(u){
   _lt=u;_lp='';
   const a=document.getElementById('lav');a.textContent=u.emoji;a.style.setProperty('--uc',u.color);
@@ -583,22 +623,32 @@ async function loadTasks(){
 async function loadGuides(){
   try{const snap=await getDocs(query(collection(db,'guides'),orderBy('updatedAt','desc')));_guides=snap.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);}
 }
-
+async function loadComments(eventId){
+  try{
+    const snap=await getDocs(query(collection(db,'comments'),where('eventId','==',eventId),orderBy('createdAt')));
+    _comments[eventId]=snap.docs.map(d=>({id:d.id,...d.data()}));
+  }catch(e){_comments[eventId]=[];}
+}
 function eventsForDate(ds){return _events.filter(e=>e.dateStart<=ds&&e.dateEnd>=ds);}
 
 // MODAL UDÁLOST
-window.openModal=function(){
+window.openModal=function(eventId){
+  _editingEventId=eventId;
+  const ev=eventId?_events.find(e=>e.id===eventId):null;
   const preDate=_selDate||ymd(new Date());
+  document.getElementById('modalTitle').textContent=ev?'Upravit událost':'Nová událost';
+  document.getElementById('evSaveBtn').textContent=ev?'Uložit změny':'Uložit událost';
+  document.getElementById('evDeleteBtn').style.display=ev&&_cur&&(_cur.isAdmin||_cur.id===ev.userId)?'flex':'none';
   const sel=document.getElementById('evUser');
   sel.innerHTML=_u.map(u=>`<option value="${u.id}">${u.emoji} ${u.name}</option>`).join('');
-  if(_cur)sel.value=_cur.id;
-  document.getElementById('evDateStart').value=preDate;
-  document.getElementById('evDateEnd').value=preDate;
-  document.getElementById('evArrival').value='';
-  document.getElementById('evDepart').value='';
-  document.getElementById('evTitle').value='';
-  document.getElementById('evGuests').value='';
-  document.getElementById('evDesc').value='';
+  sel.value=ev?ev.userId:(_cur?_cur.id:(_u[0]?.id||''));
+  document.getElementById('evTitle').value=ev?ev.title:'';
+  document.getElementById('evDateStart').value=ev?ev.dateStart:preDate;
+  document.getElementById('evDateEnd').value=ev?ev.dateEnd:preDate;
+  document.getElementById('evArrival').value=ev?(ev.arrivalTime||''):'';
+  document.getElementById('evDepart').value=ev?(ev.departTime||''):'';
+  document.getElementById('evGuests').value=ev?(ev.guests||''):'';
+  document.getElementById('evDesc').value=ev?(ev.desc||''):'';
   document.getElementById('evMsg').innerHTML='';
   document.getElementById('modalBackdrop').classList.add('open');
 };
@@ -617,15 +667,107 @@ window.submitEvent=async function(){
   if(!dateStart||!dateEnd){M('evMsg','Zadej datum');return;}
   if(dateEnd<dateStart){M('evMsg','Datum „do" nesmí být před „od"');return;}
   V(true);
-  try{await addDoc(collection(db,'events'),{userId,title,dateStart,dateEnd,arrivalTime:arrival||null,departTime:depart||null,guests:guests||null,desc:desc||null,createdAt:serverTimestamp()});await loadEvents();closeModalDirect();renderCal();renderEvList();}
-  catch(e){M('evMsg','Chyba: '+e.message);}V(false);
+  try{
+    const data={userId,title,dateStart,dateEnd,arrivalTime:arrival||null,departTime:depart||null,guests:guests||null,desc:desc||null};
+    if(_editingEventId){await updateDoc(doc(db,'events',_editingEventId),data);}
+    else{await addDoc(collection(db,'events'),{...data,createdAt:serverTimestamp()});}
+    await loadEvents();closeModalDirect();renderCal();renderEvList();
+    if(_selDate)renderDayPanel(_selDate);
+  }catch(e){M('evMsg','Chyba: '+e.message);}V(false);
 };
-window.deleteEvent=async function(id,ownerId){
+window.deleteEditingEvent=async function(){
+  if(!_editingEventId)return;
+  const ev=_events.find(e=>e.id===_editingEventId);
+  if(!ev||!(_cur&&(_cur.isAdmin||_cur.id===ev.userId))){alert('Nemůžeš mazat cizí události.');return;}
+  if(!confirm('Smazat tuto událost?'))return;
+  V(true);
+  try{await deleteDoc(doc(db,'events',_editingEventId));await loadEvents();closeModalDirect();renderCal();renderEvList();if(_selDate)renderDayPanel(_selDate);}
+  catch(e){alert('Chyba: '+e.message);}V(false);
+};
+window.deleteEvDirect=async function(id,ownerId){
   if(!(_cur&&(_cur.isAdmin||_cur.id===ownerId))){alert('Nemůžeš mazat cizí události.');return;}
   if(!confirm('Smazat tuto událost?'))return;
   V(true);
   try{await deleteDoc(doc(db,'events',id));await loadEvents();renderCal();renderEvList();}catch(e){alert('Chyba: '+e.message);}V(false);
 };
+
+// ═══ KOMENTÁŘE ═══
+window.toggleComments=async function(eventId,el){
+  const wrap=document.getElementById('cw-'+eventId);
+  if(!wrap)return;
+  const isOpen=wrap.style.display!=='none';
+  if(isOpen){wrap.style.display='none';el.textContent='Komentáře ▸';return;}
+  await loadComments(eventId);
+  renderCommentsIn(eventId);
+  wrap.style.display='block';
+  el.textContent='Komentáře ▾';
+};
+
+function renderCommentsIn(eventId){
+  const wrap=document.getElementById('cw-'+eventId);
+  if(!wrap)return;
+  const list=_comments[eventId]||[];
+  let html='';
+  list.forEach(c=>{
+    const author=_u.find(u=>u.id===c.userId);
+    const canDel=_cur&&(_cur.isAdmin||_cur.id===c.userId);
+    html+=`<div class="comment-item">
+      <div class="comment-avatar">${author?author.emoji:'?'}</div>
+      <div class="comment-body">
+        <div class="comment-author">${author?author.name:'?'} ${canDel?`<button class="comment-del" onclick="deleteComment('${c.id}','${eventId}')">✕</button>`:''}</div>
+        <div class="comment-text">${c.text}</div>
+      </div>
+    </div>`;
+  });
+  html+=`<div class="comment-form">
+    <input class="comment-input" id="ci-${eventId}" placeholder="Přidej komentář…" maxlength="300" onkeydown="if(event.key==='Enter')submitComment('${eventId}')">
+    <button class="comment-submit" onclick="submitComment('${eventId}')">Odeslat</button>
+  </div>`;
+  wrap.querySelector('.comments-wrap').innerHTML=html;
+}
+
+window.submitComment=async function(eventId){
+  const inp=document.getElementById('ci-'+eventId);
+  if(!inp)return;
+  const text=inp.value.trim();
+  if(!text||!_cur)return;
+  try{
+    await addDoc(collection(db,'comments'),{eventId,userId:_cur.id,text,createdAt:serverTimestamp()});
+    await loadComments(eventId);renderCommentsIn(eventId);
+  }catch(e){alert('Chyba: '+e.message);}
+};
+window.deleteComment=async function(id,eventId){
+  if(!confirm('Smazat komentář?'))return;
+  try{await deleteDoc(doc(db,'comments',id));await loadComments(eventId);renderCommentsIn(eventId);}
+  catch(e){alert('Chyba: '+e.message);}
+};
+
+function evHtml(ev,commentsClass){
+  const owner=_u.find(u=>u.id===ev.userId);
+  const color=owner?owner.color:'#888';
+  const canEdit=_cur&&(_cur.isAdmin||_cur.id===ev.userId);
+  let meta=owner?`${owner.emoji} ${owner.name}`:'';
+  if(ev.arrivalTime)meta+=` · příjezd ${ev.arrivalTime}`;
+  if(ev.departTime)meta+=` · odjezd ${ev.departTime}`;
+  if(ev.guests)meta+=` · ${ev.guests}`;
+  if(ev.dateStart!==ev.dateEnd)meta+=` · ${ev.dateStart} – ${ev.dateEnd}`;
+  return `
+    <div class="day-evt-main">
+      <div class="day-evt-dot" style="background:${color}"></div>
+      <div class="day-evt-body">
+        <div class="day-evt-title">${ev.title}</div>
+        <div class="day-evt-meta">${meta}</div>
+        ${ev.desc?`<div class="day-evt-meta" style="margin-top:3px;font-style:italic">${ev.desc}</div>`:''}
+      </div>
+    </div>
+    <div class="day-evt-actions">
+      ${canEdit?`<button class="day-evt-action-btn edit" onclick="openModal('${ev.id}')">✏️ Upravit</button>
+      <button class="day-evt-action-btn del" onclick="deleteEvDirect('${ev.id}','${ev.userId}')">🗑 Smazat</button>`:''}
+    </div>
+    <button class="comments-toggle" onclick="toggleComments('${ev.id}',this)">Komentáře ▸</button>
+    <div id="cw-${ev.id}" style="display:none"><div class="${commentsClass} comments-wrap"></div></div>
+  `;
+}
 
 // UDÁLOSTI SEZNAM
 window.setEvFilter=function(f,el){
@@ -648,21 +790,29 @@ function renderEvList(){
     const owner=_u.find(u=>u.id===ev.userId);
     const color=owner?owner.color:'#888';
     const isPast=ev.dateEnd<today;
-    const canDel=_cur&&(_cur.isAdmin||_cur.id===ev.userId);
+    const canEdit=_cur&&(_cur.isAdmin||_cur.id===ev.userId);
     let meta='';
     if(ev.arrivalTime)meta+=`příjezd ${ev.arrivalTime}`;
     if(ev.departTime)meta+=(meta?' · ':'')+`odjezd ${ev.departTime}`;
     if(ev.guests)meta+=(meta?' · ':'')+ev.guests;
+    if(ev.dateStart!==ev.dateEnd){const d2=new Date(ev.dateEnd+'T12:00:00');meta+=(meta?' · ':'')+`${ev.dateStart} – ${ev.dateEnd}`;}
     html+=`<div class="ev-item${isPast?' past':''}">
-      <div class="ev-color-bar" style="background:${color}"></div>
-      <div class="ev-date-col"><div class="ev-day">${d.getDate()}</div><div class="ev-mon">${MCS_SHORT[d.getMonth()]}</div></div>
-      <div class="ev-body">
-        <div class="ev-title">${ev.title}</div>
-        ${meta?`<div class="ev-meta">${meta}</div>`:''}
-        ${ev.desc?`<div class="ev-meta" style="font-style:italic;margin-top:2px">${ev.desc}</div>`:''}
-        <div class="ev-owner"><span>${owner?owner.emoji:''}</span><span>${owner?owner.name:''}</span></div>
-        ${canDel?`<button class="day-evt-del" onclick="deleteEvent('${ev.id}','${ev.userId}')">🗑 Smazat</button>`:''}
+      <div class="ev-item-main">
+        <div class="ev-color-bar" style="background:${color}"></div>
+        <div class="ev-date-col"><div class="ev-day">${d.getDate()}</div><div class="ev-mon">${MCS_SHORT[d.getMonth()]}</div></div>
+        <div class="ev-body">
+          <div class="ev-title">${ev.title}</div>
+          ${meta?`<div class="ev-meta">${meta}</div>`:''}
+          ${ev.desc?`<div class="ev-meta" style="font-style:italic;margin-top:2px">${ev.desc}</div>`:''}
+          <div class="ev-owner"><span>${owner?owner.emoji:''}</span><span>${owner?owner.name:''}</span></div>
+        </div>
       </div>
+      <div class="ev-actions">
+        ${canEdit?`<button class="ev-act-btn edit" onclick="openModal('${ev.id}')">✏️ Upravit</button>
+        <button class="ev-act-btn del" onclick="deleteEvDirect('${ev.id}','${ev.userId}')">🗑 Smazat</button>`:''}
+      </div>
+      <button class="comments-toggle" onclick="toggleComments('${ev.id}',this)">Komentáře ▸</button>
+      <div id="cw-${ev.id}" style="display:none"><div class="ev-comments comments-wrap"></div></div>
     </div>`;
   });
   el.innerHTML=html;
@@ -720,107 +870,241 @@ function taskHTML(t){
   </div>`;
 }
 
-// ═══ NÁVODY ═══
+// NÁVODY
+function buildIconPicker(){
+  const picker=document.getElementById('geIconPicker');picker.innerHTML='';
+  EM.forEach(em=>{
+    const s=document.createElement('span');s.className='ge-icon-opt'+(em===_selectedIcon?' sel':'');s.textContent=em;
+    s.onclick=()=>{picker.querySelectorAll('.ge-icon-opt').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');_selectedIcon=em;document.getElementById('geIconPreview').textContent=em;picker.classList.remove('open');};
+    picker.appendChild(s);
+  });
+}
+window.toggleIconPicker=function(){const p=document.getElementById('geIconPicker');p.classList.toggle('open');if(p.classList.contains('open'))buildIconPicker();};
 function renderGuideList(){
   const el=document.getElementById('guideList');
-  let html=`<button class="guide-add-btn" onclick="openEditor(null)">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="7" y1="0" x2="7" y2="14"/><line x1="0" y1="7" x2="14" y2="7"/></svg>
-    Přidat návod
-  </button>`;
-  if(!_guides.length){
-    html+=`<div class="guide-empty">Žádné návody · přidej první kliknutím výše</div>`;
-  }else{
-    _guides.forEach(g=>{
-      const icon=g.icon||'📋';
-      const updated=g.updatedAt?.toDate?g.updatedAt.toDate():null;
-      const meta=updated?`Upraveno ${updated.getDate()}. ${updated.getMonth()+1}. ${updated.getFullYear()}`:'';
-      html+=`<div class="guide-card" onclick="openEditor('${g.id}')">
-        <div class="guide-icon">${icon}</div>
-        <div class="guide-info">
-          <div class="guide-name">${g.name||'Bez názvu'}</div>
-          ${meta?`<div class="guide-meta">${meta}</div>`:''}
-        </div>
-        <div class="guide-arrow">›</div>
-      </div>`;
-    });
-  }
+  let html=`<button class="guide-add-btn" onclick="openEditor(null)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="7" y1="0" x2="7" y2="14"/><line x1="0" y1="7" x2="14" y2="7"/></svg>Přidat návod</button>`;
+  if(!_guides.length){html+=`<div class="guide-empty">Žádné návody · přidej první kliknutím výše</div>`;}
+  else{_guides.forEach(g=>{
+    const icon=g.icon||'📋';
+    const updated=g.updatedAt?.toDate?g.updatedAt.toDate():null;
+    const meta=updated?`Upraveno ${updated.getDate()}. ${updated.getMonth()+1}. ${updated.getFullYear()}`:'';
+    html+=`<div class="guide-card" onclick="openEditor('${g.id}')"><div class="guide-icon">${icon}</div><div class="guide-info"><div class="guide-name">${g.name||'Bez názvu'}</div>${meta?`<div class="guide-meta">${meta}</div>`:''}</div><div class="guide-arrow">›</div></div>`;
+  });}
   el.innerHTML=html;
 }
-
 window.openEditor=function(id){
   _editingGuideId=id;
-  const editor=document.getElementById('guideEditor');
   const guide=id?_guides.find(g=>g.id===id):null;
+  _selectedIcon=guide?guide.icon||'📋':'📋';
   document.getElementById('geName').value=guide?guide.name||'':'';
   document.getElementById('geTitle').textContent=guide?guide.name||'Návod':'Nový návod';
   document.getElementById('geEditor').innerHTML=guide?guide.content||'':'';
+  document.getElementById('geIconPreview').textContent=_selectedIcon;
   document.getElementById('geDelBtn').style.display=id?'block':'none';
-  editor.classList.add('open');
+  document.getElementById('geIconPicker').classList.remove('open');
+  document.getElementById('guideEditor').classList.add('open');
 };
-window.closeEditor=function(){
-  document.getElementById('guideEditor').classList.remove('open');
-};
-
-// Formátování
+window.closeEditor=function(){document.getElementById('guideEditor').classList.remove('open');};
 window.fmt=function(cmd){document.getElementById('geEditor').focus();document.execCommand(cmd,false,null);};
 window.fmtBlock=function(tag){document.getElementById('geEditor').focus();document.execCommand('formatBlock',false,tag);};
-
-// Nahrávání obrázku
 window.uploadImage=async function(e){
-  const file=e.target.files[0];
-  if(!file)return;
-  // Max 5MB
+  const file=e.target.files[0];if(!file)return;
   if(file.size>5*1024*1024){alert('Obrázek je příliš velký (max 5 MB).');return;}
-  const editor=document.getElementById('geEditor');
-  editor.focus();
-  // Placeholder
-  const placeholder=document.createElement('div');
-  placeholder.className='ge-uploading';
-  placeholder.textContent='⏳ Nahrávám obrázek…';
+  const editor=document.getElementById('geEditor');editor.focus();
+  const ph=document.createElement('div');ph.className='ge-uploading';ph.textContent='⏳ Nahrávám obrázek…';
   const sel=window.getSelection();
-  if(sel&&sel.rangeCount){sel.getRangeAt(0).insertNode(placeholder);}
-  else{editor.appendChild(placeholder);}
+  if(sel&&sel.rangeCount){sel.getRangeAt(0).insertNode(ph);}else{editor.appendChild(ph);}
   try{
     const path=`guides/${Date.now()}_${file.name.replace(/[^a-z0-9.]/gi,'_')}`;
     const storageRef=ref(storage,path);
     await uploadBytes(storageRef,file);
     const url=await getDownloadURL(storageRef);
-    placeholder.remove();
-    document.execCommand('insertHTML',false,`<img src="${url}" alt="foto">`);
-  }catch(err){
-    placeholder.remove();
-    alert('Chyba nahrávání: '+err.message);
-  }
+    ph.remove();document.execCommand('insertHTML',false,`<img src="${url}" alt="foto">`);
+  }catch(err){ph.remove();alert('Chyba nahrávání: '+err.message);}
   e.target.value='';
 };
-
 window.saveGuide=async function(){
   const name=document.getElementById('geName').value.trim()||'Bez názvu';
   const content=document.getElementById('geEditor').innerHTML;
-  // Vyber ikonu podle názvu
-  const iconMap={alarm:'🔔',topení:'🌡️',topen:'🌡️',voda:'💧',internet:'🌐',klíč:'🔑',klic:'🔑',elektrik:'⚡',oprav:'🔧',bezpečnost:'🔒'};
-  let icon='📋';
-  const nameLow=name.toLowerCase();
-  for(const[k,v]of Object.entries(iconMap)){if(nameLow.includes(k)){icon=v;break;}}
+  const icon=_selectedIcon;
   V(true);
   try{
-    if(_editingGuideId){
-      await updateDoc(doc(db,'guides',_editingGuideId),{name,content,icon,updatedAt:serverTimestamp()});
-    }else{
-      await addDoc(collection(db,'guides'),{name,content,icon,createdBy:_cur?_cur.id:null,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
-    }
-    await loadGuides();renderGuideList();
-    document.getElementById('geTitle').textContent=name;
-    closeEditor();
+    if(_editingGuideId){await updateDoc(doc(db,'guides',_editingGuideId),{name,content,icon,updatedAt:serverTimestamp()});}
+    else{await addDoc(collection(db,'guides'),{name,content,icon,createdBy:_cur?_cur.id:null,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});}
+    await loadGuides();renderGuideList();closeEditor();
   }catch(e){alert('Chyba: '+e.message);}V(false);
 };
-
 window.deleteGuide=async function(){
   if(!_editingGuideId)return;
   if(!confirm('Smazat tento návod?'))return;
   V(true);
   try{await deleteDoc(doc(db,'guides',_editingGuideId));await loadGuides();renderGuideList();closeEditor();}
   catch(e){alert('Chyba: '+e.message);}V(false);
+};
+
+// ═══ NASTAVENÍ + EDITACE PROFILU ═══
+function renderS(){
+  const u=_cur;
+  let h=`<div class="s-sec">Přihlášen jako</div>`;
+  // Vlastní profil – vždy editovatelný
+  h+=userProfileCard(u,true);
+  if(u.isAdmin&&_u.length>1){
+    h+=`<div class="s-sec">Ostatní uživatelé</div>`;
+    _u.filter(x=>x.id!==u.id).forEach(x=>{h+=userProfileCard(x,true);});
+  }
+  h+=`<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div>
+      <p style="margin-top:14px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík</p>
+      <p style="margin-top:5px;text-align:center;font-size:.66rem;color:var(--tx3);letter-spacing:1px">v 1.08</p>`;
+  document.getElementById('si').innerHTML=h;
+  // Bind emoji + color pickers pro každý profil
+  _u.forEach(u2=>{
+    if(!document.getElementById('pe-ebox-'+u2.id))return;
+    buildProfileEbox(u2.id,u2.emoji);
+    buildProfileColors(u2.id,u2.color);
+    buildProfilePinPad(u2.id);
+  });
+}
+
+function userProfileCard(u,editable){
+  return`<div class="s-card${editable?'':' no-click'}" onclick="${editable?`toggleProfileEdit('${u.id}')`:''}" >
+    <div class="s-av">${u.emoji}</div>
+    <div style="flex:1"><div class="s-name">${u.name}${u.isAdmin?' 👑':''}</div><div class="s-role">${u.isAdmin?'Admin':'Uživatel'}</div></div>
+    <div class="s-dot" style="background:${u.color}"></div>
+    ${editable?'<div class="s-edit-arrow">✏️</div>':''}
+  </div>
+  <div class="profile-edit" id="pe-${u.id}">
+    <div class="profile-edit-title">
+      Upravit profil
+      <button class="pe-close" onclick="toggleProfileEdit('${u.id}')">✕</button>
+    </div>
+    <div class="fg"><label>Jméno</label><input type="text" id="pe-name-${u.id}" value="${u.name}" maxlength="20" autocomplete="off"></div>
+    <div class="fg"><label>Avatar</label><div class="ebox" id="pe-ebox-${u.id}"></div></div>
+    <div class="fg"><label>Barva</label><div class="crow" id="pe-crow-${u.id}"></div></div>
+    <div class="pin-change-section">
+      <span class="pin-change-label">Změna PINu</span>
+      <div class="pin-step active" id="pe-pin-step0-${u.id}">
+        <button class="btn btn-g" style="margin-top:0" onclick="startPinChange('${u.id}')">Změnit PIN</button>
+      </div>
+      <div class="pin-step" id="pe-pin-step1-${u.id}">
+        <label class="pin-change-label">Nový PIN</label>
+        <div class="pdots" id="pe-pd1-${u.id}"></div>
+        <div class="ppad" id="pe-pp1-${u.id}"></div>
+      </div>
+      <div class="pin-step" id="pe-pin-step2-${u.id}">
+        <label class="pin-change-label">Potvrď PIN</label>
+        <div class="pdots" id="pe-pd2-${u.id}"></div>
+        <div class="ppad" id="pe-pp2-${u.id}"></div>
+      </div>
+    </div>
+    <div id="pe-msg-${u.id}"></div>
+    <button class="btn btn-p" style="margin-top:12px" onclick="saveProfile('${u.id}')">Uložit změny</button>
+  </div>`;
+}
+
+window.toggleProfileEdit=function(uid){
+  const panel=document.getElementById('pe-'+uid);
+  const isOpen=panel.classList.contains('open');
+  // Zavři všechny ostatní
+  document.querySelectorAll('.profile-edit.open').forEach(p=>p.classList.remove('open'));
+  if(!isOpen)panel.classList.add('open');
+};
+
+function buildProfileEbox(uid,currentEmoji){
+  const eb=document.getElementById('pe-ebox-'+uid);if(!eb)return;
+  eb.innerHTML='';
+  EM.forEach(em=>{
+    const s=document.createElement('span');
+    s.className='eo'+(em===currentEmoji?' sel':'');
+    s.textContent=em;
+    s.onclick=()=>{eb.querySelectorAll('.eo').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');};
+    eb.appendChild(s);
+  });
+}
+function buildProfileColors(uid,currentColor){
+  const cr=document.getElementById('pe-crow-'+uid);if(!cr)return;
+  cr.innerHTML='';
+  CO.forEach(c=>{
+    const d=document.createElement('div');
+    d.className='csw'+(c===currentColor?' sel':'');
+    d.style.background=c;
+    d.onclick=()=>{cr.querySelectorAll('.csw').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');};
+    cr.appendChild(d);
+  });
+}
+function buildProfilePinPad(uid){
+  // Reset pin steps
+  ['pe-pin-step0','pe-pin-step1','pe-pin-step2'].forEach((s,i)=>{
+    const el=document.getElementById(s+'-'+uid);
+    if(el){el.className='pin-step'+(i===0?' active':'');}
+  });
+}
+
+window.startPinChange=function(uid){
+  _peP1='';_peP2='';_peP1done=false;
+  const s0=document.getElementById('pe-pin-step0-'+uid);
+  const s1=document.getElementById('pe-pin-step1-'+uid);
+  if(s0)s0.className='pin-step';
+  if(s1)s1.className='pin-step active';
+  D('pe-pd1-'+uid,'');
+  P('pe-pp1-'+uid,
+    (d)=>{
+      if(_peP1.length>=4)return;_peP1+=d;D('pe-pd1-'+uid,_peP1);
+      if(_peP1.length===4){
+        _peP1done=true;
+        s1.className='pin-step';
+        const s2=document.getElementById('pe-pin-step2-'+uid);
+        if(s2)s2.className='pin-step active';
+        D('pe-pd2-'+uid,'');
+        P('pe-pp2-'+uid,
+          (d2)=>{
+            if(_peP2.length>=4)return;_peP2+=d2;D('pe-pd2-'+uid,_peP2);
+            if(_peP2.length===4){
+              if(_peP1!==_peP2){
+                document.getElementById('pe-pd2-'+uid).classList.add('shake');
+                setTimeout(()=>document.getElementById('pe-pd2-'+uid).classList.remove('shake'),380);
+                M('pe-msg-'+uid,'PINy se neshodují');
+                _peP2='';D('pe-pd2-'+uid,_peP2);
+              }else{
+                M('pe-msg-'+uid,'PIN potvrzen ✓','o');
+              }
+            }
+          },
+          ()=>{_peP2=_peP2.slice(0,-1);D('pe-pd2-'+uid,_peP2);}
+        );
+      }
+    },
+    ()=>{_peP1=_peP1.slice(0,-1);D('pe-pd1-'+uid,_peP1);}
+  );
+};
+
+window.saveProfile=async function(uid){
+  const nameEl=document.getElementById('pe-name-'+uid);
+  const name=nameEl?nameEl.value.trim():'';
+  if(!name){M('pe-msg-'+uid,'Zadej jméno');return;}
+  if(_u.some(u=>u.id!==uid&&u.name.toLowerCase()===name.toLowerCase())){M('pe-msg-'+uid,'Jméno je již obsazené');return;}
+  const ebox=document.getElementById('pe-ebox-'+uid);
+  const selEm=ebox?ebox.querySelector('.eo.sel')?.textContent:null;
+  const crow=document.getElementById('pe-crow-'+uid);
+  const selCol=crow?crow.querySelector('.csw.sel')?.style.background:null;
+  const updateData={name};
+  if(selEm)updateData.emoji=selEm;
+  if(selCol)updateData.color=selCol;
+  if(_peP1&&_peP1===_peP2&&_peP1.length===4){
+    updateData.pinHash=await h256(_peP1);
+  }
+  V(true);
+  try{
+    await updateDoc(doc(db,'users',uid),updateData);
+    await loadU();
+    // Pokud editujeme sebe, aktualizuj session
+    if(_cur&&_cur.id===uid){
+      _cur={..._cur,...updateData};
+      localStorage.setItem('borsovikUser',JSON.stringify({id:_cur.id}));
+      document.getElementById('pem').textContent=_cur.emoji;
+      document.getElementById('pnm').textContent=_cur.name;
+    }
+    renderS();
+  }catch(e){M('pe-msg-'+uid,'Chyba: '+e.message);}V(false);
 };
 
 // KALENDÁŘ
@@ -867,6 +1151,7 @@ async function renderCal(){
   }
   renderDayPanel(_selDate);
 }
+
 function renderDayPanel(ds){
   const panel=document.getElementById('dayPanel');
   const evts=eventsForDate(ds);
@@ -877,29 +1162,13 @@ function renderDayPanel(ds){
   if(hol&&evts.length===0)html+=`<div class="day-hol-item"><span style="font-size:.9rem">🎉</span><span class="day-hol-name">${hol}</span></div>`;
   if(!hol&&evts.length===0)html+=`<div class="day-panel-empty">Žádné události · klikni + pro přidání</div>`;
   evts.forEach(ev=>{
-    const owner=_u.find(u=>u.id===ev.userId);
-    const color=owner?owner.color:'#888';
-    let meta=owner?`${owner.emoji} ${owner.name}`:'';
-    if(ev.arrivalTime)meta+=` · příjezd ${ev.arrivalTime}`;
-    if(ev.departTime)meta+=` · odjezd ${ev.departTime}`;
-    if(ev.guests)meta+=` · ${ev.guests}`;
-    if(ev.dateStart!==ev.dateEnd)meta+=` · ${ev.dateStart} – ${ev.dateEnd}`;
-    const canDel=_cur&&(_cur.isAdmin||_cur.id===ev.userId);
-    html+=`<div class="day-evt-item"><div class="day-evt-dot" style="background:${color}"></div><div class="day-evt-body"><div class="day-evt-title">${ev.title}</div><div class="day-evt-meta">${meta}</div>${ev.desc?`<div class="day-evt-meta" style="margin-top:3px;font-style:italic">${ev.desc}</div>`:''}${canDel?`<button class="day-evt-del" onclick="deleteEvent('${ev.id}','${ev.userId}')">🗑 Smazat</button>`:''}</div></div>`;
+    html+=`<div class="day-evt-item">${evHtml(ev,'comments-wrap')}</div>`;
   });
   panel.innerHTML=html;
 }
 
-function renderS(){
-  const u=_cur;
-  let h=`<div class="s-sec">Přihlášen jako</div><div class="s-card"><div class="s-av">${u.emoji}</div><div style="flex:1"><div class="s-name">${u.name}${u.isAdmin?' 👑':''}</div><div class="s-role">${u.isAdmin?'Administrátor':'Uživatel'}</div></div><div class="s-dot" style="background:${u.color}"></div></div>`;
-  if(u.isAdmin){h+=`<div class="s-sec">Všichni uživatelé</div>`;_u.forEach(x=>{h+=`<div class="s-card"><div class="s-av">${x.emoji}</div><div style="flex:1"><div class="s-name">${x.name}${x.isAdmin?' 👑':''}</div><div class="s-role">${x.isAdmin?'Admin':'Uživatel'}</div></div><div class="s-dot" style="background:${x.color}"></div></div>`;});}
-  h+=`<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.7rem;color:var(--tx3)">Editace profilu · brzy</p><p style="margin-top:5px;text-align:center;font-size:.66rem;color:var(--tx3);letter-spacing:1px">v 1.06</p>`;
-  document.getElementById('si').innerHTML=h;
-}
-
-function D(id,pin){const el=document.getElementById(id);el.innerHTML='';for(let i=0;i<4;i++){const d=document.createElement('div');d.className='pd'+(i<pin.length?' on':'');el.appendChild(d);}}
-function P(id,oK,oD){const el=document.getElementById(id);el.innerHTML='';['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{const b=document.createElement('button');if(!k){b.className='pk gap';}else if(k==='⌫'){b.className='pk del';b.textContent=k;b.onclick=oD;}else{b.className='pk';b.textContent=k;b.onclick=()=>oK(k);}el.appendChild(b);});}
+function D(id,pin){const el=document.getElementById(id);if(!el)return;el.innerHTML='';for(let i=0;i<4;i++){const d=document.createElement('div');d.className='pd'+(i<pin.length?' on':'');el.appendChild(d);}}
+function P(id,oK,oD){const el=document.getElementById(id);if(!el)return;el.innerHTML='';['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{const b=document.createElement('button');if(!k){b.className='pk gap';}else if(k==='⌫'){b.className='pk del';b.textContent=k;b.onclick=oD;}else{b.className='pk';b.textContent=k;b.onclick=()=>oK(k);}el.appendChild(b);});}
 
 async function init(){
   V(true);await loadU();await loadEvents();await loadTasks();await loadGuides();
