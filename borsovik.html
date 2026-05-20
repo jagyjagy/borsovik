@@ -137,7 +137,7 @@
     .tbb.active svg{transform:scale(1.08);}
     .tbb.active::before{content:'';position:absolute;top:0;left:28%;right:28%;height:2px;background:var(--ac);border-radius:0 0 2px 2px;}
     /* ═══ KALENDÁŘ ═══ */
-    .cal-outer{display:flex;flex-direction:column;height:100%;}
+    .cal-outer{display:flex;flex-direction:column;height:100%;overflow:hidden;}
     .cal-bar{display:flex;align-items:center;padding:8px 12px;background:var(--sf);border-bottom:1px solid var(--bd);gap:8px;flex-shrink:0;}
     .cal-nav{display:flex;align-items:center;gap:4px;flex:1;}
     .cnav-btn{background:none;border:1px solid var(--bd);border-radius:var(--rs);width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);transition:all .13s;flex-shrink:0;}
@@ -149,35 +149,35 @@
     .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
     .cal-dow-cell{text-align:center;padding:7px 0;font-size:.72rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);}
     .cal-dow-cell.we{color:var(--ac);font-weight:700;}
-    .cal-grid-wrap{flex:0 0 auto;}
-    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+    .cal-grid-wrap{flex:0 0 auto;overflow:visible;position:relative;}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);overflow:visible;position:relative;}
     /* Buňka – overflow hidden zachovává pevnou výšku */
-    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:5px 4px 24px;min-height:80px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;position:relative;box-sizing:border-box;}
+    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 20px;min-height:62px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:visible;position:relative;box-sizing:border-box;}
     .cal-cell:nth-child(7n){border-right:none;}
-    .cal-cell:hover{background:var(--bg2);}
-    .cal-cell.sel{background:var(--acbg);}
+    .cal-cell:hover{background:transparent;}
+    .cal-cell.sel{background:transparent;}
     .cal-cell.other-month .cal-dn{opacity:.25;}
     .cal-cell.other-month .cal-hol{opacity:.4;}
     .cal-cell.other-month .strip{opacity:.45;}
     .cal-cell.today .cal-dn{background:var(--ac);color:#fff;border-radius:50%;}
     /* víkendy – výraznější */
-    .cal-cell.we-cell{background:#ffeee8;}
-    .cal-cell.we-cell:hover{background:#ffddd0;}
+    .cal-cell.we-cell{background:transparent;}
+    .cal-cell.we-cell:hover{background:transparent;}
     .cal-cell.we-cell.sel{background:#fdd0c0;}
     .cal-cell.we-cell .cal-dn{color:#b5623a;font-weight:700;}
     .cal-cell.today.we-cell .cal-dn{color:#fff;}
     /* svátky */
-    .cal-cell.hol-cell{background:#fff8e8;}
+    .cal-cell.hol-cell{background:transparent;}
     .cal-cell.hol-cell .cal-dn{color:#b08000;}
-    .cal-cell.we-cell.hol-cell{background:#ffe8c8;}
+    .cal-cell.we-cell.hol-cell{background:transparent;}
     /* číslo dne */
     .cal-dn{font-size:.88rem;font-weight:600;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;}
     /* svátek pod číslem – ellipsis */
     .cal-hol{font-size:.6rem;color:#a07000;font-weight:600;line-height:1.2;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
     /* Proužky – absolutně na spodku buňky */
-    .cal-strips{position:absolute;bottom:3px;left:0;right:0;display:flex;flex-direction:column;gap:2px;}
+    .cal-strips{position:absolute;bottom:3px;left:0;right:0;display:flex;flex-direction:column;gap:2px;overflow:visible;}
     /* Wrapper proužku – překrývá border buňky */
-    .strip-wrap{position:relative;height:18px;overflow:visible;margin:0 -1px;}
+    .strip-wrap{position:relative;height:18px;overflow:visible;}
     /* Barevný pruh */
     .strip{position:absolute;top:0;left:0;right:0;height:18px;border-radius:0;}
     .strip.solo{border-radius:4px;left:2px;right:2px;}
@@ -185,8 +185,18 @@
     .strip.end{border-radius:0 4px 4px 0;left:-1px;right:2px;}
     .strip.cont{left:-1px;right:-1px;}
     /* Text proužku – přesahuje přes sousední buňky */
-    .strip-text{position:absolute;left:6px;top:0;height:18px;line-height:18px;white-space:nowrap;font-size:.76rem;font-weight:600;color:#fff;z-index:5;pointer-events:none;}
+    .strip-text{position:absolute;left:6px;top:0;height:18px;line-height:18px;white-space:nowrap;font-size:.76rem;font-weight:600;color:#fff;z-index:50;pointer-events:none;overflow:visible;}
     .strip-more{font-size:.66rem;color:var(--tx3);padding:2px 4px;line-height:1;}
+
+    /* Buněčné pozadí přes pseudo-element, samotná buňka má overflow:visible pro proužky */
+    .cal-cell::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;}
+    .cal-cell.we-cell::before{background:#ffeee8;}
+    .cal-cell.hol-cell::before{background:#fff8e8;}
+    .cal-cell.we-cell.hol-cell::before{background:#ffe8c8;}
+    .cal-cell.sel::before{background:var(--acbg);}
+    .cal-cell:hover::before{background:var(--bg2);}
+    .cal-cell.we-cell:hover::before{background:#ffddd0;}
+    .cal-cell .cal-dn,.cal-cell .cal-hol{position:relative;z-index:1;}
     /* DENNÍ PANEL */
     .day-panel{flex:1;min-height:0;overflow-y:auto;border-top:2px solid var(--bd);background:var(--sf);}
     .day-panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--sf);z-index:1;}
