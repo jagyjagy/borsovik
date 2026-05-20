@@ -162,6 +162,8 @@
     .cal-cell:hover{background:var(--bg2);}
     .cal-cell.sel{background:var(--acbg);}
     .cal-cell.other-month .cal-dn{opacity:.28;}
+    .cal-cell.other-month .strip{opacity:.45;}
+    .cal-cell.other-month .cal-hol{opacity:.5;}
     .cal-cell.today .cal-dn{background:var(--ac);color:#fff;border-radius:50%;}
     .cal-cell.we-cell{background:var(--we-bg);}
     .cal-cell.we-cell:hover{background:#ffe8e0;}
@@ -1183,7 +1185,6 @@ async function renderCal(){
   const today=ymd(new Date());
   if(!_selDate)_selDate=today;
   // Předpočítej události v tomto měsíci
-  const monthEvts=eventsInMonth(y,m);
   const grid=document.getElementById('calGrid');grid.innerHTML='';
   for(let i=0;i<42;i++){
     const cell=document.createElement('div');
@@ -1192,7 +1193,7 @@ async function renderCal(){
     const dow=cd.getDay();const isWE=dow===0||dow===6;
     const hol=(_holidays[cd.getFullYear()]||{})[ds];
     const isSel=ds===_selDate;
-    const evts=monthEvts.filter(ev=>ev.dateStart<=ds&&ev.dateEnd>=ds);
+    const evts=eventsForDate(ds);
     let cls='cal-cell';
     if(!inMonth)cls+=' other-month';if(isToday)cls+=' today';
     if(isWE)cls+=' we-cell';if(hol&&!isWE)cls+=' hol-cell';if(isSel)cls+=' sel';
