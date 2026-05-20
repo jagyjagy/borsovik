@@ -149,54 +149,40 @@
     .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
     .cal-dow-cell{text-align:center;padding:7px 0;font-size:.72rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);}
     .cal-dow-cell.we{color:var(--ac);font-weight:700;}
-    .cal-grid-wrap{flex:0 0 auto;overflow:visible;position:relative;}
-    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);overflow:visible;position:relative;}
-    /* Buňka – overflow hidden zachovává pevnou výšku */
-    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 20px;min-height:62px;height:62px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;position:relative;box-sizing:border-box;}
+    .cal-grid-wrap{flex:0 0 auto;}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
+    /* Buňka – pevná výška, overflow:hidden, šířka řízená gridem */
+    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 2px;height:64px;min-width:0;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;position:relative;box-sizing:border-box;}
     .cal-cell:nth-child(7n){border-right:none;}
-    .cal-cell:hover{background:transparent;}
-    .cal-cell.sel{background:transparent;}
+    .cal-cell:hover{background:var(--bg2);}
+    .cal-cell.sel{background:var(--acbg);}
     .cal-cell.other-month .cal-dn{opacity:.25;}
-    .cal-cell.other-month .cal-hol{opacity:.4;}
-    .cal-cell.other-month .strip{opacity:.45;}
+    .cal-cell.other-month .cal-hol{opacity:.35;}
+    .cal-cell.other-month .strip{opacity:.4;}
     .cal-cell.today .cal-dn{background:var(--ac);color:#fff;border-radius:50%;}
-    /* víkendy – výraznější */
-    .cal-cell.we-cell{background:transparent;}
-    .cal-cell.we-cell:hover{background:transparent;}
+    /* Víkendy */
+    .cal-cell.we-cell{background:#ffeee8;}
+    .cal-cell.we-cell:hover{background:#ffddd0;}
     .cal-cell.we-cell.sel{background:#fdd0c0;}
     .cal-cell.we-cell .cal-dn{color:#b5623a;font-weight:700;}
     .cal-cell.today.we-cell .cal-dn{color:#fff;}
-    /* svátky */
-    .cal-cell.hol-cell{background:transparent;}
+    /* Svátky */
+    .cal-cell.hol-cell{background:#fff8e8;}
     .cal-cell.hol-cell .cal-dn{color:#b08000;}
-    .cal-cell.we-cell.hol-cell{background:transparent;}
-    /* číslo dne */
-    .cal-dn{font-size:.88rem;font-weight:600;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;}
-    /* svátek pod číslem – ellipsis */
-    .cal-hol{font-size:.58rem;color:#a07000;font-weight:600;line-height:1.2;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;display:block;width:100%;box-sizing:border-box;}
-    /* Proužky – absolutně na spodku buňky */
-    .cal-strips{position:absolute;bottom:3px;left:0;right:0;display:flex;flex-direction:column;gap:2px;overflow:visible;}
-    /* Wrapper proužku – překrývá border buňky */
-    .strip-wrap{position:relative;height:18px;overflow:visible;}
-    /* Barevný pruh */
-    .strip{position:absolute;top:0;left:0;right:0;height:18px;border-radius:0;}
-    .strip.solo{border-radius:4px;left:2px;right:2px;}
-    .strip.start{border-radius:4px 0 0 4px;left:2px;right:-1px;}
-    .strip.end{border-radius:0 4px 4px 0;left:-1px;right:2px;}
-    .strip.cont{left:-1px;right:-1px;}
-    /* Text proužku – přesahuje přes sousední buňky */
-    .strip-text{display:none;}
-    .strip-more{font-size:.66rem;color:var(--tx3);padding:2px 4px;line-height:1;}
-
-    /* Buněčné pozadí přes pseudo-element, samotná buňka má overflow:visible pro proužky */
-    .cal-cell::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;}
-    .cal-cell.we-cell::before{background:#ffeee8;}
-    .cal-cell.hol-cell::before{background:#fff8e8;}
-    .cal-cell.we-cell.hol-cell::before{background:#ffe8c8;}
-    .cal-cell.sel::before{background:var(--acbg);}
-    .cal-cell:hover::before{background:var(--bg2);}
-    .cal-cell.we-cell:hover::before{background:#ffddd0;}
-    .cal-cell .cal-dn,.cal-cell .cal-hol{position:relative;z-index:1;}
+    .cal-cell.we-cell.hol-cell{background:#ffe8c8;}
+    /* Číslo dne */
+    .cal-dn{font-size:.88rem;font-weight:600;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    /* Svátek – jedna řádka, ellipsis */
+    .cal-hol{font-size:.58rem;color:#a07000;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px;line-height:1.3;flex-shrink:0;}
+    /* Proužky – absolutně na spodku buňky, overflow:hidden spolu s buňkou */
+    .cal-strips{position:absolute;bottom:2px;left:0;right:0;display:flex;flex-direction:column;gap:2px;}
+    /* Jeden proužek */
+    .strip{height:17px;font-size:.72rem;font-weight:600;color:#fff;line-height:17px;white-space:nowrap;overflow:hidden;text-overflow:clip;padding:0 4px;}
+    .strip.solo{border-radius:4px;margin:0 2px;}
+    .strip.start{border-radius:4px 0 0 4px;margin-left:2px;margin-right:-1px;}
+    .strip.end{border-radius:0 4px 4px 0;margin-left:-1px;margin-right:2px;}
+    .strip.cont{margin:0 -1px;border-radius:0;}
+    .strip-more{font-size:.6rem;color:var(--tx3);padding:0 3px;line-height:14px;}
     /* DENNÍ PANEL */
     .day-panel{flex:1;min-height:0;overflow-y:auto;border-top:2px solid var(--bd);background:var(--sf);}
     .day-panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--sf);z-index:1;}
@@ -214,8 +200,11 @@
     .dea-btn.edit{color:var(--ac);}
     .dea-btn.del{color:#c0392b;opacity:.7;}
     .dea-btn.del:hover{opacity:1;}
-    .day-hol-item{padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;}
-    .day-hol-name{font-size:.88rem;color:var(--ac);font-weight:600;}
+    .day-hol-item{padding:10px 14px 10px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px;background:#fffbf0;}
+    .day-hol-icon{font-size:1.4rem;flex-shrink:0;}
+    .day-hol-body{display:flex;flex-direction:column;gap:1px;}
+    .day-hol-label{font-size:.62rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#b08000;}
+    .day-hol-name{font-size:.9rem;font-weight:600;color:#7a5800;}
     /* KOMENTÁŘE */
     .comments-section{padding:0 14px 12px 34px;}
     .ev-comments-section{padding:0 16px 12px 67px;}
@@ -1020,7 +1009,7 @@ async function renderCal(){
     if(isWE)cls+=' we-cell';if(hol&&!isWE)cls+=' hol-cell';if(isSel)cls+=' sel';
     cell.className=cls;
     let html='<div class="cal-dn">'+cd.getDate()+'</div>';
-    if(hol)html+='<div class="cal-hol">'+hol+'</div>';
+    if(hol)html+='<div class="cal-hol">St. svátek</div>';
     html+='<div class="cal-strips">';
     evts.slice(0,2).forEach(ev=>{
       const isStart=ev.dateStart===ds,isEnd=ev.dateEnd===ds;
@@ -1039,39 +1028,13 @@ async function renderCal(){
       const nm=owner?owner.name:'';
       const ti=ev.title?(' · '+ev.title):'';
       const labelText=showLabel?(em+' '+nm+ti+recurSym):'';
-      html+='<div class="strip-wrap"><div class="'+sc+'" style="background:'+color+'"></div><span class="strip-text">'+labelText+'</span></div>';
+      html+='<div class="'+sc+'" style="background:'+color+'">'+labelText+'</div>';
     });
     if(evts.length>2)html+='<div class="strip-more">+'+( evts.length-2)+'</div>';
     html+='</div>';cell.innerHTML=html;
     cell.addEventListener('click',()=>{_selDate=ds;grid.querySelectorAll('.cal-cell').forEach(c=>c.classList.remove('sel'));cell.classList.add('sel');renderDayPanel(ds);});
     grid.appendChild(cell);
   }
-
-  // Overlay pro texty proužků – přesahují přes buňky
-  const oldOv=document.getElementById('calLabelOverlay');
-  if(oldOv)oldOv.remove();
-  const ov=document.createElement('div');
-  ov.id='calLabelOverlay';
-  ov.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:50;overflow:visible;';
-  const gridWrap=document.querySelector('.cal-grid-wrap');
-  const gwRect=gridWrap.getBoundingClientRect();
-  // Musíme počkat na layout
-  requestAnimationFrame(()=>{
-    grid.querySelectorAll('.strip-wrap').forEach(wrap=>{
-      const lbl=wrap.querySelector('.strip-text');
-      if(!lbl||!lbl.textContent.trim())return;
-      const wr=wrap.getBoundingClientRect();
-      const left=wr.left-gwRect.left+6;
-      const top=wr.top-gwRect.top;
-      const sp=document.createElement('span');
-      sp.className='cal-label-overlay';
-      sp.textContent=lbl.textContent;
-      sp.style.left=left+'px';
-      sp.style.top=top+'px';
-      ov.appendChild(sp);
-    });
-    gridWrap.appendChild(ov);
-  });
 
   renderDayPanel(_selDate);
 }
@@ -1083,7 +1046,7 @@ async function renderDayPanel(ds){
   const hol=(_holidays[d.getFullYear()]||{})[ds];
   const isToday=ds===ymd(new Date());
   let html='<div class="day-panel-hdr"><span class="day-panel-date">'+fmtDate(ds)+(isToday?' · Dnes':'')+'</span>'+(hol?'<span class="day-panel-hol">🎉 '+hol+'</span>':'')+'</div>';
-  if(hol&&!evts.length)html+='<div class="day-hol-item"><span style="font-size:.9rem">🎉</span><span class="day-hol-name">'+hol+'</span></div>';
+  html+='<div class="day-hol-item"><span class="day-hol-icon">🎉</span><div class="day-hol-body"><div class="day-hol-label">Státní svátek</div><div class="day-hol-name">'+hol+'</div></div></div>';
   if(!hol&&!evts.length)html+='<div class="day-panel-empty">Žádné události · klikni + pro přidání</div>';
   evts.forEach(ev=>{html+='<div class="day-evt-block">'+evHtmlBlock(ev,'comments-section')+'</div>';});
   panel.innerHTML=html;
