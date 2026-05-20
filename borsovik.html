@@ -157,7 +157,7 @@
     .cal-dow-cell.we{color:var(--ac);font-weight:700;}
     .cal-grid-wrap{flex:0 0 auto;}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
-    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 3px;min-height:72px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:hidden;}
+    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 3px;min-height:72px;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;overflow:visible;}
     .cal-cell:nth-child(7n){border-right:none;}
     .cal-cell:hover{background:var(--bg2);}
     .cal-cell.sel{background:var(--acbg);}
@@ -174,10 +174,10 @@
     .cal-dn{font-size:.85rem;font-weight:500;width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:1px;}
     .cal-hol{font-size:.62rem;color:var(--ac);font-weight:600;line-height:1.2;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px;}
     .cal-strips{display:flex;flex-direction:column;gap:1px;overflow:hidden;flex:1;}
-    .strip{height:16px;border-radius:3px;font-size:.7rem;font-weight:500;color:#fff;line-height:11px;padding:0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .strip.cl{border-radius:0 2px 2px 0;padding-left:1px;}
-    .strip.cr{border-radius:2px 0 0 2px;padding-right:0;}
-    .strip.cb{border-radius:0;padding:0 1px;}
+    .strip{height:16px;border-radius:3px;font-size:.74rem;font-weight:500;color:#fff;line-height:16px;padding:0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;}
+    .strip.cl{border-radius:0 3px 3px 0;margin-left:-3px;padding-left:3px;}
+    .strip.cr{border-radius:3px 0 0 3px;margin-right:-3px;padding-right:3px;}
+    .strip.cb{border-radius:0;margin:0 -3px;padding:0 3px;}
     .strip-more{font-size:.64rem;color:var(--tx3);padding:0 3px;line-height:16px;}
 
     /* DENNÍ PANEL */
@@ -1208,8 +1208,10 @@ async function renderCal(){
       const owner=_u.find(u=>u.id===ev.userId);
       const color=owner?owner.color:'#888';
       const recurSym=ev.recur?'🔁':'';
-      // Zobraz label i při pokračování – na začátku měsíce nebo začátku viditelné oblasti
-      const showLabel=isStart||(ds.endsWith('-01')||i===0);
+      // Label: na začátku události, začátku každého řádku gridu (i%7===0), nebo 1. dne v měsíci
+      const isRowStart=(i%7===0);
+      const isMonthStart=ds.endsWith('-01');
+      const showLabel=isStart||isRowStart||isMonthStart;
       const label=showLabel?`${owner?owner.emoji:''}${owner?owner.name:''}${ev.title?' · '+ev.title:''}${recurSym}`:' ';
       html+=`<div class="${sc}" style="background:${color}">${label}</div>`;
     });
