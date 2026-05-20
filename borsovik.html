@@ -175,7 +175,7 @@
     /* Svátek – jedna řádka, ellipsis */
     .cal-hol{font-size:.58rem;color:#a07000;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px;line-height:1.3;flex-shrink:0;}
     /* Proužky – absolutně na spodku buňky */
-    .cal-strips{position:absolute;bottom:2px;left:0;right:0;display:flex;flex-direction:column;gap:2px;}
+    .cal-strips{position:absolute;bottom:6px;left:0;right:0;display:flex;flex-direction:column;gap:2px;}
     /* Barevný pruh – bez textu */
     .strip{height:17px;border-radius:0;display:block;}
     .strip.solo{border-radius:4px;margin:0 2px;}
@@ -1024,7 +1024,8 @@ async function renderCal(){
       const owner=_u.find(u=>u.id===ev.userId);
       const color=owner?owner.color:'#888';
       const recurSym=ev.recur?'🔁':'';
-      const showLabel=isStart;
+      // Label: jednou na začátku události, nebo na začátku řádku kde pokračuje (pokud start byl na minulém řádku)
+      const showLabel=isStart||(i%7===0&&!isStart&&ev.dateStart<ds);
       const em=owner?owner.emoji:'';
       const nm=owner?owner.name:'';
       const ti=ev.title?(' · '+ev.title):'';
@@ -1037,25 +1038,66 @@ async function renderCal(){
     grid.appendChild(cell);
   }
 
-  // Textové labely přes cel-grid (přesahují přes buňky)
+  // Textové labely – jeden label per událost, umístěný tam kde se vejde
   requestAnimationFrame(()=>{
     const gwrap=document.querySelector('.cal-grid-wrap');
-    const old=gwrap.querySelector('.cal-labels');
-    if(old)old.remove();
+    const oldLyr=gwrap.querySelector('.cal-labels');
+    if(oldLyr)oldLyr.remove();
     const lyr=document.createElement('div');
     lyr.className='cal-labels';
     const gwRect=gwrap.getBoundingClientRect();
+
+    // Seskup proužky podle data-label (= identifikátor události)
+    // Pro každou skupinu najdi první proužek kde se text vejde
+    const groups=new Map();
     gwrap.querySelectorAll('.strip[data-label]').forEach(strip=>{
       const txt=strip.getAttribute('data-label');
       if(!txt)return;
-      const sr=strip.getBoundingClientRect();
-      const lbl=document.createElement('span');
-      lbl.className='cal-label';
-      lbl.textContent=txt;
-      lbl.style.left=(sr.left-gwRect.left+4)+'px';
-      lbl.style.top=(sr.top-gwRect.top)+'px';
-      lyr.appendChild(lbl);
+      if(!groups.has(txt))groups.set(txt,[]);
+      groups.get(txt).push(strip);
     });
+
+    groups.forEach((strips,txt)=>{
+      // Vytvoř dočasný span pro měření šířky textu
+      const measure=document.createElement('span');
+      measure.className='cal-label';
+      measure.style.visibility='hidden';
+      measure.style.position='absolute';
+      measure.textContent=txt;
+      lyr.appendChild(measure);
+      const txtW=measure.offsetWidth||txt.length*7+10;
+      measure.remove();
+
+      // Najdi první proužek kde se text vejde (od konce proužku doleva)
+      let placed=false;
+      for(const strip of strips){
+        const sr=strip.getBoundingClientRect();
+        const stripW=sr.width;
+        if(stripW>=txtW-4||strip===strips[strips.length-1]){
+          const lbl=document.createElement('span');
+          lbl.className='cal-label';
+          lbl.textContent=txt;
+          const leftPx=sr.left-gwRect.left+4;
+          const topPx=sr.top-gwRect.top;
+          lbl.style.left=leftPx+'px';
+          lbl.style.top=topPx+'px';
+          lyr.appendChild(lbl);
+          placed=true;
+          break;
+        }
+      }
+      if(!placed&&strips.length){
+        // Fallback – první proužek
+        const sr=strips[0].getBoundingClientRect();
+        const lbl=document.createElement('span');
+        lbl.className='cal-label';
+        lbl.textContent=txt;
+        lbl.style.left=(sr.left-gwRect.left+4)+'px';
+        lbl.style.top=(sr.top-gwRect.top)+'px';
+        lyr.appendChild(lbl);
+      }
+    });
+
     gwrap.style.position='relative';
     gwrap.appendChild(lyr);
   });
