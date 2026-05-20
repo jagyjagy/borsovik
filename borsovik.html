@@ -1046,7 +1046,7 @@ async function renderDayPanel(ds){
   const hol=(_holidays[d.getFullYear()]||{})[ds];
   const isToday=ds===ymd(new Date());
   let html='<div class="day-panel-hdr"><span class="day-panel-date">'+fmtDate(ds)+(isToday?' · Dnes':'')+'</span>'+(hol?'<span class="day-panel-hol">🎉 '+hol+'</span>':'')+'</div>';
-  html+='<div class="day-hol-item"><span class="day-hol-icon">🎉</span><div class="day-hol-body"><div class="day-hol-label">Státní svátek</div><div class="day-hol-name">'+hol+'</div></div></div>';
+  if(hol)html+='<div class="day-hol-item"><span class="day-hol-icon">🎉</span><div class="day-hol-body"><div class="day-hol-label">Státní svátek</div><div class="day-hol-name">'+hol+'</div></div></div>';
   if(!hol&&!evts.length)html+='<div class="day-panel-empty">Žádné události · klikni + pro přidání</div>';
   evts.forEach(ev=>{html+='<div class="day-evt-block">'+evHtmlBlock(ev,'comments-section')+'</div>';});
   panel.innerHTML=html;
