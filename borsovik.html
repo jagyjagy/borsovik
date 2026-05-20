@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg:#f7f4ef; --bg2:#ede9e2; --bg3:#e4dfd6;
-      --sf:#ffffff; --tx:#1c1917; --tx2:#6b6560; --tx3:#a09890;
-      --ac:#b5623a; --ac2:#c97a52; --acbg:#f5ede8;
-      --bd:#ddd9d2; --bd2:#ccc7be;
-      --r:14px; --rs:8px;
+    :root{
+      --bg:#f7f4ef;--bg2:#ede9e2;--bg3:#e4dfd6;
+      --sf:#ffffff;--tx:#1c1917;--tx2:#6b6560;--tx3:#a09890;
+      --ac:#b5623a;--ac2:#c97a52;--acbg:#f5ede8;
+      --bd:#ddd9d2;--bd2:#ccc7be;
+      --r:14px;--rs:8px;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{-webkit-tap-highlight-color:transparent;}
@@ -43,7 +43,7 @@
     .add-btn{display:flex;align-items:center;gap:7px;padding:10px 20px;border:1.5px dashed var(--bd2);border-radius:40px;background:transparent;color:var(--tx3);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:border-color .15s,color .15s;}
     .add-btn:hover{border-color:var(--ac);color:var(--ac);}
 
-    /* CARD / FORM */
+    /* CARD/FORM */
     .wrap{flex:1;width:100%;max-width:420px;padding:24px 16px;display:flex;flex-direction:column;align-items:center;}
     .card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:28px 24px;width:100%;}
     .card-ttl{font-size:1.15rem;font-weight:600;letter-spacing:-.2px;margin-bottom:2px;}
@@ -109,7 +109,7 @@
     @keyframes spin{to{transform:rotate(360deg)}}
 
     /* APP SHELL */
-    .app-shell{display:none;flex-direction:column;flex:1;}
+    .app-shell{display:none;flex-direction:column;flex:1;overflow:hidden;}
     .app-shell.active{display:flex;}
     .top-bar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
     .tb-brand{display:flex;align-items:center;gap:10px;}
@@ -118,7 +118,7 @@
     .upill{display:flex;align-items:center;gap:7px;padding:5px 12px;background:var(--bg);border:1px solid var(--bd);border-radius:40px;font-size:.78rem;font-weight:500;color:var(--tx2);cursor:pointer;transition:border-color .13s;}
     .upill:hover{border-color:var(--bd2);color:var(--tx);}
     .tab-content{flex:1;overflow-y:auto;}
-    .tab-pane{display:none;padding:24px 20px;}
+    .tab-pane{display:none;padding:0;}
     .tab-pane.active{display:block;animation:up .2s ease;}
 
     /* TAB BAR */
@@ -128,6 +128,84 @@
     .tb.active{color:var(--ac);}
     .tb.active svg{transform:scale(1.1);}
     .tb.active::before{content:'';position:absolute;top:0;left:25%;right:25%;height:2px;background:var(--ac);border-radius:0 0 2px 2px;}
+
+    /* ═══════════════ KALENDÁŘ ═══════════════ */
+    .cal-wrap{display:flex;flex-direction:column;height:100%;}
+
+    /* Horní lišta kalendáře */
+    .cal-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px;}
+    .cal-nav{display:flex;align-items:center;gap:6px;}
+    .cal-nav-btn{background:none;border:1px solid var(--bd);border-radius:var(--rs);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);transition:all .13s;flex-shrink:0;}
+    .cal-nav-btn:hover{border-color:var(--bd2);color:var(--tx);}
+    .cal-nav-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .cal-title{font-size:.95rem;font-weight:600;min-width:130px;text-align:center;letter-spacing:-.1px;}
+    .cal-today-btn{background:none;border:1px solid var(--bd);border-radius:var(--rs);padding:5px 11px;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;color:var(--tx2);cursor:pointer;transition:all .13s;white-space:nowrap;}
+    .cal-today-btn:hover{border-color:var(--ac);color:var(--ac);}
+
+    /* View switcher */
+    .view-sw{display:flex;background:var(--bg2);border-radius:var(--rs);padding:3px;gap:2px;flex-shrink:0;}
+    .vsw-btn{padding:5px 11px;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;cursor:pointer;background:transparent;color:var(--tx3);transition:all .15s;white-space:nowrap;}
+    .vsw-btn.active{background:var(--sf);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+
+    /* ── MĚSÍČNÍ POHLED ── */
+    .cal-month{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+    .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
+    .cal-dow-cell{text-align:center;padding:8px 2px;font-size:.65rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);}
+    .cal-dow-cell.sun,.cal-dow-cell.sat{color:var(--ac2);}
+    .cal-grid{flex:1;display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:1fr;overflow-y:auto;align-content:start;}
+    .cal-cell{border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 3px 3px;min-height:72px;position:relative;display:flex;flex-direction:column;cursor:pointer;transition:background .12s;}
+    .cal-cell:hover{background:var(--bg2);}
+    .cal-cell.other-month .cal-day-num{color:var(--tx3);opacity:.4;}
+    .cal-cell.today .cal-day-num{background:var(--ac);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+    .cal-cell.sunday .cal-day-num,.cal-cell.saturday .cal-day-num{color:var(--ac2);}
+    .cal-cell.today.sunday .cal-day-num,.cal-cell.today.saturday .cal-day-num{color:#fff;}
+    .cal-day-num{font-size:.78rem;font-weight:500;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;}
+    .cal-holiday{font-size:.6rem;color:var(--ac);font-weight:500;line-height:1.2;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+    /* Proužky událostí */
+    .cal-events{display:flex;flex-direction:column;gap:2px;flex:1;overflow:hidden;}
+    .evt-strip{font-size:.62rem;font-weight:500;padding:1px 5px;border-radius:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;line-height:1.5;cursor:pointer;}
+    .evt-strip.continues-right{border-radius:3px 0 0 3px;margin-right:-3px;}
+    .evt-strip.continues-left{border-radius:0 3px 3px 0;margin-left:-3px;padding-left:2px;}
+    .evt-strip.continues-both{border-radius:0;margin:0 -3px;padding:1px 2px;}
+    .evt-more{font-size:.6rem;color:var(--tx3);padding:1px 3px;cursor:pointer;}
+
+    /* ── TÝDENNÍ POHLED ── */
+    .cal-week{flex:1;overflow:auto;display:flex;flex-direction:column;}
+    .week-header{display:grid;grid-template-columns:48px repeat(7,1fr);border-bottom:1px solid var(--bd);background:var(--sf);flex-shrink:0;position:sticky;top:0;z-index:2;}
+    .week-hcell{text-align:center;padding:8px 2px;border-left:1px solid var(--bd);}
+    .week-hcell:first-child{border-left:none;}
+    .week-day-name{font-size:.65rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--tx3);}
+    .week-day-num{font-size:.95rem;font-weight:600;width:28px;height:28px;display:flex;align-items:center;justify-content:center;margin:2px auto 0;border-radius:50%;}
+    .week-hcell.today .week-day-num{background:var(--ac);color:#fff;}
+    .week-hcell.sunday .week-day-name,.week-hcell.saturday .week-day-name{color:var(--ac2);}
+    .week-body{display:grid;grid-template-columns:48px repeat(7,1fr);flex:1;}
+    .week-time-col{display:flex;flex-direction:column;}
+    .week-hour-label{height:52px;display:flex;align-items:flex-start;justify-content:flex-end;padding:2px 8px 0 0;font-size:.62rem;color:var(--tx3);flex-shrink:0;}
+    .week-day-col{border-left:1px solid var(--bd);position:relative;min-height:624px;}
+    .week-hour-line{height:52px;border-bottom:1px solid var(--bd);flex-shrink:0;}
+    .week-now-line{position:absolute;left:0;right:0;height:2px;background:var(--ac);z-index:1;pointer-events:none;}
+    .week-now-line::before{content:'';position:absolute;left:-4px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--ac);}
+    .week-evt{position:absolute;left:2px;right:2px;border-radius:4px;padding:2px 5px;font-size:.68rem;font-weight:500;color:#fff;overflow:hidden;cursor:pointer;z-index:1;}
+
+    /* ── DENNÍ POHLED ── */
+    .cal-day{flex:1;overflow:auto;display:flex;flex-direction:column;}
+    .day-header{background:var(--sf);border-bottom:1px solid var(--bd);padding:12px 16px;flex-shrink:0;text-align:center;}
+    .day-header .day-ttl{font-size:1.1rem;font-weight:600;}
+    .day-header .day-sub{font-size:.72rem;color:var(--tx3);margin-top:2px;}
+    .day-body{display:grid;grid-template-columns:48px 1fr;flex:1;}
+    .day-time-col{display:flex;flex-direction:column;}
+    .day-hour-label{height:52px;display:flex;align-items:flex-start;justify-content:flex-end;padding:2px 8px 0 0;font-size:.62rem;color:var(--tx3);flex-shrink:0;}
+    .day-col{position:relative;border-left:1px solid var(--bd);min-height:624px;}
+    .day-hour-line{height:52px;border-bottom:1px solid var(--bd);}
+    .day-now-line{position:absolute;left:0;right:0;height:2px;background:var(--ac);z-index:1;pointer-events:none;}
+    .day-now-line::before{content:'';position:absolute;left:-4px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--ac);}
+    .day-evt{position:absolute;left:4px;right:4px;border-radius:4px;padding:3px 7px;font-size:.75rem;font-weight:500;color:#fff;overflow:hidden;cursor:pointer;}
+
+    /* ── PŘIDAT TLAČÍTKO ── */
+    .cal-add-fab{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 70px);right:20px;width:48px;height:48px;border-radius:50%;background:var(--ac);border:none;color:#fff;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 16px rgba(181,98,58,.35);display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;z-index:10;}
+    .cal-add-fab:hover{transform:scale(1.07);box-shadow:0 6px 20px rgba(181,98,58,.4);}
+    .cal-add-fab svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
 
     /* SETTINGS */
     .s-sec{font-size:.68rem;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px;margin-top:22px;}
@@ -143,12 +221,12 @@
     .ph svg{width:36px;height:36px;stroke:var(--tx3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.5;}
     .ph-t{font-size:1rem;font-weight:500;color:var(--tx2);}
     .ph-s{font-size:.72rem;color:var(--tx3);letter-spacing:.5px;}
+
     @media(min-width:480px){.card{padding:34px 30px;}}
   </style>
 </head>
 <body>
 
-<!-- Reusable SVG chata ikona -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
   <symbol id="ic" viewBox="0 0 40 40">
     <polygon points="4,22 20,6 36,22" fill="#b5623a"/>
@@ -221,11 +299,34 @@
     </div>
   </div>
   <div class="tab-content">
-    <div class="tab-pane active" id="pane-cal"><div class="ph"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><div class="ph-t">Kalendář</div><div class="ph-s">Připravujeme</div></div></div>
+
+    <!-- KALENDÁŘ -->
+    <div class="tab-pane active" id="pane-cal">
+      <div class="cal-wrap">
+        <div class="cal-bar">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="calNav(-1)"><svg viewBox="0 0 16 16"><polyline points="10,4 6,8 10,12"/></svg></button>
+            <div class="cal-title" id="calTitle"></div>
+            <button class="cal-nav-btn" onclick="calNav(1)"><svg viewBox="0 0 16 16"><polyline points="6,4 10,8 6,12"/></svg></button>
+          </div>
+          <button class="cal-today-btn" onclick="calGoToday()">Dnes</button>
+          <div class="view-sw">
+            <button class="vsw-btn active" onclick="setView('month',this)">Měsíc</button>
+            <button class="vsw-btn" onclick="setView('week',this)">Týden</button>
+            <button class="vsw-btn" onclick="setView('day',this)">Den</button>
+          </div>
+        </div>
+        <div id="calBody" style="flex:1;overflow:hidden;display:flex;flex-direction:column;"></div>
+      </div>
+      <button class="cal-add-fab" onclick="addEventPrompt()" title="Přidat událost">
+        <svg viewBox="0 0 22 22"><line x1="11" y1="3" x2="11" y2="19"/><line x1="3" y1="11" x2="19" y2="11"/></svg>
+      </button>
+    </div>
+
     <div class="tab-pane" id="pane-ev"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><div class="ph-t">Události</div><div class="ph-s">Připravujeme</div></div></div>
     <div class="tab-pane" id="pane-tasks"><div class="ph"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div class="ph-t">Úkoly</div><div class="ph-s">Připravujeme</div></div></div>
     <div class="tab-pane" id="pane-guides"><div class="ph"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><div class="ph-t">Návody</div><div class="ph-s">Připravujeme</div></div></div>
-    <div class="tab-pane" id="pane-settings"><div id="si"></div></div>
+    <div class="tab-pane" id="pane-settings"><div id="si" style="padding:24px 20px;"></div></div>
   </div>
   <nav class="tab-bar">
     <button class="tb active" onclick="switchTab('cal',this)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Kalendář</button>
@@ -238,20 +339,27 @@
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import{getFirestore,collection,getDocs,addDoc,query,orderBy,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{getFirestore,collection,getDocs,addDoc,query,orderBy,where,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const fb={apiKey:"AIzaSyA6dUhVOqwjTkjc0jD7bVGdSuzmevpFIK4",authDomain:"borsovik-a6116.firebaseapp.com",projectId:"borsovik-a6116",storageBucket:"borsovik-a6116.firebasestorage.app",messagingSenderId:"1056113485657",appId:"1:1056113485657:web:e3336a8bfd865baecece48"};
 const db=getFirestore(initializeApp(fb));
 
-const EM=['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😗','😚','😙','🥲','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','🤐','🤨','😐','😑','😶','😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤧','🥵','🥶','🥴','😵','🤯','🤠','🥳','🥸','😎','🤓','🧐','😕','😟','🙁','☹️','😮','😯','😲','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀','💩','🤡','👹','👺','👻','👽','👾','🤖','😺','😸','😹','😻','😼','😽','🙀','😿','😾','🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐻‍❄️','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🙈','🙉','🙊','🐔','🐧','🐦','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷','🦂','🐢','🐍','🦎','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🦭','🐊','🦓','🦍','🦧','🦣','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦬','🐄','🐎','🐖','🐏','🐑','🦙','🐐','🦌','🐕','🐩','🦮','🐈','🐈‍⬛','🐓','🦃','🦤','🦚','🦜','🦢','🦩','🕊','🐇','🦝','🦨','🦡','🦫','🦦','🦥','🐁','🐀','🐿','🦔','🌵','🎄','🌲','🌳','🌴','🌱','🌿','☘️','🍀','🍃','🍂','🍁','🍄','🌾','💐','🌷','🌹','🥀','🌺','🌸','🌼','🌻','🌞','🌝','🌛','🌜','🌚','🌕','🌙','🌟','💫','⭐','🌠','☀️','⛅','🌦','🌧','⛈','🌩','🌨','❄️','☃️','⛄','💨','💧','💦','🌊','🔥','🌈','⚡','🍎','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶','🧄','🧅','🥔','🍠','🥐','🍞','🥖','🧀','🥚','🍳','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥙','🌮','🌯','🥗','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍘','🍥','🧁','🍰','🎂','🍭','🍬','🍫','🍿','🍩','🍪','☕','🍵','🫖','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🍾','🏠','🏡','🏢','🏥','🏦','🏨','🏩','🏪','🏫','🏬','🏭','🏯','🏰','🗼','🗽','⛪','🌁','🌃','🌄','🌅','🌆','🌇','🌉','🎠','🎡','🎢','🎪','🚂','🚃','🚄','🚅','🚆','🚇','🚌','🚎','🚑','🚒','🚓','🚕','🚗','🚙','🛻','🚚','🚛','🚜','🏎','🏍','🛵','🚲','🛴','🛹','⛵','🚤','🛥','🛳','⛴','🚢','✈️','🛩','🚁','🚀','🛸','🎆','🎇','🎃','🎄','🎀','🎁','🏆','🥇','🥈','🥉','🏅','🎭','🎨','🎬','🎤','🎧','🎼','🎵','🎶','🎹','🥁','🎷','🎺','🎸','🎻','🎲','♟','🎯','🎳','🎮','🧩','⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🎱','🏓','🏸','🏒','🏑','🥍','🏏','🪃','🥅','⛳','🎣','🏹','🥊','🥋','🎽','🛹','🛷','🥌','🪁'];
+const EM=['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😗','😚','😙','🥲','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','🤐','🤨','😐','😑','😶','😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤧','🥵','🥶','🥴','😵','🤯','🤠','🥳','🥸','😎','🤓','🧐','😕','😟','🙁','☹️','😮','😯','😲','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀','💩','🤡','👹','👺','👻','👽','👾','🤖','😺','😸','😹','😻','😼','😽','🙀','😿','😾','🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐻‍❄️','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🙈','🙉','🙊','🐔','🐧','🐦','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷','🦂','🐢','🐍','🦎','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🦭','🐊','🦓','🦍','🦧','🦣','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦬','🐄','🐎','🐖','🐏','🐑','🦙','🐐','🦌','🐕','🐩','🦮','🐈','🐈‍⬛','🐓','🦃','🦤','🦚','🦜','🦢','🦩','🕊','🐇','🦝','🦨','🦡','🦫','🦦','🦥','🐁','🐀','🐿','🦔','🌵','🎄','🌲','🌳','🌴','🌱','🌿','☘️','🍀','🍃','🍂','🍁','🍄','🌾','💐','🌷','🌹','🥀','🌺','🌸','🌼','🌻','🌞','🌝','🌛','🌜','🌚','🌕','🌙','🌟','💫','⭐','🌠','☀️','⛅','🌦','🌧','⛈','🌩','🌨','❄️','☃️','⛄','💨','💧','💦','🌊','🔥','🌈','⚡','🍎','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶','🧄','🧅','🥔','🍠','🥐','🍞','🥖','🧀','🥚','🍳','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥙','🌮','🌯','🥗','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍘','🍥','🧁','🍰','🎂','🍭','🍬','🍫','🍿','🍩','🍪','☕','🍵','🫖','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🍾','🏠','🏡','🏢','🏥','🏦','🏨','🏩','🏪','🏫','🏬','🏭','🏯','🏰','🗼','🗽','⛪','🌁','🌃','🌄','🌅','🌆','🌇','🌉','🎠','🎡','🎢','🎪','🚂','🚃','🚄','🚅','🚆','🚇','🚌','🚎','🚑','🚒','🚓','🚕','🚗','🚙','🛻','🚚','🚛','🚜','🏎','🏍','🛵','🚲','🛴','🛹','⛵','🚤','🛥','🛳','⛴','🚢','✈️','🛩','🚁','🚀','🛸','🎆','🎇','🎃','🎄','🎀','🎁','🏆','🥇','🥈','🥉','🏅','🎭','🎨','🎬','🎤','🎧','🎼','🎵','🎶','🎹','🥁','🎷','🎺','🎸','🎻','🎲','♟','🎯','🎳','🎮','🧩','⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🎱','🏓','🏸','🏒','🏑','🥍','🏏','🪃','🥅','⛳','🎣','🏹','🥊','🥋','🎽','🛷','🥌'];
 const CO=['#c0392b','#e67e22','#d4ac0d','#27ae60','#16a085','#2980b9','#8e44ad','#e91e63','#00838f','#558b2f','#ff5722','#546e7a','#6d4c41','#2d5a27','#1565c0'];
+const DOW_CS=['Ne','Po','Út','St','Čt','Pá','So'];
+const MONTHS_CS=['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
 
 let _u=[],_cur=null,_lt=null,_lp='',_rp1='',_rp2='',_p1d=false,_se=EM[0],_sc=CO[0];
+let _calView='month', _calDate=new Date(), _holidays={}, _events=[];
 
+// ── UTILS ──
 async function h256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
 const V=v=>document.getElementById('veil').style.display=v?'flex':'none';
 const M=(id,t,c='e')=>document.getElementById(id).innerHTML=`<div class="msg m${c}">${t}</div>`;
+function ymd(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
 
+// ── NAV ──
 window.goTo=function(id){
   if(id==='sRegister')initR();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -261,7 +369,7 @@ window.goTo=function(id){
 function showApp(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('appShell').classList.add('active');
-  renderS();
+  renderS();renderCal();
 }
 window.switchTab=function(t,el){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
@@ -270,6 +378,7 @@ window.switchTab=function(t,el){
   el.classList.add('active');
 };
 
+// ── USERS ──
 async function loadU(){
   V(true);
   try{const s=await getDocs(query(collection(db,'users'),orderBy('createdAt')));_u=s.docs.map(d=>({id:d.id,...d.data()}));renderG();}catch(e){console.error(e);}
@@ -284,6 +393,7 @@ function renderG(){
   });
 }
 
+// ── LOGIN ──
 window.openL=function(u){
   _lt=u;_lp='';
   const a=document.getElementById('lav');a.textContent=u.emoji;a.style.setProperty('--uc',u.color);
@@ -303,6 +413,7 @@ function lD(){_lp=_lp.slice(0,-1);D('ldots',_lp);document.getElementById('loginM
 function eApp(){document.getElementById('pem').textContent=_cur.emoji;document.getElementById('pnm').textContent=_cur.name;showApp();}
 window.logout=function(){sessionStorage.removeItem('bU');_cur=null;goTo('sHome');};
 
+// ── REGISTER ──
 function initR(){
   _rp1='';_rp2='';_p1d=false;_se=EM[0];_sc=CO[0];
   document.getElementById('regName').value='';
@@ -338,19 +449,235 @@ window.submitReg=async function(){
   V(false);
 };
 
+// ── HOLIDAYS ──
+async function loadHolidays(year){
+  if(_holidays[year])return;
+  try{
+    const r=await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/CZ`);
+    const data=await r.json();
+    _holidays[year]={};
+    data.forEach(h=>{_holidays[year][h.date]=h.localName;});
+  }catch(e){console.warn('Svátky nedostupné',e);}
+}
+
+// ── EVENTS ──
+async function loadEvents(){
+  try{
+    const snap=await getDocs(query(collection(db,'events'),orderBy('dateStart')));
+    _events=snap.docs.map(d=>({id:d.id,...d.data()}));
+  }catch(e){console.error(e);}
+}
+
+function getEventsForDate(dateStr){
+  return _events.filter(e=>e.dateStart<=dateStr&&e.dateEnd>=dateStr);
+}
+
+// ── CALENDAR ──
+window.setView=function(v,el){
+  _calView=v;
+  document.querySelectorAll('.vsw-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderCal();
+};
+window.calNav=function(dir){
+  if(_calView==='month'){_calDate.setMonth(_calDate.getMonth()+dir);}
+  else if(_calView==='week'){_calDate.setDate(_calDate.getDate()+dir*7);}
+  else{_calDate.setDate(_calDate.getDate()+dir);}
+  _calDate=new Date(_calDate);renderCal();
+};
+window.calGoToday=function(){_calDate=new Date();renderCal();};
+window.addEventPrompt=function(){alert('Přidání události – brzy! (implementujeme v dalším kroku)');};
+
+async function renderCal(){
+  const year=_calDate.getFullYear();
+  await loadHolidays(year);
+  await loadHolidays(year+1);
+  const body=document.getElementById('calBody');
+  if(_calView==='month')renderMonth(body);
+  else if(_calView==='week')renderWeek(body);
+  else renderDay(body);
+}
+
+function renderMonth(body){
+  const y=_calDate.getFullYear(),m=_calDate.getMonth();
+  document.getElementById('calTitle').textContent=`${MONTHS_CS[m]} ${y}`;
+  const firstDay=new Date(y,m,1);
+  const lastDay=new Date(y,m+1,0);
+  let startDow=firstDay.getDay(); // 0=Ne
+  // Začínáme od pondělí: posun
+  const startOffset=(startDow+6)%7;
+  const gridStart=addDays(firstDay,-startOffset);
+  const today=ymd(new Date());
+
+  let html=`<div class="cal-month"><div class="cal-dow">`;
+  ['Po','Út','St','Čt','Pá','So','Ne'].forEach((d,i)=>{
+    const cls=i>=5?'sun':'';
+    html+=`<div class="cal-dow-cell ${cls}">${d}</div>`;
+  });
+  html+=`</div><div class="cal-grid">`;
+
+  const totalCells=42;
+  for(let i=0;i<totalCells;i++){
+    const cellDate=addDays(gridStart,i);
+    const cdStr=ymd(cellDate);
+    const isCurrentMonth=cellDate.getMonth()===m;
+    const isToday=cdStr===today;
+    const dow=cellDate.getDay(); // 0=Ne,6=So
+    const isSun=dow===0, isSat=dow===6;
+    const holiday=(_holidays[cellDate.getFullYear()]||{})[cdStr];
+    const cellEvents=getEventsForDate(cdStr);
+
+    let cls='cal-cell';
+    if(!isCurrentMonth)cls+=' other-month';
+    if(isToday)cls+=' today';
+    if(isSun)cls+=' sunday';
+    if(isSat)cls+=' saturday';
+
+    html+=`<div class="${cls}" data-date="${cdStr}">`;
+    html+=`<div class="cal-day-num">${cellDate.getDate()}</div>`;
+    if(holiday)html+=`<div class="cal-holiday">${holiday}</div>`;
+
+    // Proužky událostí (max 3, pak +N)
+    html+=`<div class="cal-events">`;
+    const shown=cellEvents.slice(0,3);
+    shown.forEach(ev=>{
+      const isStart=ev.dateStart===cdStr;
+      const isEnd=ev.dateEnd===cdStr;
+      let stripCls='evt-strip';
+      if(!isEnd&&!isStart)stripCls+=' continues-both';
+      else if(!isEnd)stripCls+=' continues-right';
+      else if(!isStart)stripCls+=' continues-left';
+      const owner=_u.find(u=>u.id===ev.userId);
+      const color=ev.color||(owner?owner.color:'#888');
+      const label=isStart?`${owner?owner.emoji:''}${owner?owner.name:''}${ev.title?' · '+ev.title:''}`:'';
+      html+=`<div class="${stripCls}" style="background:${color}" title="${ev.title||''}">${label}</div>`;
+    });
+    if(cellEvents.length>3)html+=`<div class="evt-more">+${cellEvents.length-3} další</div>`;
+    html+=`</div></div>`;
+  }
+  html+=`</div></div>`;
+  body.innerHTML=html;
+
+  // Klik na buňku
+  body.querySelectorAll('.cal-cell').forEach(cell=>{
+    cell.addEventListener('click',()=>{
+      _calDate=new Date(cell.dataset.date+'T12:00:00');
+      setView('day',document.querySelectorAll('.vsw-btn')[2]);
+    });
+  });
+}
+
+function renderWeek(body){
+  const d=new Date(_calDate);
+  const dow=(d.getDay()+6)%7; // 0=Po
+  const weekStart=addDays(d,-dow);
+  const y0=weekStart.getFullYear(),m0=weekStart.getMonth(),d0=weekStart.getDate();
+  const weekEnd=addDays(weekStart,6);
+  document.getElementById('calTitle').textContent=
+    `${d0}. ${m0+1}. – ${weekEnd.getDate()}. ${weekEnd.getMonth()+1}. ${weekEnd.getFullYear()}`;
+
+  const today=ymd(new Date());
+  const now=new Date();
+  const nowMinutes=now.getHours()*60+now.getMinutes();
+
+  let html=`<div class="cal-week"><div class="week-header"><div class="week-hcell"></div>`;
+  for(let i=0;i<7;i++){
+    const day=addDays(weekStart,i);
+    const ds=ymd(day);
+    const isToday=ds===today;
+    const isSun=day.getDay()===0,isSat=day.getDay()===6;
+    let cls='week-hcell';
+    if(isToday)cls+=' today';
+    if(isSun)cls+=' sunday';
+    if(isSat)cls+=' saturday';
+    html+=`<div class="${cls}"><div class="week-day-name">${['Po','Út','St','Čt','Pá','So','Ne'][i]}</div><div class="week-day-num">${day.getDate()}</div></div>`;
+  }
+  html+=`</div><div class="week-body"><div class="week-time-col">`;
+  for(let h=0;h<24;h++){html+=`<div class="week-hour-label">${h}:00</div>`;}
+  html+=`</div>`;
+  for(let i=0;i<7;i++){
+    const day=addDays(weekStart,i);
+    const ds=ymd(day);
+    const isToday=ds===today;
+    html+=`<div class="week-day-col" id="wdc-${i}">`;
+    for(let h=0;h<24;h++)html+=`<div class="week-hour-line"></div>`;
+    if(isToday){const pct=(nowMinutes/1440*100).toFixed(2);html+=`<div class="week-now-line" style="top:${pct}%"></div>`;}
+    const dayEvts=getEventsForDate(ds);
+    dayEvts.forEach(ev=>{
+      const owner=_u.find(u=>u.id===ev.userId);
+      const color=ev.color||(owner?owner.color:'#888');
+      const arrivalMin=ev.arrivalTime?timeToMin(ev.arrivalTime):0;
+      const departMin=ev.departTime?timeToMin(ev.departTime):1439;
+      const top=(arrivalMin/1440*100).toFixed(2);
+      const height=Math.max(((departMin-arrivalMin)/1440*100),2).toFixed(2);
+      html+=`<div class="week-evt" style="top:${top}%;height:${height}%;background:${color}">${owner?owner.emoji:''} ${ev.title||''}</div>`;
+    });
+    html+=`</div>`;
+  }
+  html+=`</div></div>`;
+  body.innerHTML=html;
+}
+
+function renderDay(body){
+  const ds=ymd(_calDate);
+  const dow=_calDate.getDay();
+  const dowName=['neděle','pondělí','úterý','středa','čtvrtek','pátek','sobota'][dow];
+  const holiday=(_holidays[_calDate.getFullYear()]||{})[ds];
+  document.getElementById('calTitle').textContent=
+    `${_calDate.getDate()}. ${_calDate.getMonth()+1}. ${_calDate.getFullYear()}`;
+
+  const today=ymd(new Date());
+  const isToday=ds===today;
+  const now=new Date();
+  const nowMinutes=now.getHours()*60+now.getMinutes();
+
+  let html=`<div class="cal-day">
+    <div class="day-header">
+      <div class="day-ttl">${_calDate.getDate()}. ${MONTHS_CS[_calDate.getMonth()]} ${_calDate.getFullYear()}</div>
+      <div class="day-sub">${dowName}${holiday?' · '+holiday:''}</div>
+    </div>
+    <div class="day-body">
+      <div class="day-time-col">`;
+  for(let h=0;h<24;h++)html+=`<div class="day-hour-label">${h}:00</div>`;
+  html+=`</div><div class="day-col">`;
+  for(let h=0;h<24;h++)html+=`<div class="day-hour-line"></div>`;
+  if(isToday){const pct=(nowMinutes/1440*100).toFixed(2);html+=`<div class="day-now-line" style="top:${pct}%"></div>`;}
+  const dayEvts=getEventsForDate(ds);
+  dayEvts.forEach(ev=>{
+    const owner=_u.find(u=>u.id===ev.userId);
+    const color=ev.color||(owner?owner.color:'#888');
+    const arrivalMin=ev.arrivalTime?timeToMin(ev.arrivalTime):0;
+    const departMin=ev.departTime?timeToMin(ev.departTime):1439;
+    const top=(arrivalMin/1440*100).toFixed(2);
+    const height=Math.max(((departMin-arrivalMin)/1440*100),2).toFixed(2);
+    html+=`<div class="day-evt" style="top:${top}%;height:${height}%;background:${color}">${owner?owner.emoji+' ':''}<strong>${owner?owner.name:''}</strong>${ev.title?' · '+ev.title:''}</div>`;
+  });
+  html+=`</div></div></div>`;
+  body.innerHTML=html;
+}
+
+function timeToMin(t){if(!t)return 0;const[h,m]=t.split(':').map(Number);return h*60+(m||0);}
+
+// ── SETTINGS ──
 function renderS(){
   const u=_cur;
   let h=`<div class="s-sec">Přihlášen jako</div><div class="s-card"><div class="s-av">${u.emoji}</div><div style="flex:1"><div class="s-name">${u.name}${u.isAdmin?' 👑':''}</div><div class="s-role">${u.isAdmin?'Administrátor':'Uživatel'}</div></div><div class="s-dot" style="background:${u.color}"></div></div>`;
   if(u.isAdmin){h+=`<div class="s-sec">Všichni uživatelé</div>`;_u.forEach(x=>{h+=`<div class="s-card"><div class="s-av">${x.emoji}</div><div style="flex:1"><div class="s-name">${x.name}${x.isAdmin?' 👑':''}</div><div class="s-role">${x.isAdmin?'Admin':'Uživatel'}</div></div><div class="s-dot" style="background:${x.color}"></div></div>`;});}
-  h+=`<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:16px;text-align:center;font-size:.72rem;color:var(--tx3)">Editace profilu · brzy</p>`;
+  h+=`<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div>
+      <p style="margin-top:16px;text-align:center;font-size:.72rem;color:var(--tx3)">Editace profilu · brzy</p>
+      <p style="margin-top:6px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v 1.01</p>`;
   document.getElementById('si').innerHTML=h;
 }
 
+// ── PIN UI ──
 function D(id,pin){const el=document.getElementById(id);el.innerHTML='';for(let i=0;i<4;i++){const d=document.createElement('div');d.className='pd'+(i<pin.length?' on':'');el.appendChild(d);}}
 function P(id,oK,oD){const el=document.getElementById(id);el.innerHTML='';['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{const b=document.createElement('button');if(!k){b.className='pk gap';}else if(k==='⌫'){b.className='pk del';b.textContent=k;b.onclick=oD;}else{b.className='pk';b.textContent=k;b.onclick=()=>oK(k);}el.appendChild(b);});}
 
+// ── INIT ──
 async function init(){
-  V(true);await loadU();
+  V(true);
+  await loadU();
+  await loadEvents();
   const s=sessionStorage.getItem('bU');
   if(s){try{const u=JSON.parse(s);const f=_u.find(x=>x.id===u.id);if(f){_cur=f;eApp();return;}}catch(e){}}
   goTo('sHome');
