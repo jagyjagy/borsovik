@@ -111,6 +111,9 @@
     .modal-body{overflow-y:auto;padding:16px 20px;flex:1;}
     .modal-footer{padding:12px 20px;border-top:1px solid var(--bd);flex-shrink:0;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;}
     .recur-badge{display:inline-flex;align-items:center;gap:4px;font-size:.68rem;font-weight:500;color:var(--ac);background:var(--acbg);border-radius:10px;padding:2px 8px;margin-top:3px;}
+    .vis-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:500;color:var(--tx3);background:var(--bg2);border-radius:10px;padding:2px 7px;margin-left:4px;}
+    .vis-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:500;color:var(--tx3);background:var(--bg2);border-radius:10px;padding:2px 7px;margin-top:3px;margin-left:4px;}
+    .vis-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:500;color:var(--tx3);background:var(--bg2);border-radius:10px;padding:2px 7px;margin-top:3px;margin-left:4px;}
     /* APP SHELL */
     .app-shell{display:none;flex-direction:column;height:100svh;}
     .app-shell.active{display:flex;}
@@ -409,7 +412,37 @@
           <option value="yearly">Každý rok</option>
         </select>
       </div>
+      <div class="fg"><label>Viditelnost</label>
+        <select id="evVisibility" onchange="visChange()">
+          <option value="all">Všichni</option>
+          <option value="me">Jen já</option>
+          <option value="user">Konkrétní uživatel…</option>
+        </select>
+      </div>
+      <div class="fg" id="evVisUserWrap" style="display:none">
+        <label>Kdo uvidí událost</label>
+        <select id="evVisUser"></select>
+      </div>
+      <div class="fg"><label>Viditelnost</label>
+        <select id="evVisibility">
+          <option value="all">Všichni</option>
+          <option value="me">Jen já</option>
+          <option value="user">Konkrétní uživatel…</option>
+        </select>
+      </div>
+      <div class="fg" id="evVisUserWrap" style="display:none">
+        <label>Kdo uvidí událost</label>
+        <select id="evVisUser"></select>
+      </div>
       <div class="fg"><label>Hosté <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.75rem">(nepovinné)</span></label><input type="text" id="evGuests" placeholder="např. Karel, Petra, děti…"></div>
+      <div class="fg"><label>Viditelnost</label>
+        <select id="evVisibility" onchange="onVisChange()">
+          <option value="all">Všem</option>
+          <option value="me">Jen mně</option>
+          <option value="user">Konkrétní uživatel…</option>
+        </select>
+      </div>
+      <div class="fg" id="evVisUserRow" style="display:none"><label>Vyber uživatele</label><select id="evVisUser"></select></div>
       <div class="fg"><label>Popis <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.75rem">(nepovinné)</span></label><textarea id="evDesc" placeholder="Volitelný popis…"></textarea></div>
       <div id="evMsg"></div>
     </div>
@@ -697,13 +730,21 @@ function getVirtualEvent(ev,year,month){
   const ne=new Date(ns.getTime()+dur);
   return {...ev,dateStart:ymd(ns),dateEnd:ymd(ne),_virtual:true};
 }
+function isVisible(ev){
+  if(!ev.visibility||ev.visibility==='all')return true;
+  if(!_cur)return false;
+  if(ev.userId===_cur.id)return true; // tvůrce vždy vidí
+  if(ev.visibility==='me')return false;
+  if(ev.visibility==='user')return ev.visibilityUser===_cur.id;
+  return true;
+}
 function eventsForDate(ds){
   const d=new Date(ds+'T12:00:00');
   const y=d.getFullYear(),m=d.getMonth();
   const res=[];
   _events.forEach(ev=>{
-    if(!ev.recur){if(ev.dateStart<=ds&&ev.dateEnd>=ds)res.push(ev);}
-    else{if(eventOccursInMonth(ev,y,m)){const vev=getVirtualEvent(ev,y,m);if(vev.dateStart<=ds&&vev.dateEnd>=ds)res.push({...ev,...vev});}}
+    if(!ev.recur){if(ev.dateStart<=ds&&ev.dateEnd>=ds&&isVisible(ev))res.push(ev);}
+    else{if(eventOccursInMonth(ev,y,m)&&isVisible(ev)){const vev=getVirtualEvent(ev,y,m);if(vev.dateStart<=ds&&vev.dateEnd>=ds)res.push({...ev,...vev});}}
   });
   return res;
 }
@@ -725,10 +766,23 @@ window.openModal=function(eventId){
   document.getElementById('evArrival').value=ev?(ev.arrivalTime||''):'';
   document.getElementById('evDepart').value=ev?(ev.departTime||''):'';
   document.getElementById('evRecur').value=ev?(ev.recur||''):'';
+  // Visibility
+  const visEl=document.getElementById('evVisibility');
+  const visUserEl=document.getElementById('evVisUser');
+  visUserEl.innerHTML=_u.filter(u=>u.id!==(_cur?_cur.id:null)).map(u=>'<option value="'+u.id+'">'+u.emoji+' '+u.name+'</option>').join('');
+  const evVis=ev?(ev.visibility||'all'):'all';
+  const evVisUser=ev?(ev.visibilityUser||''):'';
+  visEl.value=evVis;
+  if(evVisUser)visUserEl.value=evVisUser;
+  document.getElementById('evVisUserWrap').style.display=evVis==='user'?'block':'none';
   document.getElementById('evGuests').value=ev?(ev.guests||''):'';
   document.getElementById('evDesc').value=ev?(ev.desc||''):'';
   document.getElementById('evMsg').innerHTML='';
   document.getElementById('modalBackdrop').classList.add('open');
+};
+window.visChange=function(){
+  const v=document.getElementById('evVisibility').value;
+  document.getElementById('evVisUserWrap').style.display=v==='user'?'block':'none';
 };
 window.closeModal=function(e){if(e.target===document.getElementById('modalBackdrop'))closeModalDirect();};
 window.closeModalDirect=function(){document.getElementById('modalBackdrop').classList.remove('open');};
@@ -740,6 +794,8 @@ window.submitEvent=async function(){
   const arrival=document.getElementById('evArrival').value;
   const depart=document.getElementById('evDepart').value;
   const recur=document.getElementById('evRecur').value;
+  const visibility=document.getElementById('evVisibility').value||'all';
+  const visibilityUser=visibility==='user'?(document.getElementById('evVisUser').value||''):'';
   const guests=document.getElementById('evGuests').value.trim();
   const desc=document.getElementById('evDesc').value.trim();
   if(!title){M('evMsg','Zadej název události');return;}
@@ -747,7 +803,7 @@ window.submitEvent=async function(){
   if(dateEnd<dateStart){M('evMsg','Datum "do" nesmí být před "od"');return;}
   V(true);
   try{
-    const data={userId,title,dateStart,dateEnd,arrivalTime:arrival||null,departTime:depart||null,recur:recur||null,guests:guests||null,desc:desc||null};
+    const data={userId,title,dateStart,dateEnd,arrivalTime:arrival||null,departTime:depart||null,recur:recur||null,guests:guests||null,desc:desc||null,visibility:visibility||'all',visibilityUser:visibilityUser||null};
     if(_editingEventId)await updateDoc(doc(db,'events',_editingEventId),data);
     else await addDoc(collection(db,'events'),{...data,createdAt:serverTimestamp()});
     await loadEvents();closeModalDirect();renderCal();renderEvList();
@@ -812,7 +868,7 @@ function evHtmlBlock(ev,commentCss){
   if(ev.guests)meta+=' · '+ev.guests;
   if(ev.dateStart!==ev.dateEnd)meta+=' · '+ev.dateStart+' – '+ev.dateEnd;
   const rl=ev.recur?('<span class="recur-badge">'+RECUR_LABEL[ev.recur]+'</span>'):'';
-  return '<div class="day-evt-main"><div class="day-evt-dot" style="background:'+color+'"></div><div class="day-evt-body"><div class="day-evt-title">'+ev.title+rl+'</div><div class="day-evt-meta">'+meta+'</div>'+(ev.desc?'<div class="day-evt-meta" style="margin-top:3px;font-style:italic">'+ev.desc+'</div>':'')+'</div></div><div class="day-evt-actions">'+(canEdit&&!ev._virtual?'<button class="dea-btn edit" onclick="openModal(\''+ev.id+'\')">✏️ Upravit</button><button class="dea-btn del" onclick="deleteEvDirect(\''+ev.id+'\',\''+ev.userId+'\')">🗑 Smazat</button>':'')+'</div><div class="'+commentCss+'" data-cid="event-'+ev.id+'"><div class="no-comments">Načítám…</div></div>';
+  const visLbl=(ev.visibility&&ev.visibility!=='all')?('<span class="vis-badge">'+(ev.visibility==='me'?'🔒 Jen já':'👤 Jen '+(_u.find(u=>u.id===ev.visibilityUser)||{name:'?'}).name)+'</span>'):'';  return '<div class="day-evt-main"><div class="day-evt-dot" style="background:'+color+'"></div><div class="day-evt-body"><div class="day-evt-title">'+ev.title+rl+'</div><div class="day-evt-meta">'+meta+'</div>'+(ev.desc?'<div class="day-evt-meta" style="margin-top:3px;font-style:italic">'+ev.desc+'</div>':'')+'</div></div><div class="day-evt-actions">'+(canEdit&&!ev._virtual?'<button class="dea-btn edit" onclick="openModal(\''+ev.id+'\')">✏️ Upravit</button><button class="dea-btn del" onclick="deleteEvDirect(\''+ev.id+'\',\''+ev.userId+'\')">🗑 Smazat</button>':'')+'</div><div class="'+commentCss+'" data-cid="event-'+ev.id+'"><div class="no-comments">Načítám…</div></div>';
 }
 
 // ── UDÁLOSTI SEZNAM ──
@@ -823,6 +879,7 @@ async function renderEvList(){
   const expanded=[];
   const ty=new Date().getFullYear();
   _events.forEach(ev=>{
+    if(!isVisible(ev))return;
     if(!ev.recur){expanded.push(ev);}
     else{
       for(let y=ty-1;y<=ty+2;y++){
