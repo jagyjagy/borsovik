@@ -28,7 +28,7 @@
     .screen.active{display:flex;}
     .screen-scroll{overflow-y:auto;}
     @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .hdr{width:100%;background:var(--sf);border-bottom:1px solid var(--bd);padding:env(safe-area-inset-top,0px) 20px 0;min-height:calc(52px + env(safe-area-inset-top,0px));display:flex;align-items:flex-end;padding-bottom:8px;gap:12px;flex-shrink:0;}
+    .hdr{width:100%;background:var(--sf);border-bottom:1px solid var(--bd);padding:env(safe-area-inset-top,0px) 20px 8px;min-height:calc(52px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:12px;flex-shrink:0;}
     .hdr-logo{width:28px;height:28px;border-radius:7px;object-fit:cover;}
     .hdr-title{font-size:1rem;font-weight:600;letter-spacing:-.2px;}
     .hdr-sub{font-size:.72rem;color:var(--tx3);margin-left:auto;}
@@ -114,7 +114,7 @@
     /* APP SHELL */
     .app-shell{display:none;flex-direction:column;height:100svh;}
     .app-shell.active{display:flex;}
-    .top-bar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+    .top-bar{background:var(--sf);border-bottom:1px solid var(--bd);padding:env(safe-area-inset-top,0px) 20px 0;min-height:calc(56px + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
     .tb-brand{display:flex;align-items:center;gap:10px;}
     .tb-logo{width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0;}
     .tb-info{display:flex;flex-direction:column;gap:0px;}
@@ -130,7 +130,7 @@
     .tab-pane{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;}
     .tab-pane.active{display:flex;}
     .pane-scroll{overflow-y:auto;flex:1;padding:20px;}
-    .tab-bar{display:flex;background:var(--sf);border-top:1px solid var(--bd);flex-shrink:0;height:var(--tab-h);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px);border-radius:16px 16px 0 0;box-shadow:0 -2px 16px rgba(0,0,0,.06);}
+    .tab-bar{display:flex;background:var(--sf);border-top:1px solid var(--bd);flex-shrink:0;height:calc(var(--tab-h) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);border-radius:16px 16px 0 0;box-shadow:0 -2px 16px rgba(0,0,0,.06);}
     .tbb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;color:var(--tx3);font-family:'DM Sans',sans-serif;font-size:.56rem;font-weight:500;letter-spacing:.7px;text-transform:uppercase;cursor:pointer;transition:color .13s;position:relative;padding:0;}
     .tbb svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s cubic-bezier(.16,1,.3,1);}
     .tbb.active{color:var(--ac);}
@@ -269,6 +269,7 @@
     .task-block{border-bottom:1px solid var(--bd);background:var(--sf);}
     .task-main{display:flex;align-items:center;gap:10px;padding:11px 16px 6px;}
     .task-block.done .task-text{text-decoration:line-through;color:var(--tx3);}
+    .task-block.recurring{border-left:2px solid var(--ac);}
     .task-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s;background:transparent;}
     .task-check:hover{border-color:var(--ac);}
     .task-block.done .task-check{background:var(--ac);border-color:var(--ac);}
@@ -517,7 +518,7 @@
       </div>
       <div class="about-section">Changelog</div>
       <div class="changelog-item">
-        <div class="changelog-ver">v1.16 <span class="changelog-date">říjen 2026</span></div>
+        <div class="changelog-ver">v1.20 <span class="changelog-date">říjen 2026</span></div>
         <ul class="changelog-list">
           <li>Oprava tlačítka „Přidat pobyt" a „Upravit" — FAB nefungoval kvůli overflow ořezu scrollovacího kontejneru</li>
         </ul>
@@ -566,7 +567,7 @@
           <li>GitHub Pages hosting</li>
         </ul>
       </div>
-      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.16</p>
+      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.20</p>
     </div>
   </div>
 </div>
@@ -613,7 +614,7 @@
   <div class="top-bar">
     <div class="tb-brand"><img class="tb-logo" src="icon.png" onerror="this.style.display='none'" alt=""><div class="tb-info"><span class="tb-name">Boršovík</span><span class="tb-addr">Rodinný plánovač</span></div></div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <span class="tb-version" onclick="openAbout()">v1.16</span>
+      <span class="tb-version" onclick="openAbout()">v1.20</span>
       <div class="upill" id="upill" onclick="logout()"><span id="pem"></span><span id="pnm"></span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6H2M5 9l-3-3 3-3"/></svg>
       </div>
@@ -655,7 +656,7 @@
         <input class="task-input" id="taskInput" type="text" placeholder="Nový úkol…" maxlength="120" onkeydown="if(event.key==='Enter')addTask()">
         <button class="task-add-btn" onclick="addTask()"><svg viewBox="0 0 18 18"><line x1="9" y1="1" x2="9" y2="17"/><line x1="1" y1="9" x2="17" y2="9"/></svg></button>
       </div>
-      <div class="task-assign-row"><span class="task-assign-label">Přiřadit:</span><select class="task-assign-sel" id="taskAssign"></select></div>
+      <div class="task-assign-row"><span class="task-assign-label">Přiřadit:</span><select class="task-assign-sel" id="taskAssign"></select><select class="task-assign-sel" id="taskRecur" style="min-width:120px"><option value="">Jednorázový</option><option value="weekly">🔁 Každý týden</option><option value="monthly">🔁 Každý měsíc</option></select></div>
       <div class="task-list" id="taskList"></div>
     </div>
     <!-- NÁVODY -->
@@ -752,7 +753,7 @@ window.goTo=function(id){
 function showApp(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('appShell').classList.add('active');
-  renderS();renderCal();renderEvList();renderTaskList();renderGuideList();
+  renderS();renderCal();renderEvList();renderTaskList();renderGuideList();setTimeout(checkTomorrowNotif,3000);setTimeout(updateNotifStatus,500);
   loadWeather();updateTaskBadge();renderAtCottage();
 }
 window.switchTab=function(t,el){
@@ -1029,7 +1030,8 @@ window.addTask=async function(){
   const assignedTo=document.getElementById('taskAssign').value||null;
   const createdBy=_cur?_cur.id:null;
   V(true);
-  try{await addDoc(collection(db,'tasks'),{text,assignedTo,createdBy,done:false,createdAt:serverTimestamp()});document.getElementById('taskInput').value='';await loadTasks();renderTaskList();}
+  const recur=document.getElementById('taskRecur').value||null;
+  try{await addDoc(collection(db,'tasks'),{text,assignedTo,createdBy,recur,done:false,createdAt:serverTimestamp()});document.getElementById('taskInput').value='';await loadTasks();renderTaskList();}
   catch(e){alert('Chyba: '+e.message);}V(false);
 };
 window.toggleTask=async function(id,done,el){
@@ -1082,7 +1084,61 @@ function taskBlockHtml(t){
   const canEdit=_cur&&(_cur.isAdmin||_cur.id===t.createdBy||_cur.id===t.assignedTo);
   const canDel=_cur&&(_cur.isAdmin||_cur.id===t.createdBy);
   const color=assignee?assignee.color:'var(--bd2)';
-  return '<div class="task-block'+(t.done?' done':'')+'" id="tb-'+t.id+'"><div class="task-swipe-hint task-swipe-done">'+(t.done?'↩ Zpět':'✓ Hotovo')+'</div><div class="task-swipe-hint task-swipe-delete">✕ Smazat</div><div class="task-block-inner"><div class="task-main"><div class="task-check" onclick="toggleTask(\''+t.id+'\','+t.done+',this)" style="border-color:'+color+'"><svg viewBox="0 0 11 9"><polyline points="1,4.5 4,7.5 10,1"/></svg></div><div class="task-body"><div class="task-text">'+t.text+'</div><div class="task-assignee">'+(assignee?assignee.emoji+' '+assignee.name:'Nikdo')+(creator&&creator.id!==(assignee?assignee.id:'')?' · přidal '+creator.emoji+' '+creator.name:'')+'</div></div>'+(canDel?'<button class="task-del" onclick="deleteTask(\''+t.id+'\',\''+t.createdBy+'\')">✕</button>':'')+'</div><div class="task-actions">'+(canEdit?'<button class="ta-btn edit" onclick="startEditTask(\''+t.id+'\')">✏️ Upravit</button>':'')+'</div><div class="task-comments-section" data-cid="task-'+t.id+'"><div class="no-comments">Načítám…</div></div></div></div>';
+  const trl=t.recur?('<span class="recur-badge">'+(t.recur==='weekly'?'🔁 Každý týden':'🔁 Každý měsíc')+'</span>'):'';
+  const recurCls=t.recur?' recurring':'';
+  return '<div class="task-block'+(t.done?' done':'')+recurCls+'" id="tb-'+t.id+'">\<div class="task-swipe-hint task-swipe-done">'+(t.done?'↩ Zpět':'✓ Hotovo')+'</div><div class="task-swipe-hint task-swipe-delete">✕ Smazat</div><div class="task-block-inner"><div class="task-main"><div class="task-check" onclick="toggleTask(\''+t.id+'\','+t.done+',this)" style="border-color:'+color+'"><svg viewBox="0 0 11 9"><polyline points="1,4.5 4,7.5 10,1"/></svg></div><div class="task-body"><div class="task-text">'+t.text+'</div><div class="task-assignee">'+(assignee?assignee.emoji+' '+assignee.name:'Nikdo')+(creator&&creator.id!==(assignee?assignee.id:'')?' · přidal '+creator.emoji+' '+creator.name:'')+'</div></div>'+(canDel?'<button class="task-del" onclick="deleteTask(\''+t.id+'\',\''+t.createdBy+'\')">✕</button>':'')+'</div><div class="task-actions">'+(canEdit?'<button class="ta-btn edit" onclick="startEditTask(\''+t.id+'\')">✏️ Upravit</button>':'')+'</div><div class="task-comments-section" data-cid="task-'+t.id+'"><div class="no-comments">Načítám…</div></div></div></div>';
+}
+
+
+// ── PUSH NOTIFIKACE + SERVICE WORKER ──
+let _swReg=null;
+async function registerSW(){
+  if(!('serviceWorker' in navigator))return;
+  try{
+    _swReg=await navigator.serviceWorker.register('./sw.js',{scope:'./'});
+    await navigator.serviceWorker.ready;
+  }catch(e){console.warn('SW registration failed:',e);}
+}
+registerSW();
+
+function updateNotifStatus(){
+  const el=document.getElementById('notifStatus');
+  const btn=document.getElementById('notifBtn');
+  if(!('Notification' in window)){if(el)el.textContent='Nepodporováno';if(btn)btn.style.display='none';return;}
+  const p=Notification.permission;
+  if(el)el.textContent=p==='granted'?'Zapnuto ✓':p==='denied'?'Zamítnuto v prohlížeči':'Vypnuto';
+  if(btn){btn.textContent=p==='granted'?'Zkusit hned':'Zapnout';btn.style.display=p==='denied'?'none':'';}
+}
+window.requestNotifPerm=async function(){
+  if(!('Notification' in window)){alert('Tvůj prohlížeč notifikace nepodporuje.');return;}
+  const result=await Notification.requestPermission();
+  updateNotifStatus();
+  if(result==='granted'){await scheduleAllNotifs();showTestNotif();}
+  else alert('Notifikace nejsou povoleny. Povol je v nastavení prohlížeče/systému.');
+};
+function showTestNotif(){
+  if(_swReg&&_swReg.active){
+    _swReg.active.postMessage({type:'SCHEDULE_NOTIF',title:'Boršovík 🏡',body:'Notifikace fungují! Dostaneš připomenutí den před příjezdem.',tag:'test-notif',timestamp:Date.now()+3000});
+  } else {
+    new Notification('Boršovík 🏡',{body:'Notifikace fungují!',icon:'icon.png'});
+  }
+}
+async function scheduleAllNotifs(){
+  if(Notification.permission!=='granted')return;
+  if(!_swReg||!_swReg.active)return;
+  const now=Date.now();
+  _events.forEach(ev=>{
+    if(!_cur||ev.userId!==_cur.id)return;
+    // Notifikace den před příjezdem v 8:00
+    const arrDate=new Date(ev.dateStart+'T08:00:00');
+    const notifTime=arrDate.getTime()-86400000; // den předem
+    if(notifTime<=now)return;
+    const tag='ev-'+ev.id+'-arrival';
+    _swReg.active.postMessage({type:'SCHEDULE_NOTIF',title:'Boršovík 🏡 – zítra jedeš na chatu!',body:(ev.title||'Pobyt')+' začíná '+ev.dateStart+(ev.arrivalTime?' v '+ev.arrivalTime:''),tag,timestamp:notifTime});
+  });
+}
+function checkTomorrowNotif(){
+  if(Notification.permission==='granted')scheduleAllNotifs();
 }
 
 // ── NÁVODY ──
@@ -1284,7 +1340,7 @@ async function renderDayPanel(ds){
   const isToday=ds===ymd(new Date());
   let html='<div class="day-panel-hdr"><span class="day-panel-date">'+fmtDate(ds)+(isToday?' · Dnes':'')+'</span>'+(hol?'<span class="day-panel-hol">🎉 '+hol+'</span>':'')+'</div>';
   if(hol)html+='<div class="day-hol-item"><span class="day-hol-icon">🎉</span><div class="day-hol-body"><div class="day-hol-label">Státní svátek</div><div class="day-hol-name">'+hol+'</div></div></div>';
-  if(!hol&&!evts.length)html+='<div class="day-panel-empty">Žádné události · klikni + pro přidání</div>';
+  if(!hol&&!evts.length)html+='<div class="day-panel-empty" onclick="openModal(null)" style="cursor:pointer">Žádné události — <u>přidat pobyt</u></div>';
   evts.forEach(ev=>{html+='<div class="day-evt-block">'+evHtmlBlock(ev,'comments-section')+'</div>';});
   panel.innerHTML=html;
   evts.forEach(ev=>populateComments('event',ev.id));
@@ -1302,9 +1358,11 @@ function renderS(){
   h+='<div class="s-toggle-row" style="border:none;padding:6px 0;margin-bottom:0"><div><span class="s-toggle-label">🔥 Topení</span><span class="s-toggle-sub">'+(heat?'Zapnuto':'Vypnuto')+'</span></div><label class="s-toggle"><input type="checkbox" id="heatingToggle"'+(heat?' checked':'')+'><span class="s-toggle-slider"></span></label></div>';
   h+='<div class="s-toggle-row" style="border:none;padding:6px 0;margin-bottom:0"><div><span class="s-toggle-label">💧 Voda</span><span class="s-toggle-sub">'+(water?'Zapnuta':'Vypnuta')+'</span></div><label class="s-toggle"><input type="checkbox" id="waterToggle"'+(water?' checked':'')+'><span class="s-toggle-slider"></span></label></div>';
   h+='</div>';
+  h+='<div class="s-sec">Notifikace</div>';
+  h+='<div class="s-toggle-row"><div><span class="s-toggle-label">🔔 Připomenutí pobytu</span><span class="s-toggle-sub">Den předem – stav: <span id="notifStatus">zjišťuji…</span></span></div><button class="btn" id="notifBtn" onclick="requestNotifPerm()" style="padding:6px 14px;font-size:.75rem">Zapnout</button></div>';
   h+='<div class="s-sec">Přihlášen jako</div>'+userProfileCard(u);
   if(u.isAdmin&&_u.length>1){h+='<div class="s-sec">Ostatní uživatelé</div>';_u.filter(x=>x.id!==u.id).forEach(x=>{h+=userProfileCard(x);});}
-  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.16</p>';
+  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.20</p>';
   document.getElementById('si').innerHTML=h;
   _u.forEach(u2=>{if(!document.getElementById('pe-ebox-'+u2.id))return;buildProfileEbox(u2.id,u2.emoji);buildProfileColors(u2.id,u2.color);buildProfilePinPad(u2.id);});
   const darkToggle=document.getElementById('darkToggle');
