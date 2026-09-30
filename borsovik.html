@@ -517,7 +517,7 @@
       </div>
       <div class="about-section">Changelog</div>
       <div class="changelog-item">
-        <div class="changelog-ver">v1.15 <span class="changelog-date">říjen 2026</span></div>
+        <div class="changelog-ver">v1.16 <span class="changelog-date">říjen 2026</span></div>
         <ul class="changelog-list">
           <li>Oprava tlačítka „Přidat pobyt" a „Upravit" — FAB nefungoval kvůli overflow ořezu scrollovacího kontejneru</li>
         </ul>
@@ -566,7 +566,7 @@
           <li>GitHub Pages hosting</li>
         </ul>
       </div>
-      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.15</p>
+      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.16</p>
     </div>
   </div>
 </div>
@@ -613,7 +613,7 @@
   <div class="top-bar">
     <div class="tb-brand"><img class="tb-logo" src="icon.png" onerror="this.style.display='none'" alt=""><div class="tb-info"><span class="tb-name">Boršovík</span><span class="tb-addr">Rodinný plánovač</span></div></div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <span class="tb-version" onclick="openAbout()">v1.15</span>
+      <span class="tb-version" onclick="openAbout()">v1.16</span>
       <div class="upill" id="upill" onclick="logout()"><span id="pem"></span><span id="pnm"></span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6H2M5 9l-3-3 3-3"/></svg>
       </div>
@@ -829,8 +829,8 @@ async function loadHolidays(year){
   if(_holidays[year])return;
   try{const r=await fetch('https://date.nager.at/api/v3/PublicHolidays/'+year+'/CZ');const data=await r.json();_holidays[year]={};data.forEach(h=>{_holidays[year][h.date]=h.localName;});}catch(e){_holidays[year]={};}
 }
-async function loadEvents(){try{const snap=await getDocs(query(collection(db,'events'),orderBy('dateStart')));_events=snap.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);}}
-async function loadTasks(){try{const snap=await getDocs(query(collection(db,'tasks'),orderBy('createdAt')));_tasks=snap.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);}}
+async function loadEvents(){try{const snap=await getDocs(query(collection(db,'events'),orderBy('dateStart','desc')));_events=snap.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);}}
+async function loadTasks(){try{const snap=await getDocs(query(collection(db,'tasks'),orderBy('createdAt','desc')));const all=snap.docs.map(d=>({id:d.id,...d.data()}));_tasks=[...all.filter(t=>!t.done),...all.filter(t=>t.done)];}catch(e){console.error(e);}}
 async function loadGuides(){try{const snap=await getDocs(query(collection(db,'guides'),orderBy('updatedAt','desc')));_guides=snap.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.error(e);}}
 
 // ── OPAKUJÍCÍ SE UDÁLOSTI ──
@@ -1304,7 +1304,7 @@ function renderS(){
   h+='</div>';
   h+='<div class="s-sec">Přihlášen jako</div>'+userProfileCard(u);
   if(u.isAdmin&&_u.length>1){h+='<div class="s-sec">Ostatní uživatelé</div>';_u.filter(x=>x.id!==u.id).forEach(x=>{h+=userProfileCard(x);});}
-  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.15</p>';
+  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.16</p>';
   document.getElementById('si').innerHTML=h;
   _u.forEach(u2=>{if(!document.getElementById('pe-ebox-'+u2.id))return;buildProfileEbox(u2.id,u2.emoji);buildProfileColors(u2.id,u2.color);buildProfilePinPad(u2.id);});
   const darkToggle=document.getElementById('darkToggle');
