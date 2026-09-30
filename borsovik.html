@@ -522,7 +522,7 @@
       </div>
       <div class="about-section">Changelog</div>
       <div class="changelog-item">
-        <div class="changelog-ver">v1.20 <span class="changelog-date">říjen 2026</span></div>
+        <div class="changelog-ver">v1.21 <span class="changelog-date">říjen 2026</span></div>
         <ul class="changelog-list">
           <li>Oprava tlačítka „Přidat pobyt" a „Upravit" — FAB nefungoval kvůli overflow ořezu scrollovacího kontejneru</li>
         </ul>
@@ -571,7 +571,7 @@
           <li>GitHub Pages hosting</li>
         </ul>
       </div>
-      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.20</p>
+      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.21</p>
     </div>
   </div>
 </div>
@@ -618,7 +618,7 @@
   <div class="top-bar">
     <div class="tb-brand"><img class="tb-logo" src="icon.png" onerror="this.style.display='none'" alt=""><div class="tb-info"><span class="tb-name">Boršovík</span><span class="tb-addr">Rodinný plánovač</span></div></div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <span class="tb-version" onclick="openAbout()">v1.20</span>
+      <span class="tb-version" onclick="openAbout()">v1.21</span>
       <div class="upill" id="upill" onclick="logout()"><span id="pem"></span><span id="pnm"></span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6H2M5 9l-3-3 3-3"/></svg>
       </div>
@@ -1381,7 +1381,7 @@ function renderS(){
   h+='<div class="s-toggle-row"><div><span class="s-toggle-label">🔔 Připomenutí pobytu</span><span class="s-toggle-sub">Den předem – stav: <span id="notifStatus">zjišťuji…</span></span></div><button class="btn" id="notifBtn" onclick="requestNotifPerm()" style="padding:6px 14px;font-size:.75rem">Zapnout</button></div>';
   h+='<div class="s-sec">Přihlášen jako</div>'+userProfileCard(u);
   if(u.isAdmin&&_u.length>1){h+='<div class="s-sec">Ostatní uživatelé</div>';_u.filter(x=>x.id!==u.id).forEach(x=>{h+=userProfileCard(x);});}
-  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.20</p>';
+  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.21</p>';
   document.getElementById('si').innerHTML=h;
   _u.forEach(u2=>{if(!document.getElementById('pe-ebox-'+u2.id))return;buildProfileEbox(u2.id,u2.emoji);buildProfileColors(u2.id,u2.color);buildProfilePinPad(u2.id);});
   const darkToggle=document.getElementById('darkToggle');
