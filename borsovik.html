@@ -23,12 +23,12 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{-webkit-tap-highlight-color:transparent;}
-    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);height:100svh;display:flex;flex-direction:column;font-size:15px;overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);height:100svh;display:flex;flex-direction:column;font-size:15px;overflow:hidden;}
     .screen{display:none;flex:1;flex-direction:column;min-height:0;animation:up .28s cubic-bezier(.16,1,.3,1);}
     .screen.active{display:flex;}
     .screen-scroll{overflow-y:auto;}
     @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .hdr{width:100%;background:var(--sf);border-bottom:1px solid var(--bd);padding:0 20px;height:52px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+    .hdr{width:100%;background:var(--sf);border-bottom:1px solid var(--bd);padding:env(safe-area-inset-top,0px) 20px 0;min-height:calc(52px + env(safe-area-inset-top,0px));display:flex;align-items:flex-end;padding-bottom:8px;gap:12px;flex-shrink:0;}
     .hdr-logo{width:28px;height:28px;border-radius:7px;object-fit:cover;}
     .hdr-title{font-size:1rem;font-weight:600;letter-spacing:-.2px;}
     .hdr-sub{font-size:.72rem;color:var(--tx3);margin-left:auto;}
@@ -383,9 +383,9 @@
     .atcottage-em{font-size:1rem;line-height:1;}
     .atcottage-empty{font-size:.78rem;color:var(--tx3);font-style:italic;}
     /* ═══ WEATHER — inline v buňkách ═══ */
-    .cal-wx{display:flex;align-items:center;gap:2px;margin-top:2px;font-size:.6rem;color:var(--tx3);line-height:1;}
-    .cal-wx-icon{font-size:.75rem;line-height:1;}
-    .cal-wx-temp{font-weight:600;font-size:.6rem;}
+    .cal-wx{display:flex;align-items:center;justify-content:center;gap:1px;margin-top:1px;line-height:1;}
+    .cal-wx-icon{font-size:.8rem;line-height:1;}
+    .cal-wx-temp{font-weight:600;font-size:.62rem;color:var(--ac);}
     /* ═══ TASK BADGE ═══ */
     .tbb[data-badge]::after{content:attr(data-badge);position:absolute;top:4px;right:calc(50% - 18px);background:var(--ac);color:#fff;font-size:.5rem;font-weight:700;min-width:14px;height:14px;padding:0 3px;border-radius:7px;display:flex;align-items:center;justify-content:center;line-height:1;}
     /* ═══ CHECK ANIMATION ═══ */
@@ -514,11 +514,11 @@
       </div>
       <div class="about-section">Changelog</div>
       <div class="changelog-item">
-        <div class="changelog-ver">v1.12 <span class="changelog-date">říjen 2026</span></div>
+        <div class="changelog-ver">v1.13 <span class="changelog-date">říjen 2026</span></div>
         <ul class="changelog-list">
-          <li>Oprava zobrazení detailu události a tlačítka Upravit</li>
-          <li>Počasí jako malé ikonky s teplotou přímo v buňkách kalendáře (14 dní dopředu)</li>
-          <li>Safe-area pro iPhone — obsah se posouvá pod status bar</li>
+          <li>Oprava tlačítka Upravit u událostí v den-panelu</li>
+          <li>Počasí z Moravské Třebové, 14 dní, ikonka + teplota pod číslem dne</li>
+          <li>Oprava safe-area — header se neschovává pod status bar na iPhone</li>
         </ul>
         <div class="changelog-ver">v1.11 <span class="changelog-date">září 2026</span></div>
         <ul class="changelog-list">
@@ -559,7 +559,7 @@
           <li>GitHub Pages hosting</li>
         </ul>
       </div>
-      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.12</p>
+      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.13</p>
     </div>
   </div>
 </div>
@@ -606,7 +606,7 @@
   <div class="top-bar">
     <div class="tb-brand"><img class="tb-logo" src="icon.png" onerror="this.style.display='none'" alt=""><div class="tb-info"><span class="tb-name">Boršovík</span><span class="tb-addr">Rodinný plánovač</span></div></div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <span class="tb-version" onclick="openAbout()">v1.12</span>
+      <span class="tb-version" onclick="openAbout()">v1.13</span>
       <div class="upill" id="upill" onclick="logout()"><span id="pem"></span><span id="pnm"></span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6H2M5 9l-3-3 3-3"/></svg>
       </div>
@@ -961,7 +961,7 @@ function evHtmlBlock(ev,commentCss){
   if(ev.guests)meta+=(meta?' · ':'')+ev.guests;
   if(ev.dateStart!==ev.dateEnd)meta+=(meta?' · ':'')+ev.dateStart+' – '+ev.dateEnd;
   const rl=ev.recur?('<span class="recur-badge">'+RECUR_LABEL[ev.recur]+'</span>'):'';
-  return '<div class="ev-block"><div class="ev-color-bar" style="background:'+color+'"></div><div class="ev-body"><div class="ev-title">'+(ev.title||'Pobyt')+rl+'</div>'+(meta?'<div class="ev-meta">'+meta+'</div>':'')+(ev.desc?'<div class="ev-meta" style="font-style:italic">'+ev.desc+'</div>':'')+'<div class="ev-owner">'+(owner?owner.emoji+' '+owner.name:'')+'</div></div>'+(canEdit&&!ev._virtual?'<div class="ev-actions"><button class="ev-act edit" onclick="openModal(\''+ev.id+'\')">✏️ Upravit</button><button class="ev-act del" onclick="deleteEvDirect(\''+ev.id+'\',\''+ev.userId+'\')">🗑 Smazat</button></div>':'')+'<div class="'+commentCss+'" data-cid="event-'+ev.id+'"><div class="no-comments">Načítám…</div></div></div>';
+  return '<div class="ev-block"><div class="ev-main"><div class="ev-color-bar" style="background:'+color+'"></div><div class="ev-body"><div class="ev-title">'+(ev.title||'Pobyt')+rl+'</div>'+(meta?'<div class="ev-meta">'+meta+'</div>':'')+(ev.desc?'<div class="ev-meta" style="font-style:italic">'+ev.desc+'</div>':'')+'<div class="ev-owner">'+(owner?owner.emoji+' '+owner.name:'')+'</div></div></div>'+(canEdit&&!ev._virtual?'<div class="ev-actions" style="padding-left:16px"><button class="ev-act edit" onclick="openModal(\''+ev.id+'\')">✏️ Upravit</button><button class="ev-act del" onclick="deleteEvDirect(\''+ev.id+'\',\''+ev.userId+'\')">🗑 Smazat</button></div>':'')+'<div class="'+commentCss+'" data-cid="event-'+ev.id+'"><div class="no-comments">Načítám…</div></div></div>';
 }
 
 // ── UDÁLOSTI SEZNAM ──
@@ -1174,7 +1174,7 @@ async function renderCal(){
     if(isWE)cls+=' we-cell';if(hol&&!isWE)cls+=' hol-cell';if(isSel)cls+=' sel';
     cell.className=cls;
     const wx=inMonth?wxForDate(ds):null;
-    let html='<div class="cal-dn">'+cd.getDate()+(wx?'<span class="cal-wx"><span class="cal-wx-icon">'+wx.icon+'</span><span class="cal-wx-temp">'+wx.temp+'°</span></span>':'')+'</div>';
+    let html='<div class="cal-dn">'+cd.getDate()+'</div>'+(wx?'<div class="cal-wx"><span class="cal-wx-icon">'+wx.icon+'</span><span class="cal-wx-temp">'+wx.temp+'°</span></div>':'');
     if(hol)html+='<div class="cal-hol">St. svátek</div>';
     html+='<div class="cal-strips">';
     evts.slice(0,2).forEach(ev=>{
@@ -1296,7 +1296,7 @@ function renderS(){
   h+='</div>';
   h+='<div class="s-sec">Přihlášen jako</div>'+userProfileCard(u);
   if(u.isAdmin&&_u.length>1){h+='<div class="s-sec">Ostatní uživatelé</div>';_u.filter(x=>x.id!==u.id).forEach(x=>{h+=userProfileCard(x);});}
-  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.12</p>';
+  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.13</p>';
   document.getElementById('si').innerHTML=h;
   _u.forEach(u2=>{if(!document.getElementById('pe-ebox-'+u2.id))return;buildProfileEbox(u2.id,u2.emoji);buildProfileColors(u2.id,u2.color);buildProfilePinPad(u2.id);});
   const darkToggle=document.getElementById('darkToggle');
@@ -1421,7 +1421,7 @@ let _wxData=new Map();
 async function loadWeather(){
   if(_weatherLoaded)return;
   try{
-    const url='https://api.open-meteo.com/v1/forecast?latitude=49.06&longitude=14.61&daily=temperature_2m_max,weathercode&forecast_days=14&timezone=Europe%2FPrague';
+    const url='https://api.open-meteo.com/v1/forecast?latitude=49.76&longitude=16.67&daily=temperature_2m_max,weathercode&forecast_days=14&timezone=Europe%2FPrague';
     const r=await fetch(url);const data=await r.json();
     data.daily.time.forEach((ds,i)=>{
       _wxData.set(ds,{icon:wmoIcon(data.daily.weathercode[i]),temp:Math.round(data.daily.temperature_2m_max[i])});
