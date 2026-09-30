@@ -483,7 +483,9 @@
           <option value="yearly">Každý rok</option>
         </select>
       </div>
-
+      <div class="fg"><label>Hosté</label><input type="text" id="evGuests" placeholder="např. babička, děda…" maxlength="80"></div>
+      <div class="fg"><label>Poznámka</label><textarea id="evDesc" rows="2" placeholder="Volitelná poznámka…" style="resize:vertical;font-family:inherit;font-size:.88rem;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--rs);width:100%;box-sizing:border-box;background:var(--bg);color:var(--tx)"></textarea></div>
+      <div id="evMsg" style="font-size:.78rem;color:#c0392b;min-height:16px"></div>
     </div>
 
     <div class="modal-footer">
@@ -515,7 +517,7 @@
       </div>
       <div class="about-section">Changelog</div>
       <div class="changelog-item">
-        <div class="changelog-ver">v1.14 <span class="changelog-date">říjen 2026</span></div>
+        <div class="changelog-ver">v1.15 <span class="changelog-date">říjen 2026</span></div>
         <ul class="changelog-list">
           <li>Oprava tlačítka „Přidat pobyt" a „Upravit" — FAB nefungoval kvůli overflow ořezu scrollovacího kontejneru</li>
         </ul>
@@ -564,7 +566,7 @@
           <li>GitHub Pages hosting</li>
         </ul>
       </div>
-      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.14</p>
+      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.15</p>
     </div>
   </div>
 </div>
@@ -611,7 +613,7 @@
   <div class="top-bar">
     <div class="tb-brand"><img class="tb-logo" src="icon.png" onerror="this.style.display='none'" alt=""><div class="tb-info"><span class="tb-name">Boršovík</span><span class="tb-addr">Rodinný plánovač</span></div></div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <span class="tb-version" onclick="openAbout()">v1.14</span>
+      <span class="tb-version" onclick="openAbout()">v1.15</span>
       <div class="upill" id="upill" onclick="logout()"><span id="pem"></span><span id="pnm"></span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6H2M5 9l-3-3 3-3"/></svg>
       </div>
@@ -1302,7 +1304,7 @@ function renderS(){
   h+='</div>';
   h+='<div class="s-sec">Přihlášen jako</div>'+userProfileCard(u);
   if(u.isAdmin&&_u.length>1){h+='<div class="s-sec">Ostatní uživatelé</div>';_u.filter(x=>x.id!==u.id).forEach(x=>{h+=userProfileCard(x);});}
-  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.14</p>';
+  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.15</p>';
   document.getElementById('si').innerHTML=h;
   _u.forEach(u2=>{if(!document.getElementById('pe-ebox-'+u2.id))return;buildProfileEbox(u2.id,u2.emoji);buildProfileColors(u2.id,u2.color);buildProfilePinPad(u2.id);});
   const darkToggle=document.getElementById('darkToggle');
