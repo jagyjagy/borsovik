@@ -753,7 +753,7 @@ window.goTo=function(id){
 function showApp(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('appShell').classList.add('active');
-  renderS();renderCal();renderEvList();renderTaskList();renderGuideList();setTimeout(checkTomorrowNotif,3000);setTimeout(updateNotifStatus,500);
+  renderS();renderCal();renderEvList();renderTaskList();renderGuideList();setTimeout(checkTomorrowNotif,3000);setTimeout(updateNotifStatus,500);setTimeout(checkArrivalNotifsNow,1000);
   loadWeather();updateTaskBadge();renderAtCottage();
 }
 window.switchTab=function(t,el){
@@ -1129,9 +1129,8 @@ async function scheduleAllNotifs(){
   const now=Date.now();
   _events.forEach(ev=>{
     if(!_cur||ev.userId!==_cur.id)return;
-    // Notifikace den před příjezdem v 8:00
     const arrDate=new Date(ev.dateStart+'T08:00:00');
-    const notifTime=arrDate.getTime()-86400000; // den předem
+    const notifTime=arrDate.getTime()-86400000;
     if(notifTime<=now)return;
     const tag='ev-'+ev.id+'-arrival';
     _swReg.active.postMessage({type:'SCHEDULE_NOTIF',title:'Boršovík 🏡 – zítra jedeš na chatu!',body:(ev.title||'Pobyt')+' začíná '+ev.dateStart+(ev.arrivalTime?' v '+ev.arrivalTime:''),tag,timestamp:notifTime});
@@ -1139,6 +1138,22 @@ async function scheduleAllNotifs(){
 }
 function checkTomorrowNotif(){
   if(Notification.permission==='granted')scheduleAllNotifs();
+}
+function checkArrivalNotifsNow(){
+  if(Notification.permission!=='granted')return;
+  if(!_cur||!_events.length)return;
+  const todayStr=ymd(new Date());
+  const tomorrowStr=ymd(new Date(Date.now()+86400000));
+  _events.forEach(ev=>{
+    if(ev.userId!==_cur.id)return;
+    if(ev.dateStart===todayStr){
+      const tag='ev-'+ev.id+'-today';
+      new Notification('Boršovík 🏡 – dnes jedeš na chatu!',{body:(ev.title||'Pobyt')+(ev.arrivalTime?' v '+ev.arrivalTime:''),tag,icon:'icon.png'});
+    } else if(ev.dateStart===tomorrowStr){
+      const tag='ev-'+ev.id+'-tomorrow';
+      new Notification('Boršovík 🏡 – zítra jedeš na chatu!',{body:(ev.title||'Pobyt')+' začíná zítra'+(ev.arrivalTime?' v '+ev.arrivalTime:''),tag,icon:'icon.png'});
+    }
+  });
 }
 
 // ── NÁVODY ──
@@ -1553,7 +1568,7 @@ async function init(){
     await Promise.all([loadU(),loadEvents(),loadTasks(),loadGuides(),loadCottageStatus()]);
     _selDate=ymd(new Date());
     const stored=localStorage.getItem('borsovikUser');
-    if(stored){try{const parsed=JSON.parse(stored);const f=_u.find(x=>x.id===parsed.id);if(f){_cur=f;V(false);eApp();loadWeather();return;}}catch(e){}}
+    if(stored){try{const parsed=JSON.parse(stored);const f=_u.find(x=>x.id===parsed.id);if(f){_cur=f;V(false);eApp();loadWeather();checkArrivalNotifsNow();return;}}catch(e){}}
     V(false);
     goTo('sHome');
   }catch(e){
