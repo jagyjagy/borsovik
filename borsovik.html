@@ -111,9 +111,6 @@
     .modal-body{overflow-y:auto;padding:16px 20px;flex:1;}
     .modal-footer{padding:12px 20px;border-top:1px solid var(--bd);flex-shrink:0;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;}
     .recur-badge{display:inline-flex;align-items:center;gap:4px;font-size:.68rem;font-weight:500;color:var(--ac);background:var(--acbg);border-radius:10px;padding:2px 8px;margin-top:3px;}
-    .vis-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:500;color:var(--tx3);background:var(--bg2);border-radius:10px;padding:2px 7px;margin-left:4px;}
-    .vis-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:500;color:var(--tx3);background:var(--bg2);border-radius:10px;padding:2px 7px;margin-top:3px;margin-left:4px;}
-    .vis-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:500;color:var(--tx3);background:var(--bg2);border-radius:10px;padding:2px 7px;margin-top:3px;margin-left:4px;}
     /* APP SHELL */
     .app-shell{display:none;flex-direction:column;height:100svh;}
     .app-shell.active{display:flex;}
@@ -370,6 +367,88 @@
     .pin-change-label{font-size:.68rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;display:block;}
     .pin-step{display:none;}
     .pin-step.active{display:block;}
+    /* ═══ DARK MODE ═══ */
+    [data-theme="dark"]{
+      --bg:#1a1714;--bg2:#242018;--bg3:#2e2923;
+      --sf:#252219;--tx:#f0ece4;--tx2:#a09880;--tx3:#6a6358;
+      --ac:#c97a52;--ac2:#d98a62;--acbg:#2e2218;
+      --bd:#3a3630;--bd2:#4a4640;
+    }
+    /* ═══ KDO JE NA CHATĚ ═══ */
+    .atcottage-strip{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--acbg);border-bottom:1px solid var(--bd);flex-shrink:0;min-height:44px;}
+    .atcottage-strip:empty{display:none;}
+    .atcottage-label{font-size:.65rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ac);white-space:nowrap;flex-shrink:0;}
+    .atcottage-users{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+    .atcottage-pill{display:flex;align-items:center;gap:5px;padding:3px 9px 3px 5px;border-radius:20px;font-size:.78rem;font-weight:500;color:#fff;white-space:nowrap;}
+    .atcottage-em{font-size:1rem;line-height:1;}
+    .atcottage-empty{font-size:.78rem;color:var(--tx3);font-style:italic;}
+    /* ═══ WEATHER WIDGET ═══ */
+    .weather-strip{display:flex;align-items:center;gap:0;background:var(--sf);border-bottom:1px solid var(--bd);padding:8px 14px;flex-shrink:0;overflow-x:auto;min-height:60px;}
+    .weather-strip::-webkit-scrollbar{display:none;}
+    .weather-now{display:flex;align-items:center;gap:8px;padding-right:14px;margin-right:8px;border-right:1px solid var(--bd);flex-shrink:0;}
+    .weather-icon{font-size:1.6rem;line-height:1;flex-shrink:0;}
+    .weather-temp{font-size:1.4rem;font-weight:700;color:var(--tx);line-height:1;}
+    .weather-desc{font-size:.68rem;color:var(--tx3);white-space:nowrap;margin-top:1px;}
+    .weather-hourly{display:flex;gap:10px;align-items:center;}
+    .weather-hour{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;}
+    .weather-h-time{font-size:.6rem;color:var(--tx3);font-weight:500;}
+    .weather-h-icon{font-size:1.1rem;line-height:1;}
+    .weather-h-temp{font-size:.72rem;font-weight:600;color:var(--tx2);}
+    .weather-loading{font-size:.75rem;color:var(--tx3);font-style:italic;padding:4px 0;}
+    /* ═══ TASK BADGE ═══ */
+    .tbb[data-badge]::after{content:attr(data-badge);position:absolute;top:4px;right:calc(50% - 18px);background:var(--ac);color:#fff;font-size:.5rem;font-weight:700;min-width:14px;height:14px;padding:0 3px;border-radius:7px;display:flex;align-items:center;justify-content:center;line-height:1;}
+    /* ═══ CHECK ANIMATION ═══ */
+    @keyframes checkPop{0%{transform:scale(1)}40%{transform:scale(1.35)}70%{transform:scale(.88)}100%{transform:scale(1)}}
+    .task-check.popping{animation:checkPop .3s cubic-bezier(.16,1,.3,1);}
+    /* ═══ SWIPE ═══ */
+    .task-block{position:relative;overflow:hidden;}
+    .task-swipe-hint{position:absolute;top:0;bottom:0;width:80px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:#fff;pointer-events:none;opacity:0;transition:opacity .15s;z-index:1;}
+    .task-swipe-done{left:0;background:var(--ac);}
+    .task-swipe-delete{right:0;background:#c0392b;}
+    .task-block-inner{position:relative;background:var(--sf);z-index:2;transition:transform .15s ease;will-change:transform;}
+    /* ═══ EMPTY STATES ═══ */
+    .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 28px;gap:14px;flex:1;}
+    .empty-state-svg{width:72px;height:72px;opacity:.35;}
+    .empty-state-title{font-size:.94rem;font-weight:600;color:var(--tx2);}
+    .empty-state-sub{font-size:.78rem;color:var(--tx3);text-align:center;line-height:1.5;}
+    /* ═══ BULK DELETE ═══ */
+    .task-section-row{display:flex;align-items:center;padding:10px 16px 4px;background:var(--bg);border-bottom:1px solid var(--bd);}
+    .task-section-lbl{flex:1;font-size:.68rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);}
+    .bulk-del-btn{font-size:.7rem;color:#c0392b;background:none;border:none;font-family:'DM Sans',sans-serif;cursor:pointer;padding:2px 0;opacity:.7;display:flex;align-items:center;gap:4px;}
+    .bulk-del-btn:hover{opacity:1;}
+    /* ═══ ABOUT MODAL ═══ */
+    .about-backdrop{position:fixed;inset:0;background:rgba(28,25,23,.5);backdrop-filter:blur(4px);z-index:300;display:none;align-items:flex-end;justify-content:center;}
+    .about-backdrop.open{display:flex;animation:fadein .2s ease;}
+    .about-modal{background:var(--sf);border-radius:20px 20px 0 0;width:100%;max-width:520px;max-height:88svh;display:flex;flex-direction:column;animation:slideup .28s cubic-bezier(.16,1,.3,1);}
+    .about-hdr{padding:14px 20px 10px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;flex-shrink:0;}
+    .about-logo{width:36px;height:36px;border-radius:9px;object-fit:cover;}
+    .about-title{font-size:1rem;font-weight:700;flex:1;}
+    .about-close{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:1.1rem;padding:6px;border-radius:50%;}
+    .about-body{overflow-y:auto;padding:16px 20px;flex:1;}
+    .about-desc{font-size:.88rem;line-height:1.65;color:var(--tx2);margin-bottom:20px;}
+    .about-section{font-size:.68rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px;margin-top:20px;}
+    .about-section:first-of-type{margin-top:0;}
+    .changelog-item{border-left:2px solid var(--bd2);padding:4px 0 10px 14px;margin-bottom:0;}
+    .changelog-item:last-child{border-left:2px solid transparent;}
+    .changelog-ver{font-size:.82rem;font-weight:700;color:var(--ac);margin-bottom:2px;display:flex;align-items:center;gap:8px;}
+    .changelog-date{font-size:.7rem;color:var(--tx3);font-weight:400;}
+    .changelog-list{font-size:.82rem;color:var(--tx2);line-height:1.7;padding-left:14px;}
+    .changelog-list li{margin-bottom:1px;}
+    /* ═══ SETTINGS EXTRAS ═══ */
+    .s-toggle-row{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+    .s-toggle-label{flex:1;font-size:.88rem;font-weight:500;}
+    .s-toggle-sub{font-size:.72rem;color:var(--tx3);display:block;margin-top:1px;}
+    .s-toggle{position:relative;width:44px;height:26px;flex-shrink:0;}
+    .s-toggle input{opacity:0;width:0;height:0;position:absolute;}
+    .s-toggle-slider{position:absolute;inset:0;background:var(--bd2);border-radius:13px;transition:background .2s;cursor:pointer;}
+    .s-toggle-slider::after{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+    .s-toggle input:checked+.s-toggle-slider{background:var(--ac);}
+    .s-toggle input:checked+.s-toggle-slider::after{transform:translateX(18px);}
+    .cottage-status-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px;margin-bottom:8px;}
+    .cottage-status-title{font-size:.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px;}
+    /* ═══ VERSION PILL ═══ */
+    .tb-version{font-size:.58rem;font-weight:600;letter-spacing:.8px;color:var(--tx3);background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:2px 6px;cursor:pointer;transition:color .13s;flex-shrink:0;}
+    .tb-version:hover{color:var(--ac);border-color:var(--ac2);}
   </style>
 </head>
 <body>
@@ -412,43 +491,75 @@
           <option value="yearly">Každý rok</option>
         </select>
       </div>
-      <div class="fg"><label>Viditelnost</label>
-        <select id="evVisibility" onchange="visChange()">
-          <option value="all">Všichni</option>
-          <option value="me">Jen já</option>
-          <option value="user">Konkrétní uživatel…</option>
-        </select>
-      </div>
-      <div class="fg" id="evVisUserWrap" style="display:none">
-        <label>Kdo uvidí událost</label>
-        <select id="evVisUser"></select>
-      </div>
-      <div class="fg"><label>Viditelnost</label>
-        <select id="evVisibility">
-          <option value="all">Všichni</option>
-          <option value="me">Jen já</option>
-          <option value="user">Konkrétní uživatel…</option>
-        </select>
-      </div>
-      <div class="fg" id="evVisUserWrap" style="display:none">
-        <label>Kdo uvidí událost</label>
-        <select id="evVisUser"></select>
-      </div>
-      <div class="fg"><label>Hosté <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.75rem">(nepovinné)</span></label><input type="text" id="evGuests" placeholder="např. Karel, Petra, děti…"></div>
-      <div class="fg"><label>Viditelnost</label>
-        <select id="evVisibility" onchange="onVisChange()">
-          <option value="all">Všem</option>
-          <option value="me">Jen mně</option>
-          <option value="user">Konkrétní uživatel…</option>
-        </select>
-      </div>
-      <div class="fg" id="evVisUserRow" style="display:none"><label>Vyber uživatele</label><select id="evVisUser"></select></div>
-      <div class="fg"><label>Popis <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.75rem">(nepovinné)</span></label><textarea id="evDesc" placeholder="Volitelný popis…"></textarea></div>
-      <div id="evMsg"></div>
-    </div>
     <div class="modal-footer">
       <button class="btn btn-p" id="evSaveBtn" onclick="submitEvent()">Uložit událost</button>
       <button class="btn btn-danger" id="evDeleteBtn" onclick="deleteEditingEvent()" style="display:none">Smazat událost</button>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="about-backdrop" id="aboutBackdrop" onclick="if(event.target===this)closeAbout()">
+  <div class="about-modal">
+    <div class="modal-handle"></div>
+    <div class="about-hdr">
+      <img class="about-logo" src="icon.png" onerror="this.style.display='none'" alt="">
+      <span class="about-title">Boršovík</span>
+      <button class="about-close" onclick="closeAbout()">✕</button>
+    </div>
+    <div class="about-body">
+      <div class="about-desc">Rodinný plánovač pro chatu Boršov. Umožňuje naplánovat pobyty v kalendáři, spravovat společné úkoly, sdílet návody a komentáře — vše v reálném čase pro celou rodinu.</div>
+      <div class="about-section">Co appka umí</div>
+      <div style="font-size:.84rem;color:var(--tx2);line-height:1.75">
+        📅 <b>Kalendář</b> — přidávání pobytů s příjezdem/odjezdem, opakující se události, státní svátky<br>
+        ⭐ <b>Události</b> — přehled všech pobytů s filtry (vše / nadcházející / minulé)<br>
+        ✅ <b>Úkoly</b> — sdílené úkoly s přiřazením, komentáři a swipe gesty<br>
+        📖 <b>Návody</b> — editovatelné návody s fotkami (topení, voda, …)<br>
+        ⚙️ <b>Nastavení</b> — tmavý režim, stav chaty, profily uživatelů<br>
+        🌤️ <b>Počasí</b> — aktuální předpověď pro Boršov (OpenMeteo)
+      </div>
+      <div class="about-section">Changelog</div>
+      <div class="changelog-item">
+        <div class="changelog-ver">v1.11 <span class="changelog-date">říjen 2026</span></div>
+        <ul class="changelog-list">
+          <li>Počasí v kalendáři (OpenMeteo, bez API klíče)</li>
+          <li>Stav chaty – topení &amp; voda v nastavení (Firestore)</li>
+          <li>Tmavý režim – ruční přepínač v nastavení</li>
+          <li>Počítadlo otevřených úkolů na ikoně záložky</li>
+          <li>Swipe gesta na úkolech (→ hotovo / ← smazat)</li>
+          <li>Haptická odezva při přepínání úkolů</li>
+          <li>Animace zaškrtnutí úkolu</li>
+          <li>Lepší prázdné stavy s ikonami</li>
+          <li>Hromadné smazání hotových úkolů</li>
+          <li>About &amp; changelog (toto okno)</li>
+        </ul>
+      </div>
+      <div class="changelog-item">
+        <div class="changelog-ver">v1.10 <span class="changelog-date">2026</span></div>
+        <ul class="changelog-list">
+          <li>Odebrána viditelnost událostí</li>
+          <li>Vylepšení kalendářních proužků a labelů</li>
+          <li>Komentáře u úkolů a událostí</li>
+        </ul>
+      </div>
+      <div class="changelog-item">
+        <div class="changelog-ver">v1.9 <span class="changelog-date">2026</span></div>
+        <ul class="changelog-list">
+          <li>Opakující se události (měsíčně / ročně)</li>
+          <li>Příjezd a odjezd u událostí</li>
+          <li>Státní svátky (Nager.at API)</li>
+        </ul>
+      </div>
+      <div class="changelog-item">
+        <div class="changelog-ver">v1.0–1.8 <span class="changelog-date">2025–2026</span></div>
+        <ul class="changelog-list">
+          <li>Základní kalendář, události, úkoly, návody</li>
+          <li>Registrace a PIN přihlášení</li>
+          <li>Firebase Firestore + Storage backend</li>
+          <li>GitHub Pages hosting</li>
+        </ul>
+      </div>
+      <p style="margin-top:24px;text-align:center;font-size:.7rem;color:var(--tx3)">Boršovík · Rodinný plánovač · v1.11</p>
     </div>
   </div>
 </div>
@@ -494,7 +605,8 @@
 <div class="app-shell" id="appShell">
   <div class="top-bar">
     <div class="tb-brand"><img class="tb-logo" src="icon.png" onerror="this.style.display='none'" alt=""><div class="tb-info"><span class="tb-name">Boršovík</span><span class="tb-addr">Rodinný plánovač</span></div></div>
-    <div style="display:flex;align-items:center;gap:4px;">
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span class="tb-version" onclick="openAbout()">v1.11</span>
       <div class="upill" id="upill" onclick="logout()"><span id="pem"></span><span id="pnm"></span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6H2M5 9l-3-3 3-3"/></svg>
       </div>
@@ -513,6 +625,8 @@
           </div>
           <button class="cal-today-btn" onclick="calGoToday()">Dnes</button>
         </div>
+        <div class="atcottage-strip" id="atCottageStrip"></div>
+        <div class="weather-strip" id="weatherStrip"><span class="weather-loading">Načítám počasí…</span></div>
         <div class="cal-dow" id="calDow"></div>
         <div class="cal-grid-wrap"><div class="cal-grid" id="calGrid"></div></div>
         <div class="day-panel" id="dayPanel"></div>
@@ -587,7 +701,7 @@
   <nav class="tab-bar">
     <button class="tbb active" onclick="switchTab('cal',this)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Kalendář</button>
     <button class="tbb" onclick="switchTab('ev',this)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Události</button>
-    <button class="tbb" onclick="switchTab('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Úkoly</button>
+    <button class="tbb" id="tasksTab" onclick="switchTab('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Úkoly</button>
     <button class="tbb" onclick="switchTab('guides',this)"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Návody</button>
   </nav>
 </div>
@@ -613,6 +727,8 @@ let _u=[],_cur=null,_lt=null,_lp='',_rp1='',_rp2='',_p1d=false,_se=EM[0],_sc=CO[
 let _calDate=new Date(),_holidays={},_events=[],_tasks=[],_guides=[],_selDate=null,_evFilter='all';
 let _editingEventId=null,_editingGuideId=null,_selectedIcon='📋';
 let _peP1='',_peP2='';
+let _cottageStatus={heating:false,water:false};
+let _weatherLoaded=false;
 
 async function h256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
 const V=v=>document.getElementById('veil').style.display=v?'flex':'none';
@@ -631,6 +747,7 @@ function showApp(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('appShell').classList.add('active');
   renderS();renderCal();renderEvList();renderTaskList();renderGuideList();
+  loadWeather();updateTaskBadge();renderAtCottage();
 }
 window.switchTab=function(t,el){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
@@ -730,21 +847,13 @@ function getVirtualEvent(ev,year,month){
   const ne=new Date(ns.getTime()+dur);
   return {...ev,dateStart:ymd(ns),dateEnd:ymd(ne),_virtual:true};
 }
-function isVisible(ev){
-  if(!ev.visibility||ev.visibility==='all')return true;
-  if(!_cur)return false;
-  if(ev.userId===_cur.id)return true; // tvůrce vždy vidí
-  if(ev.visibility==='me')return false;
-  if(ev.visibility==='user')return ev.visibilityUser===_cur.id;
-  return true;
-}
 function eventsForDate(ds){
   const d=new Date(ds+'T12:00:00');
   const y=d.getFullYear(),m=d.getMonth();
   const res=[];
   _events.forEach(ev=>{
-    if(!ev.recur){if(ev.dateStart<=ds&&ev.dateEnd>=ds&&isVisible(ev))res.push(ev);}
-    else{if(eventOccursInMonth(ev,y,m)&&isVisible(ev)){const vev=getVirtualEvent(ev,y,m);if(vev.dateStart<=ds&&vev.dateEnd>=ds)res.push({...ev,...vev});}}
+    if(!ev.recur){if(ev.dateStart<=ds&&ev.dateEnd>=ds)res.push(ev);}
+    else{if(eventOccursInMonth(ev,y,m)){const vev=getVirtualEvent(ev,y,m);if(vev.dateStart<=ds&&vev.dateEnd>=ds)res.push({...ev,...vev});}}
   });
   return res;
 }
@@ -766,23 +875,10 @@ window.openModal=function(eventId){
   document.getElementById('evArrival').value=ev?(ev.arrivalTime||''):'';
   document.getElementById('evDepart').value=ev?(ev.departTime||''):'';
   document.getElementById('evRecur').value=ev?(ev.recur||''):'';
-  // Visibility
-  const visEl=document.getElementById('evVisibility');
-  const visUserEl=document.getElementById('evVisUser');
-  visUserEl.innerHTML=_u.filter(u=>u.id!==(_cur?_cur.id:null)).map(u=>'<option value="'+u.id+'">'+u.emoji+' '+u.name+'</option>').join('');
-  const evVis=ev?(ev.visibility||'all'):'all';
-  const evVisUser=ev?(ev.visibilityUser||''):'';
-  visEl.value=evVis;
-  if(evVisUser)visUserEl.value=evVisUser;
-  document.getElementById('evVisUserWrap').style.display=evVis==='user'?'block':'none';
   document.getElementById('evGuests').value=ev?(ev.guests||''):'';
   document.getElementById('evDesc').value=ev?(ev.desc||''):'';
   document.getElementById('evMsg').innerHTML='';
   document.getElementById('modalBackdrop').classList.add('open');
-};
-window.visChange=function(){
-  const v=document.getElementById('evVisibility').value;
-  document.getElementById('evVisUserWrap').style.display=v==='user'?'block':'none';
 };
 window.closeModal=function(e){if(e.target===document.getElementById('modalBackdrop'))closeModalDirect();};
 window.closeModalDirect=function(){document.getElementById('modalBackdrop').classList.remove('open');};
@@ -794,8 +890,6 @@ window.submitEvent=async function(){
   const arrival=document.getElementById('evArrival').value;
   const depart=document.getElementById('evDepart').value;
   const recur=document.getElementById('evRecur').value;
-  const visibility=document.getElementById('evVisibility').value||'all';
-  const visibilityUser=visibility==='user'?(document.getElementById('evVisUser').value||''):'';
   const guests=document.getElementById('evGuests').value.trim();
   const desc=document.getElementById('evDesc').value.trim();
   if(!title){M('evMsg','Zadej název události');return;}
@@ -803,7 +897,7 @@ window.submitEvent=async function(){
   if(dateEnd<dateStart){M('evMsg','Datum "do" nesmí být před "od"');return;}
   V(true);
   try{
-    const data={userId,title,dateStart,dateEnd,arrivalTime:arrival||null,departTime:depart||null,recur:recur||null,guests:guests||null,desc:desc||null,visibility:visibility||'all',visibilityUser:visibilityUser||null};
+    const data={userId,title,dateStart,dateEnd,arrivalTime:arrival||null,departTime:depart||null,recur:recur||null,guests:guests||null,desc:desc||null};
     if(_editingEventId)await updateDoc(doc(db,'events',_editingEventId),data);
     else await addDoc(collection(db,'events'),{...data,createdAt:serverTimestamp()});
     await loadEvents();closeModalDirect();renderCal();renderEvList();
@@ -868,7 +962,6 @@ function evHtmlBlock(ev,commentCss){
   if(ev.guests)meta+=' · '+ev.guests;
   if(ev.dateStart!==ev.dateEnd)meta+=' · '+ev.dateStart+' – '+ev.dateEnd;
   const rl=ev.recur?('<span class="recur-badge">'+RECUR_LABEL[ev.recur]+'</span>'):'';
-  const visLbl=(ev.visibility&&ev.visibility!=='all')?('<span class="vis-badge">'+(ev.visibility==='me'?'🔒 Jen já':'👤 Jen '+(_u.find(u=>u.id===ev.visibilityUser)||{name:'?'}).name)+'</span>'):'';  return '<div class="day-evt-main"><div class="day-evt-dot" style="background:'+color+'"></div><div class="day-evt-body"><div class="day-evt-title">'+ev.title+rl+'</div><div class="day-evt-meta">'+meta+'</div>'+(ev.desc?'<div class="day-evt-meta" style="margin-top:3px;font-style:italic">'+ev.desc+'</div>':'')+'</div></div><div class="day-evt-actions">'+(canEdit&&!ev._virtual?'<button class="dea-btn edit" onclick="openModal(\''+ev.id+'\')">✏️ Upravit</button><button class="dea-btn del" onclick="deleteEvDirect(\''+ev.id+'\',\''+ev.userId+'\')">🗑 Smazat</button>':'')+'</div><div class="'+commentCss+'" data-cid="event-'+ev.id+'"><div class="no-comments">Načítám…</div></div>';
 }
 
 // ── UDÁLOSTI SEZNAM ──
@@ -879,7 +972,6 @@ async function renderEvList(){
   const expanded=[];
   const ty=new Date().getFullYear();
   _events.forEach(ev=>{
-    if(!isVisible(ev))return;
     if(!ev.recur){expanded.push(ev);}
     else{
       for(let y=ty-1;y<=ty+2;y++){
@@ -895,7 +987,7 @@ async function renderEvList(){
   let list=expanded.sort((a,b)=>a.dateStart.localeCompare(b.dateStart));
   if(_evFilter==='upcoming')list=list.filter(e=>e.dateEnd>=today);
   if(_evFilter==='past')list=list.filter(e=>e.dateEnd<today);
-  if(!list.length){el.innerHTML='<div class="ev-empty">Žádné události</div>';return;}
+  if(!list.length){el.innerHTML='<div class="empty-state"><svg class="empty-state-svg" viewBox="0 0 64 64" fill="none"><use href="#ic"/></svg><div class="empty-state-title">Žádné události</div><div class="empty-state-sub">Přidej první pobyt kliknutím na +</div></div>';return;}
   let html='';let lastMonth='';
   list.forEach(ev=>{
     const d=new Date(ev.dateStart+'T12:00:00');
@@ -932,7 +1024,9 @@ window.addTask=async function(){
   try{await addDoc(collection(db,'tasks'),{text,assignedTo,createdBy,done:false,createdAt:serverTimestamp()});document.getElementById('taskInput').value='';await loadTasks();renderTaskList();}
   catch(e){alert('Chyba: '+e.message);}V(false);
 };
-window.toggleTask=async function(id,done){
+window.toggleTask=async function(id,done,el){
+  if(navigator.vibrate)navigator.vibrate(15);
+  if(el){el.classList.add('popping');setTimeout(()=>el.classList.remove('popping'),320);}
   try{await updateDoc(doc(db,'tasks',id),{done:!done});await loadTasks();renderTaskList();}catch(e){alert('Chyba: '+e.message);}
 };
 window.deleteTask=async function(id,createdBy){
@@ -953,16 +1047,26 @@ window.saveEditTask=async function(id){
   const assignedTo=sel?sel.value||null:null;
   V(true);try{await updateDoc(doc(db,'tasks',id),{text,assignedTo});await loadTasks();renderTaskList();}catch(e){alert('Chyba: '+e.message);}V(false);
 };
+window.bulkDeleteDone=async function(){
+  const done=_tasks.filter(t=>t.done);if(!done.length)return;
+  if(!confirm('Smazat '+done.length+' hotových úkolů?'))return;
+  V(true);
+  try{await Promise.all(done.map(t=>deleteDoc(doc(db,'tasks',t.id))));await loadTasks();renderTaskList();}catch(e){alert('Chyba: '+e.message);}V(false);
+};
 async function renderTaskList(){
   refreshTaskAssign();
   const el=document.getElementById('taskList');
   const open=_tasks.filter(t=>!t.done);const done=_tasks.filter(t=>t.done);
-  if(!_tasks.length){el.innerHTML='<div class="task-empty">Žádné úkoly · přidej první!</div>';return;}
+  updateTaskBadge();
+  if(!_tasks.length){
+    el.innerHTML='<div class="empty-state"><svg class="empty-state-svg" viewBox="0 0 64 64" fill="none"><rect x="10" y="8" width="44" height="48" rx="6" stroke="currentColor" stroke-width="2.5"/><path d="M20 24h24M20 32h24M20 40h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="47" cy="47" r="11" fill="var(--bg)" stroke="currentColor" stroke-width="2.5"/><path d="M43 47l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="empty-state-title">Žádné úkoly</div><div class="empty-state-sub">Přidej první úkol nahoře a přiřaď ho členovi rodiny.</div></div>';
+    return;
+  }
   let html='';
-  if(open.length){html+='<div class="task-section">K dokončení ('+open.length+')</div>';open.forEach(t=>html+=taskBlockHtml(t));}
-  if(done.length){html+='<div class="task-section">Hotovo ('+done.length+')</div>';done.forEach(t=>html+=taskBlockHtml(t));}
+  if(open.length){html+='<div class="task-section-row"><span class="task-section-lbl">K dokončení ('+open.length+')</span></div>';open.forEach(t=>html+=taskBlockHtml(t));}
+  if(done.length){html+='<div class="task-section-row"><span class="task-section-lbl">Hotovo ('+done.length+')</span><button class="bulk-del-btn" onclick="bulkDeleteDone()"><svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="1,3 13,3"/><path d="M5 3V1h4v2"/><path d="M2 3l1 9h8l1-9"/></svg>Smazat vše</button></div>';done.forEach(t=>html+=taskBlockHtml(t));}
   el.innerHTML=html;
-  _tasks.forEach(t=>populateComments('task',t.id));
+  _tasks.forEach(t=>{populateComments('task',t.id);const blk=document.getElementById('tb-'+t.id);if(blk)attachSwipe(blk,t.id,t.done);});
 }
 function taskBlockHtml(t){
   const assignee=t.assignedTo?_u.find(u=>u.id===t.assignedTo):null;
@@ -970,7 +1074,7 @@ function taskBlockHtml(t){
   const canEdit=_cur&&(_cur.isAdmin||_cur.id===t.createdBy||_cur.id===t.assignedTo);
   const canDel=_cur&&(_cur.isAdmin||_cur.id===t.createdBy);
   const color=assignee?assignee.color:'var(--bd2)';
-  return '<div class="task-block'+(t.done?' done':'')+'" id="tb-'+t.id+'"><div class="task-main"><div class="task-check" onclick="toggleTask(\''+t.id+'\','+t.done+')" style="border-color:'+color+'"><svg viewBox="0 0 11 9"><polyline points="1,4.5 4,7.5 10,1"/></svg></div><div class="task-body"><div class="task-text">'+t.text+'</div><div class="task-assignee">'+(assignee?assignee.emoji+' '+assignee.name:'Nikdo')+(creator&&creator.id!==(assignee?assignee.id:'')?' · přidal '+creator.emoji+' '+creator.name:'')+'</div></div>'+(canDel?'<button class="task-del" onclick="deleteTask(\''+t.id+'\',\''+t.createdBy+'\')">✕</button>':'')+'</div><div class="task-actions">'+(canEdit?'<button class="ta-btn edit" onclick="startEditTask(\''+t.id+'\')">✏️ Upravit</button>':'')+'</div><div class="task-comments-section" data-cid="task-'+t.id+'"><div class="no-comments">Načítám…</div></div></div>';
+  return '<div class="task-block'+(t.done?' done':'')+'" id="tb-'+t.id+'"><div class="task-swipe-hint task-swipe-done">'+(t.done?'↩ Zpět':'✓ Hotovo')+'</div><div class="task-swipe-hint task-swipe-delete">✕ Smazat</div><div class="task-block-inner"><div class="task-main"><div class="task-check" onclick="toggleTask(\''+t.id+'\','+t.done+',this)" style="border-color:'+color+'"><svg viewBox="0 0 11 9"><polyline points="1,4.5 4,7.5 10,1"/></svg></div><div class="task-body"><div class="task-text">'+t.text+'</div><div class="task-assignee">'+(assignee?assignee.emoji+' '+assignee.name:'Nikdo')+(creator&&creator.id!==(assignee?assignee.id:'')?' · přidal '+creator.emoji+' '+creator.name:'')+'</div></div>'+(canDel?'<button class="task-del" onclick="deleteTask(\''+t.id+'\',\''+t.createdBy+'\')">✕</button>':'')+'</div><div class="task-actions">'+(canEdit?'<button class="ta-btn edit" onclick="startEditTask(\''+t.id+'\')">✏️ Upravit</button>':'')+'</div><div class="task-comments-section" data-cid="task-'+t.id+'"><div class="no-comments">Načítám…</div></div></div></div>';
 }
 
 // ── NÁVODY ──
@@ -982,7 +1086,7 @@ window.toggleIconPicker=function(){const p=document.getElementById('geIconPicker
 function renderGuideList(){
   const el=document.getElementById('guideList');
   let html='<button class="guide-add-btn" onclick="openEditor(null)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="7" y1="0" x2="7" y2="14"/><line x1="0" y1="7" x2="14" y2="7"/></svg>Přidat návod</button>';
-  if(!_guides.length)html+='<div class="guide-empty">Žádné návody</div>';
+  if(!_guides.length)html+='<div class="empty-state" style="padding:32px 20px"><svg class="empty-state-svg" viewBox="0 0 64 64" fill="none"><path d="M12 56a6 6 0 010-12h40V8H12a6 6 0 00-6 6v36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M22 20h20M22 28h20M22 36h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><div class="empty-state-title">Žádné návody</div><div class="empty-state-sub">Vytvoř první návod – třeba jak zapnout topení.</div></div>';
   else _guides.forEach(g=>{const icon=g.icon||'📋';const updated=g.updatedAt?g.updatedAt.toDate?g.updatedAt.toDate():null:null;const meta=updated?'Upraveno '+updated.getDate()+'. '+(updated.getMonth()+1)+'. '+updated.getFullYear():'';html+='<div class="guide-card" onclick="openReader(\''+g.id+'\')"><div class="guide-icon">'+icon+'</div><div class="guide-info"><div class="guide-name">'+(g.name||'Bez názvu')+'</div>'+(meta?'<div class="guide-meta">'+meta+'</div>':'')+'</div><div class="guide-arrow">›</div></div>';});
   el.innerHTML=html;
 }
@@ -1046,6 +1150,7 @@ window.deleteGuide=async function(){
 window.calNav=function(dir){_calDate.setMonth(_calDate.getMonth()+dir);_calDate=new Date(_calDate);renderCal();};
 window.calGoToday=function(){_calDate=new Date();_selDate=ymd(new Date());renderCal();};
 async function renderCal(){
+  renderAtCottage();
   const y=_calDate.getFullYear(),m=_calDate.getMonth();
   await loadHolidays(y);if(m===11)await loadHolidays(y+1);
   document.getElementById('calTitle').textContent=MCS[m]+' '+y;
@@ -1179,11 +1284,26 @@ async function renderDayPanel(ds){
 // ── NASTAVENÍ ──
 function renderS(){
   const u=_cur;
-  let h='<div class="s-sec">Přihlášen jako</div>'+userProfileCard(u);
+  const dm=localStorage.getItem('borsovikDark')==='1';
+  const heat=_cottageStatus.heating;const water=_cottageStatus.water;
+  let h='<div class="s-sec">Vzhled</div>';
+  h+='<div class="s-toggle-row"><div><span class="s-toggle-label">Tmavý režim</span></div><label class="s-toggle"><input type="checkbox" id="darkToggle"'+(dm?' checked':'')+'><span class="s-toggle-slider"></span></label></div>';
+  h+='<div class="s-sec">Stav chaty</div>';
+  h+='<div class="cottage-status-card"><div class="cottage-status-title">Aktuální stav</div>';
+  h+='<div class="s-toggle-row" style="border:none;padding:6px 0;margin-bottom:0"><div><span class="s-toggle-label">🔥 Topení</span><span class="s-toggle-sub">'+(heat?'Zapnuto':'Vypnuto')+'</span></div><label class="s-toggle"><input type="checkbox" id="heatingToggle"'+(heat?' checked':'')+'><span class="s-toggle-slider"></span></label></div>';
+  h+='<div class="s-toggle-row" style="border:none;padding:6px 0;margin-bottom:0"><div><span class="s-toggle-label">💧 Voda</span><span class="s-toggle-sub">'+(water?'Zapnuta':'Vypnuta')+'</span></div><label class="s-toggle"><input type="checkbox" id="waterToggle"'+(water?' checked':'')+'><span class="s-toggle-slider"></span></label></div>';
+  h+='</div>';
+  h+='<div class="s-sec">Přihlášen jako</div>'+userProfileCard(u);
   if(u.isAdmin&&_u.length>1){h+='<div class="s-sec">Ostatní uživatelé</div>';_u.filter(x=>x.id!==u.id).forEach(x=>{h+=userProfileCard(x);});}
-  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v 1.10</p>';
+  h+='<div style="margin-top:24px"><button class="btn btn-g" onclick="logout()">Odhlásit se</button></div><p style="margin-top:14px;text-align:center;font-size:.72rem;color:var(--tx3)">Boršovík</p><p style="margin-top:5px;text-align:center;font-size:.68rem;color:var(--tx3);letter-spacing:1px">v1.11</p>';
   document.getElementById('si').innerHTML=h;
   _u.forEach(u2=>{if(!document.getElementById('pe-ebox-'+u2.id))return;buildProfileEbox(u2.id,u2.emoji);buildProfileColors(u2.id,u2.color);buildProfilePinPad(u2.id);});
+  const darkToggle=document.getElementById('darkToggle');
+  if(darkToggle)darkToggle.addEventListener('change',function(){setDarkMode(this.checked);});
+  const htToggle=document.getElementById('heatingToggle');
+  if(htToggle)htToggle.addEventListener('change',function(){saveCottageStatus('heating',this.checked);});
+  const wtToggle=document.getElementById('waterToggle');
+  if(wtToggle)wtToggle.addEventListener('change',function(){saveCottageStatus('water',this.checked);});
 }
 function userProfileCard(u){
   return '<div class="s-card" onclick="toggleProfileEdit(\''+u.id+'\')"><div class="s-av">'+u.emoji+'</div><div style="flex:1"><div class="s-name">'+u.name+(u.isAdmin?' 👑':'')+'</div><div class="s-role">'+(u.isAdmin?'Admin':'Uživatel')+'</div></div><div class="s-dot" style="background:'+u.color+'"></div><div class="s-edit-arrow">✏️</div></div><div class="profile-edit" id="pe-'+u.id+'"><div class="profile-edit-title">Upravit profil<button class="pe-close" onclick="toggleProfileEdit(\''+u.id+'\')">✕</button></div><div class="fg"><label>Jméno</label><input type="text" id="pe-name-'+u.id+'" value="'+u.name+'" maxlength="20" autocomplete="off"></div><div class="fg"><label>Avatar</label><div class="ebox" id="pe-ebox-'+u.id+'"></div></div><div class="fg"><label>Barva</label><div class="crow" id="pe-crow-'+u.id+'"></div></div><div class="pin-change-section"><span class="pin-change-label">Změna PINu</span><div class="pin-step active" id="pe-pin-step0-'+u.id+'"><button class="btn btn-g" style="margin-top:0" onclick="startPinChange(\''+u.id+'\')">Změnit PIN</button></div><div class="pin-step" id="pe-pin-step1-'+u.id+'"><label class="pin-change-label">Nový PIN</label><div class="pdots" id="pe-pd1-'+u.id+'"></div><div class="ppad" id="pe-pp1-'+u.id+'"></div></div><div class="pin-step" id="pe-pin-step2-'+u.id+'"><label class="pin-change-label">Potvrď PIN</label><div class="pdots" id="pe-pd2-'+u.id+'"></div><div class="ppad" id="pe-pp2-'+u.id+'"></div></div></div><div id="pe-msg-'+u.id+'"></div><button class="btn btn-p" style="margin-top:12px" onclick="saveProfile(\''+u.id+'\')">Uložit změny</button></div>';
@@ -1234,13 +1354,143 @@ window.saveProfile=async function(uid){
 function D(id,pin){const el=document.getElementById(id);if(!el)return;el.innerHTML='';for(let i=0;i<4;i++){const d=document.createElement('div');d.className='pd'+(i<pin.length?' on':'');el.appendChild(d);}}
 function P(id,oK,oD){const el=document.getElementById(id);if(!el)return;el.innerHTML='';['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{const b=document.createElement('button');if(!k){b.className='pk gap';}else if(k==='⌫'){b.className='pk del';b.textContent=k;b.onclick=oD;}else{b.className='pk';b.textContent=k;b.onclick=()=>oK(k);}el.appendChild(b);});}
 
+// ── KDO JE NA CHATĚ ──
+function renderAtCottage(){
+  const strip=document.getElementById('atCottageStrip');
+  if(!strip)return;
+  const today=ymd(new Date());
+  const here=[];
+  _events.forEach(ev=>{
+    // přímé události
+    if(!ev.recur){if(ev.dateStart<=today&&ev.dateEnd>=today)here.push(ev.userId);}
+    else{
+      const d=new Date(today+'T12:00:00');
+      const vev=getVirtualEvent(ev,d.getFullYear(),d.getMonth());
+      if(vev.dateStart<=today&&vev.dateEnd>=today)here.push(ev.userId);
+    }
+  });
+  const unique=[...new Set(here)];
+  if(!unique.length){strip.innerHTML='';return;}// skrýt strip pokud nikdo
+  let html='<span class="atcottage-label">🏠 Na chatě</span><div class="atcottage-users">';
+  unique.forEach(uid=>{
+    const u=_u.find(x=>x.id===uid);
+    if(!u)return;
+    html+='<div class="atcottage-pill" style="background:'+u.color+'"><span class="atcottage-em">'+u.emoji+'</span>'+u.name+'</div>';
+  });
+  html+='</div>';
+  strip.innerHTML=html;
+}
+
+// ── DARK MODE ──
+function setDarkMode(on){
+  document.documentElement.setAttribute('data-theme',on?'dark':'');
+  localStorage.setItem('borsovikDark',on?'1':'0');
+}
+function initDarkMode(){
+  const dm=localStorage.getItem('borsovikDark');
+  if(dm==='1')document.documentElement.setAttribute('data-theme','dark');
+}
+
+// ── ABOUT MODAL ──
+window.openAbout=function(){document.getElementById('aboutBackdrop').classList.add('open');};
+window.closeAbout=function(){document.getElementById('aboutBackdrop').classList.remove('open');};
+
+// ── COTTAGE STATUS ──
+async function loadCottageStatus(){
+  try{
+    const snap=await getDocs(query(collection(db,'settings'),where('key','==','cottageStatus')));
+    if(!snap.empty){const d=snap.docs[0].data();_cottageStatus={heating:!!d.heating,water:!!d.water};}
+  }catch(e){console.error(e);}
+}
+async function saveCottageStatus(field,val){
+  try{
+    _cottageStatus[field]=val;
+    const snap=await getDocs(query(collection(db,'settings'),where('key','==','cottageStatus')));
+    if(snap.empty){await addDoc(collection(db,'settings'),{key:'cottageStatus',heating:_cottageStatus.heating,water:_cottageStatus.water});}
+    else{await updateDoc(doc(db,'settings',snap.docs[0].id),{[field]:val});}
+    renderS();
+  }catch(e){alert('Chyba: '+e.message);}
+}
+
+// ── WEATHER ──
+const WMO={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+function wmoIcon(c){return WMO[c]||'🌡️';}
+async function loadWeather(){
+  if(_weatherLoaded)return;
+  const strip=document.getElementById('weatherStrip');
+  if(!strip)return;
+  try{
+    const url='https://api.open-meteo.com/v1/forecast?latitude=49.06&longitude=14.61&current=temperature_2m,weathercode&hourly=temperature_2m,weathercode&forecast_days=1&timezone=Europe%2FPrague';
+    const r=await fetch(url);const data=await r.json();
+    const temp=Math.round(data.current.temperature_2m);
+    const code=data.current.weathercode;
+    const icon=wmoIcon(code);
+    const now=new Date().getHours();
+    const hours=data.hourly.time.map((t,i)=>({h:new Date(t).getHours(),t:Math.round(data.hourly.temperature_2m[i]),c:data.hourly.weathercode[i]})).filter(x=>x.h>now&&x.h<=now+8).filter((_,i)=>i%2===0).slice(0,4);
+    let html='<div class="weather-now"><div class="weather-icon">'+icon+'</div><div><div class="weather-temp">'+temp+'°</div><div class="weather-desc">Boršov · teď</div></div></div><div class="weather-hourly">';
+    hours.forEach(x=>{html+='<div class="weather-hour"><div class="weather-h-time">'+String(x.h).padStart(2,'0')+'h</div><div class="weather-h-icon">'+wmoIcon(x.c)+'</div><div class="weather-h-temp">'+x.t+'°</div></div>';});
+    html+='</div>';
+    strip.innerHTML=html;
+    _weatherLoaded=true;
+  }catch(e){strip.innerHTML='<span class="weather-loading">Počasí nedostupné</span>';}
+}
+
+// ── TASK BADGE ──
+function updateTaskBadge(){
+  const open=_tasks.filter(t=>!t.done).length;
+  const btn=document.getElementById('tasksTab');
+  if(!btn)return;
+  if(open>0)btn.setAttribute('data-badge',open>99?'99+':String(open));
+  else btn.removeAttribute('data-badge');
+}
+
+// ── SWIPE GESTA NA ÚKOLECH ──
+function attachSwipe(el,taskId,isDone){
+  const inner=el.querySelector('.task-block-inner');
+  const hintDone=el.querySelector('.task-swipe-done');
+  const hintDel=el.querySelector('.task-swipe-delete');
+  if(!inner)return;
+  let startX=0,startY=0,dx=0,swiping=false,axisLocked=false;
+  const threshold=72;
+  el.addEventListener('touchstart',e=>{const t=e.touches[0];startX=t.clientX;startY=t.clientY;dx=0;swiping=true;axisLocked=false;},{passive:true});
+  el.addEventListener('touchmove',e=>{
+    if(!swiping)return;
+    const t=e.touches[0];const mx=t.clientX-startX;const my=t.clientY-startY;
+    if(!axisLocked){if(Math.abs(mx)<6&&Math.abs(my)<6)return;axisLocked=true;if(Math.abs(my)>Math.abs(mx)){swiping=false;return;}}
+    dx=mx;
+    const clamped=Math.max(-threshold*1.2,Math.min(threshold*1.2,dx));
+    inner.style.transform='translateX('+clamped+'px)';
+    if(hintDone)hintDone.style.opacity=dx>20?Math.min(1,(dx-20)/50):'0';
+    if(hintDel)hintDel.style.opacity=dx<-20?Math.min(1,(-dx-20)/50):'0';
+    if(Math.abs(dx)>10)e.preventDefault();
+  },{passive:false});
+  el.addEventListener('touchend',async()=>{
+    if(!swiping)return;swiping=false;
+    inner.style.transition='transform .2s ease';
+    if(dx>threshold){
+      inner.style.transform='translateX(110%)';
+      setTimeout(async()=>{if(navigator.vibrate)navigator.vibrate(15);await updateDoc(doc(db,'tasks',taskId),{done:!isDone});await loadTasks();renderTaskList();},180);
+    }else if(dx<-threshold){
+      const t=_tasks.find(x=>x.id===taskId);
+      if(t&&_cur&&(_cur.isAdmin||_cur.id===t.createdBy)){
+        inner.style.transform='translateX(-110%)';
+        setTimeout(async()=>{if(navigator.vibrate)navigator.vibrate([10,30,10]);await deleteDoc(doc(db,'tasks',taskId));await loadTasks();renderTaskList();},180);
+      }else{inner.style.transform='';setTimeout(()=>{inner.style.transition='';},200);}
+    }else{
+      inner.style.transform='';
+      setTimeout(()=>{inner.style.transition='';if(hintDone)hintDone.style.opacity='0';if(hintDel)hintDel.style.opacity='0';},200);
+    }
+  });
+}
+
 async function init(){
+  initDarkMode();
   try{
     V(true);
-    await Promise.all([loadU(),loadEvents(),loadTasks(),loadGuides()]);
+    await Promise.all([loadU(),loadEvents(),loadTasks(),loadGuides(),loadCottageStatus()]);
     _selDate=ymd(new Date());
     const stored=localStorage.getItem('borsovikUser');
-    if(stored){try{const parsed=JSON.parse(stored);const f=_u.find(x=>x.id===parsed.id);if(f){_cur=f;V(false);eApp();return;}}catch(e){}}
+    if(stored){try{const parsed=JSON.parse(stored);const f=_u.find(x=>x.id===parsed.id);if(f){_cur=f;V(false);eApp();loadWeather();return;}}catch(e){}}
     V(false);
     goTo('sHome');
   }catch(e){
