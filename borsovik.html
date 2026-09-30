@@ -1173,7 +1173,7 @@ async function renderCal(){
     if(!inMonth)cls+=' other-month';if(isToday)cls+=' today';
     if(isWE)cls+=' we-cell';if(hol&&!isWE)cls+=' hol-cell';if(isSel)cls+=' sel';
     cell.className=cls;
-    const wx=inMonth?wxForDate(ds):null;
+    const wx=(inMonth&&ds>=today)?wxForDate(ds):null;
     let html='<div class="cal-dn">'+cd.getDate()+'</div>'+(wx?'<div class="cal-wx"><span class="cal-wx-icon">'+wx.icon+'</span><span class="cal-wx-temp">'+wx.temp+'°</span></div>':'');
     if(hol)html+='<div class="cal-hol">St. svátek</div>';
     html+='<div class="cal-strips">';
