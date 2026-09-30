@@ -166,6 +166,10 @@
     .cal-cell.we-cell.sel{background:#fdd0c0;}
     .cal-cell.we-cell .cal-dn{color:#b5623a;font-weight:700;}
     .cal-cell.today.we-cell .cal-dn{color:#fff;}
+    [data-theme="dark"] .cal-cell.we-cell{background:#2a1f18;}
+    [data-theme="dark"] .cal-cell.we-cell:hover{background:#352820;}
+    [data-theme="dark"] .cal-cell.we-cell.sel{background:#3e2e22;}
+    [data-theme="dark"] .cal-cell.we-cell.hol-cell{background:#2e2010;}
     /* Svátky */
     .cal-cell.hol-cell{background:#fff8e8;}
     .cal-cell.hol-cell .cal-dn{color:#b08000;}
@@ -293,7 +297,7 @@
     .task-empty{padding:48px 20px;text-align:center;font-size:.84rem;color:var(--tx3);}
     /* NÁVODY */
     .guide-list{flex:1;overflow-y:auto;padding:16px;}
-    .guide-reader{position:absolute;inset:0;background:var(--sf);display:none;flex-direction:column;z-index:10;animation:up .25s ease;}
+    .guide-reader{position:absolute;inset:0;background:var(--sf);color:var(--tx);display:none;flex-direction:column;z-index:10;animation:up .25s ease;}
     .guide-reader.open{display:flex;}
     .guide-reader-bar{display:flex;align-items:center;gap:8px;padding:0 16px;height:52px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0;}
     .gr-back{background:none;border:none;cursor:pointer;color:var(--tx2);font-size:.82rem;font-weight:500;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;padding:0;transition:color .13s;}
@@ -993,7 +997,7 @@ async function renderEvList(){
       }
     }
   });
-  let list=expanded.sort((a,b)=>a.dateStart.localeCompare(b.dateStart));
+  let list=expanded.sort((a,b)=>b.dateStart.localeCompare(a.dateStart));
   if(_evFilter==='upcoming')list=list.filter(e=>e.dateEnd>=today);
   if(_evFilter==='past')list=list.filter(e=>e.dateEnd<today);
   if(!list.length){el.innerHTML='<div class="empty-state"><svg class="empty-state-svg" viewBox="0 0 64 64" fill="none"><use href="#ic"/></svg><div class="empty-state-title">Žádné události</div><div class="empty-state-sub">Přidej první pobyt kliknutím na +</div></div>';return;}
