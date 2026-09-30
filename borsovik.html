@@ -137,7 +137,7 @@
     .tbb.active svg{transform:scale(1.08);}
     .tbb.active::before{content:'';position:absolute;top:0;left:28%;right:28%;height:2px;background:var(--ac);border-radius:0 0 2px 2px;}
     /* ═══ KALENDÁŘ ═══ */
-    .cal-outer{display:flex;flex-direction:column;height:100%;overflow:hidden;}
+    .cal-outer{display:flex;flex-direction:column;height:100%;overflow-y:auto;}
     .cal-bar{display:flex;align-items:center;padding:8px 12px;background:var(--sf);border-bottom:1px solid var(--bd);gap:8px;flex-shrink:0;}
     .cal-nav{display:flex;align-items:center;gap:4px;flex:1;}
     .cnav-btn{background:none;border:1px solid var(--bd);border-radius:var(--rs);width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);transition:all .13s;flex-shrink:0;}
@@ -187,8 +187,8 @@
     .cal-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
     .cal-label{position:absolute;height:17px;line-height:17px;white-space:nowrap;font-size:.72rem;font-weight:600;color:#fff;padding:0 5px;pointer-events:none;overflow:visible;}
     /* DENNÍ PANEL */
-    .day-panel{flex:1;min-height:0;overflow-y:auto;border-top:2px solid var(--bd);background:var(--sf);}
-    .day-panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--sf);z-index:1;}
+    .day-panel{flex-shrink:0;border-top:2px solid var(--bd);background:var(--sf);min-height:120px;}
+    .day-panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px;border-bottom:1px solid var(--bd);background:var(--sf);}
     .day-panel-date{font-size:.88rem;font-weight:600;}
     .day-panel-hol{font-size:.75rem;color:var(--ac);font-weight:600;}
     .day-panel-empty{padding:22px;text-align:center;font-size:.84rem;color:var(--tx3);}
@@ -861,6 +861,7 @@ function eventsForDate(ds){
 window.openModal=function(eventId){
   _editingEventId=eventId;
   const ev=eventId?_events.find(e=>e.id===eventId):null;
+  if(eventId&&!ev){console.warn('openModal: event not found',eventId,'_events ids:',_events.map(e=>e.id));}
   const preDate=_selDate||ymd(new Date());
   document.getElementById('modalTitle').textContent=ev?'Upravit událost':'Nová událost';
   document.getElementById('evSaveBtn').textContent=ev?'Uložit změny':'Uložit událost';
@@ -1173,7 +1174,7 @@ async function renderCal(){
     if(!inMonth)cls+=' other-month';if(isToday)cls+=' today';
     if(isWE)cls+=' we-cell';if(hol&&!isWE)cls+=' hol-cell';if(isSel)cls+=' sel';
     cell.className=cls;
-    const wx=(inMonth&&ds>=today)?wxForDate(ds):null;
+    const wx=(ds>=today)?wxForDate(ds):null;
     let html='<div class="cal-dn">'+cd.getDate()+'</div>'+(wx?'<div class="cal-wx"><span class="cal-wx-icon">'+wx.icon+'</span><span class="cal-wx-temp">'+wx.temp+'°</span></div>':'');
     if(hol)html+='<div class="cal-hol">St. svátek</div>';
     html+='<div class="cal-strips">';
